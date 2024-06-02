@@ -15,8 +15,9 @@ public partial class DiagnosedWith
     public string Care { get; set; } = null!;
 
     public virtual Child Child { get; set; } = null!;
-    public virtual HealthProblem HealthProblem { get; set; }
+    public virtual HealthProblem HealthProblem { get; set; } = null!;
 
 
 public virtual HealthProblem HealthProblemsNumberNavigation { get; set; } = null!;
+public virtual RegisterdTo CurrentAcademicYearNavigation { get; set; } = null!;
 }

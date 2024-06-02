@@ -18,7 +18,7 @@ public partial class Child
     public string Parent1 { get; set; } = null!;
 
     public string Parent2 { get; set; } = null!;
-    public string ChildPhotoName { get; set; } = null!;
+    public string? ChildPhotoName { get; set; }
 
 
     public virtual ICollection<DailyAttendance> DailyAttendances { get; set; } = new List<DailyAttendance>();

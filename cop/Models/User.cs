@@ -24,7 +24,7 @@ public partial class User
     public string UserpPassword { get; set; } = null!;
 
     public int UserCode { get; set; }
-    public string UserPhotoName { get; set; } = null!;
+    public string? UserPhotoName { get; set; }
 
 
     public virtual Parent? Parent { get; set; }
@@ -34,4 +34,5 @@ public partial class User
     public virtual ICollection<UserInKindergarten> UserInKindergartens { get; set; } = new List<UserInKindergarten>();
 
     public virtual ICollection<Interest> InterestsNumbers { get; set; } = new List<Interest>();
+
 }

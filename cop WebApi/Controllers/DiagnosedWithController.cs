@@ -1,4 +1,5 @@
-﻿using cop.Models;
+﻿using Co_p_new__WebApi.DTO;
+using cop.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +17,11 @@ namespace Co_p_new_WebApi.Controllers
         public IActionResult GetChildrenWithHealthProblems()
         {
             var childrenWithHealthProblems = db.DiagnosedWiths
-                .Select(dw => new
+                .Select(dw => new ChildHealthProblemDTO()
                 {
-                    childID = dw.ChildId,
+                    ChildId = dw.ChildId,
                     ChildName = dw.Child.ChildFirstName + " " + dw.Child.ChildSurname,
-                    KindergartenName = dw.Child.RegisterdTos.FirstOrDefault().KindergartenNumberNavigation.KindergartenName,
-                    CurrentAcademicYear = dw.Child.RegisterdTos.FirstOrDefault().CurrentAcademicYear,
+                    KindergartenName = dw.KindergartenName,
                     HealthProblemName = dw.HealthProblemsNumberNavigation.HealthProblemName,
                     Severity = dw.Severity,
                     Care = dw.Care
@@ -37,11 +37,11 @@ namespace Co_p_new_WebApi.Controllers
         {
             var diagnosedChildren = db.RegisterdTos
                 .Where(r => r.KindergartenNumberNavigation.KindergartenName == kindergartenName && r.CurrentAcademicYear == year)
-                .SelectMany(r => r.Child.DiagnosedWiths.Select(dw => new
+                .SelectMany(r => r.Child.DiagnosedWiths.Select(dw => new ChildHealthProblemDTO
                 {
-                    ChildId = r.ChildId,
-                    ChildName = r.Child.ChildFirstName + " " + r.Child.ChildSurname,
-                    HealthProblemsName = dw.HealthProblemsNumberNavigation.HealthProblemName,
+                    ChildId = dw.ChildId,
+                    ChildName = dw.Child.ChildFirstName + " " + dw.Child.ChildSurname,
+                    HealthProblemName = dw.HealthProblem.HealthProblemName,
                     Severity = dw.Severity,
                     Care = dw.Care
                 }))
@@ -51,25 +51,19 @@ namespace Co_p_new_WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("Add")]
+        [Route("AddHealthProblemToChild")]
         public bool AddHealthProblemToChild(string parentId, int healthProblemsNumber, int severity, string care)
         {
-            // Step 1: Retrieve the Child ID
             var childId = db.Children
                 .Where(c => c.Parent1 == parentId || c.Parent2 == parentId)
                 .Select(c => c.ChildId)
                 .FirstOrDefault();
 
-            // Step 2: Check for the Child
             if (childId == null)
             {
-                // Child with the provided Parent ID does not exist
                 return false;
             }
 
-            try
-            {
-                // Step 3: Add the Health Problem
                 var diagnosedWith = new DiagnosedWith
                 {
                     ChildId = childId,
@@ -82,16 +76,7 @@ namespace Co_p_new_WebApi.Controllers
                 db.SaveChanges();
 
                 return true;
-            }
-            catch (Exception ex)
-            {
-                // Handle any exceptions, such as database errors
-                Console.WriteLine($"Error adding health problem: {ex.Message}");
-                return false;
-            }
-
-
-
+             
         }
     }
 }

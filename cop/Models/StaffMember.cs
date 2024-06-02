@@ -14,4 +14,5 @@ public partial class StaffMember
     public virtual User User { get; set; } = null!;
 
     public virtual ICollection<HealthProblem> HealthProblemsNumbers { get; set; } = new List<HealthProblem>();
+  
 }
