@@ -12,7 +12,7 @@ import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 
 const EfooterS =
     <div className="footer-icons">
-        <Link style={{width: '10%'}} to="/MainStaffMember">
+        <Link style={{ width: '10%' }} to="/MainStaffMember">
             <img src={logo} alt="My Logo" className="logofooter" />
         </Link>
         <Link to="/MainStaffMember">
@@ -25,7 +25,7 @@ const EfooterS =
                 <EditCalendarOutlinedIcon className="footer-icon" />
             </IconButton>
         </Link>
-        <Link>
+        <Link to='/Meals'>
             <IconButton >
                 <RestaurantMenuOutlinedIcon className="footer-icon" />
             </IconButton>

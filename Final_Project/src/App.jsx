@@ -17,6 +17,7 @@ import BonusStaffMember from './components/StaffMember/BonusStaffMember'
 import StaffRegister from './components/StaffMember/StaffRegister'
 import StaffRegister2 from './components/StaffMember/StaffRegister2'
 import Presence from './components/StaffMember/Presence'
+import Meals from './components/StaffMember/Meals';
 
 import LogInParent from './components/Parents/LogInParent'
 import MainParent from './components/Parents/MainParent'
@@ -65,6 +66,7 @@ function App() {
           <Route path='/StaffRegister' element={<StaffRegister />} />
           <Route path='/StaffRegister2' element={<StaffRegister2 />} />
           <Route path='/Presence' element={<Presence />} />
+          <Route path='/Meals' element={<Meals />} />
 
           <Route path='/LogInParent' element={<LogInParent />} />
           <Route path='/MainParent' element={<MainParent />} />

@@ -49,7 +49,7 @@ export default function EditProfileP2() {
   };
 
   const handleSubmit = () => {
-    navigate('/EditProfileP2', { state: details });
+    navigate('/EditProfile', { state: details });
   };
 
   return (
@@ -144,7 +144,7 @@ export default function EditProfileP2() {
           onClick={handleSubmit}
           type='submit'
         >
-          המשך
+          אישור
         </Button>
       </form>
       {EfooterP}
