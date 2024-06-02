@@ -1,0 +1,23 @@
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  flex: 1;
+  margin: 0;
+  display:block;
+  place-items: center;
+  min-width: 100%;
+  flex-direction: column;
+  padding: 0;
+  background-color: #f0f0f0;
+  font-family: 'Karantina', cursive;
+  direction: rtl;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+ }
