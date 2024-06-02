@@ -22,7 +22,8 @@ import LogInParent from './components/Parents/LogInParent'
 import MainParent from './components/Parents/MainParent'
 import EditProfile from './components/Parents/EditProfile'
 import EditProfileChild from './components/Parents/EditProfileChild'
-import EditProfileParent from './components/Parents/EditProfileParent'
+import EditProfileP from './components/Parents/EditProfileP'
+import EditProfileP2 from './components/Parents/EditProfileP2'
 import Allergies from './components/Parents/Allergies';
 
 import './assets/StyleSheets/Register.css'
@@ -69,7 +70,8 @@ function App() {
           <Route path='/MainParent' element={<MainParent />} />
           <Route path='/EditProfile' element={<EditProfile />} />
           <Route path='/EditProfileChild' element={<EditProfileChild />} />
-          <Route path='/EditProfileParent' element={<EditProfileParent />} />
+          <Route path='/EditProfileP' element={<EditProfileP />} />
+          <Route path='/EditProfileP2' element={<EditProfileP2 />} />
           <Route path='/Allergies' element={<Allergies />} />
 
 

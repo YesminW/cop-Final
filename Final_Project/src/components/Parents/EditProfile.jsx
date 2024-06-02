@@ -23,7 +23,7 @@ export default function EditProfile() {
                 <Link to="/EditProfileChild" className="btn btn-primary bootstrap-edit-profile-button">
                     פרטים אישיים {userData.firstName}
                 </Link>
-                <Link to="/EditProfileParent" className="btn btn-primary bootstrap-edit-profile-button">
+                <Link to="/EditProfileP" className="btn btn-primary bootstrap-edit-profile-button">
                     פרטים אישיים {userData.firstName}
                 </Link>
             </form>
