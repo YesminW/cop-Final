@@ -50,16 +50,6 @@ export default function EditProfileChild() {
                 <div className='registerdiv'>
                     <h2 style={{ textAlign: 'center', margin: 0 }}> פרטים אישיים {details.firstName} </h2>
                 </div>
-                <div className="form-floating mt-3 mb-3">
-                    <label htmlFor="pwd">סיסמא</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="pwd"
-                        placeholder="סיסמא"
-                        name="pswd"
-                    />
-                </div>
                 <TextField
                     fullWidth
                     margin="normal"
