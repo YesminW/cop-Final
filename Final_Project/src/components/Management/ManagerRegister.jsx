@@ -135,8 +135,9 @@ export default function ManagerRegister() {
                     role={undefined}
                     variant="contained"
                     tabIndex={0}
-                    startIcon={<CloudUploadIcon />}
                     sx={{
+                        fontFamily: 'Karantina',
+                        fontSize: '20px',
                         margin: '20px',
                         backgroundColor: '#076871',
                         '&:hover': {
@@ -144,6 +145,8 @@ export default function ManagerRegister() {
                         }
                     }}        >
                     העלאת תמונת פרופיל
+                    {<CloudUploadIcon style={{margin:"10px"}} />}
+
                     <input
                         type="file"
                         name="file"
@@ -154,17 +157,18 @@ export default function ManagerRegister() {
                 </Button>
                 {errors.profilePicture && <p>{errors.profilePicture}</p>}
             </FormControl>
-            <FormControl fullWidth margin="normal" style={{ width: '120%' }}>
+            <FormControl fullWidth margin="normal" style={{ width: '120%', direction: 'rtl', padding: '10px 0'  }}>
                 <InputLabel id="gender-label">מין</InputLabel>
                 <Select
+                style={{direction:'rtl'}}
                     labelId="gender-label"
                     name="gender"
                     value={formValues.gender}
                     onChange={handleChange}
                     error={!!errors.gender}
                     className='register-textfield'
+                    
                 >
-                    <MenuItem value=""><em>בחר</em></MenuItem>
                     <MenuItem value="male">זכר</MenuItem>
                     <MenuItem value="female">נקבה</MenuItem>
                     <MenuItem value="other">אחר</MenuItem>

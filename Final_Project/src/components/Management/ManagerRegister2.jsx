@@ -133,7 +133,7 @@ export default function AdditionalRegistrationForm(props) {
             </FormControl>
             <FormControl fullWidth margin="normal">
                 <TextField
-                    label="אימייל"
+                    label="מייל"
                     name="email"
                     value={formValues.email}
                     onChange={handleChange}
@@ -182,7 +182,7 @@ export default function AdditionalRegistrationForm(props) {
                             backgroundColor: '#6196A6',
                         }
                     }}        >
-                    העלאת תמונת פרופיל
+                    העלאת מסמכים
                     <input
                         type="file"
                         name="file"

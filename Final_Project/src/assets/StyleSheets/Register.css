@@ -32,6 +32,9 @@ form {
     text-align: center;
     font-size: 28px;
     font-family: 'Karantina', cursive;
+    display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 button[type="submit"] {
@@ -49,7 +52,7 @@ button[type="submit"] {
 
 button[type="submit"]:hover,
 .btn1:hover {
-    background-color: #005662;
+    background-color: #57888f;
 }
 
 p {
@@ -80,7 +83,7 @@ p {
     transform-origin: top right;
     right: 0;
     left: 60%;
-    font-size: 1.5rem;
+    font-size: 20px;
     font-family: 'Karantina', cursive;
 }
 
@@ -102,4 +105,10 @@ p {
     border-radius: 5px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     font-family: 'Karantina', cursive;
+}
+
+#gender-label{
+    font-family: 'Karantina';
+    font-size: 20px;
+    direction: rtl;
 }
