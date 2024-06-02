@@ -174,15 +174,18 @@ export default function AdditionalRegistrationForm(props) {
                     role={undefined}
                     variant="contained"
                     tabIndex={0}
-                    startIcon={<CloudUploadIcon />}
                     sx={{
+                        fontSize: '20px',
                         margin: '20px',
+                        fontFamily: 'Karantina',
                         backgroundColor: '#076871',
                         '&:hover': {
                             backgroundColor: '#6196A6',
                         }
                     }}        >
                     העלאת מסמכים
+                    {<CloudUploadIcon style={{margin:"10px"}} />}
+
                     <input
                         type="file"
                         name="file"

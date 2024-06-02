@@ -107,7 +107,7 @@ p {
     font-family: 'Karantina', cursive;
 }
 
-#gender-label{
+.gender-label{
     font-family: 'Karantina';
     font-size: 20px;
     direction: rtl;
