@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import EfooterS from '../../Elements/EfooterS';
+import '../../assets/StyleSheets/Meals.css'
 
 export default function Meals() {
     const getCurrentWeekDates = () => {
@@ -10,12 +11,11 @@ export default function Meals() {
     const getWeekDates = (startDate) => {
         const dates = [];
         const startDay = startDate.getDay();
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 6; i++) { // Calculate dates from Sunday to Friday
             dates.push(new Date(startDate.getTime() + (i - startDay + 1) * 24 * 60 * 60 * 1000));
         }
         return dates;
     };
-
     const formatDate = (date) => {
         return date.toLocaleDateString('he-IL');
     };
