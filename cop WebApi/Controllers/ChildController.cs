@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using System.ComponentModel;
 
 namespace Co_p_new__WebApi.Controllers
@@ -11,7 +12,7 @@ namespace Co_p_new__WebApi.Controllers
     {
         CoPNewContext db = new CoPNewContext();
 
- 
+
         [HttpGet]
         [Route("AllChild")]
         public dynamic GetAllChild()
@@ -29,70 +30,71 @@ namespace Co_p_new__WebApi.Controllers
             return children;
 
         }
-        //[HttpPost]
-        //[Route("AddChildrenByExcel")]
-        //public async Task<IActionResult> UploadExcel(IFormFile file)
-        //{
-        //    if (file == null || file.Length == 0)
-        //    {
-        //        return BadRequest("Please upload a valid Excel file.");
-        //    }
 
-        //    ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // Set the license context
+        [HttpPost]
+        [Route("AddChildrenByExcel")]
+        public async Task<IActionResult> UploadExcel(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("Please upload a valid Excel file.");
+            }
 
-        //    var children = new List<Child>();
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial; // Set the license context
 
-        //    using (var stream = new MemoryStream())
-        //    {
-        //        await file.CopyToAsync(stream);
-        //        using (var package = new ExcelPackage(stream))
-        //        {
-        //            var worksheet = package.Workbook.Worksheets.First();
-        //            if (worksheet.Dimension == null)
-        //            {
-        //                return BadRequest("The Excel file is empty.");
-        //            }
-        //            var rowCount = worksheet.Dimension.Rows;
-        //            Console.WriteLine($"Row count: {rowCount}");
+            var children = new List<Child>();
 
-        //            for (int row = 2; row <= rowCount; row++) // Assuming the first row is the header
-        //            {
-        //                var childId = worksheet.Cells[row, 1].Text;
-        //                var childFirstName = worksheet.Cells[row, 2].Text; // Change from int to string
-        //                var childSurname = worksheet.Cells[row, 3].Text;  // Change from int to string
-        //                var childBirthDate = DateTime.Parse(worksheet.Cells[row, 4].Text); // Parse DateTime
-        //                var childGender = worksheet.Cells[row, 5].Text;
-        //                var parent1 = worksheet.Cells[row, 6].Text;
-        //                var parent2 = worksheet.Cells[row, 7].Text;
-        //                var childPhotoName = worksheet.Cells[row, 8].Text;
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+                using (var package = new ExcelPackage(stream))
+                {
+                    var worksheet = package.Workbook.Worksheets.First();
+                    if (worksheet.Dimension == null)
+                    {
+                        return BadRequest("The Excel file is empty.");
+                    }
+                    var rowCount = worksheet.Dimension.Rows;
+                    Console.WriteLine($"Row count: {rowCount}");
 
-        //                // Retrieve or create related entities as needed
-        //                var child = db.Children.FirstOrDefault(c => c.ChildId == childId);
-        //                if (child == null)
-        //                {
-        //                    var newChild = new Child
-        //                    {
-        //                        ChildId = childId,
-        //                        ChildFirstName = childFirstName,
-        //                        ChildSurname = childSurname,
-        //                        ChildBirthDate = childBirthDate,
-        //                        ChildGender = childGender,
-        //                        Parent1 = parent1,
-        //                        Parent2 = parent2,
-        //                        ChildPhotoName = childPhotoName
-        //                    };
+                    for (int row = 2; row <= rowCount; row++) // Assuming the first row is the header
+                    {
+                        var childId = worksheet.Cells[row, 1].Text;
+                        var childFirstName = worksheet.Cells[row, 2].Text; // Change from int to string
+                        var childSurname = worksheet.Cells[row, 3].Text;  // Change from int to string
+                        var childBirthDate = DateTime.Parse(worksheet.Cells[row, 4].Text); // Parse DateTime
+                        var childGender = worksheet.Cells[row, 5].Text;
+                        var parent1 = worksheet.Cells[row, 6].Text;
+                        var parent2 = worksheet.Cells[row, 7].Text;
+                        var childPhotoName = worksheet.Cells[row, 8].Text;
 
-        //                    children.Add(newChild);
-        //                }
-        //            }
-        //        }
-        //    }
+                        // Retrieve or create related entities as needed
+                        var child = db.Children.FirstOrDefault(c => c.ChildId == childId);
+                        if (child == null)
+                        {
+                            var newChild = new Child
+                            {
+                                ChildId = childId,
+                                ChildFirstName = childFirstName,
+                                ChildSurname = childSurname,
+                                ChildBirthDate = childBirthDate,
+                                ChildGender = childGender,
+                                Parent1 = parent1,
+                                Parent2 = parent2,
+                                ChildPhotoName = childPhotoName
+                            };
 
-        //    db.Children.AddRange(children);
-        //    await db.SaveChangesAsync();
+                            children.Add(newChild);
+                        }
+                    }
+                }
+            }
 
-        //    return Ok(new { Message = "Data imported successfully." });
-        //}
+            db.Children.AddRange(children);
+            await db.SaveChangesAsync();
+
+            return Ok(new { Message = "Data imported successfully." });
+        }
         [HttpPost]
         [Route("AddChildren")]
         public dynamic addChild(string ID, string childFMame, string chilsSName, DateTime chilsBdate, string gender, string parent1, string parent2)
@@ -111,6 +113,16 @@ namespace Co_p_new__WebApi.Controllers
             db.Children.Add(c);
             db.SaveChanges();
             return Ok(c);
+        }
+
+        [HttpDelete]
+        [Route("DeleteChild")]
+        public dynamic DeleteChild(string ID)
+        {
+            Child c = db.Children.Where(x => x.ChildId == ID).FirstOrDefault();
+            db.Children.Remove(c);
+            db.SaveChanges();
+            return (c.ChildFirstName + " " + c.ChildSurname + "deleted");
         }
 
 
