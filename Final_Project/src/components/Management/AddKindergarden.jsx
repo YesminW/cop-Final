@@ -71,7 +71,7 @@ export default function AddKindergarden() {
                 <h2 style={{ textAlign: 'center', margin: 0, color: 'white', fontSize: '28px' }}>הקמת גן</h2>
             </div>
 
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="normal" className='register-textfield'>
                 <TextField
                     label="שם הגן"
                     name="gardenName"
@@ -83,7 +83,8 @@ export default function AddKindergarden() {
                 />
             </FormControl>
 
-            <FormControl fullWidth margin="normal">
+            <FormControl fullWidth margin="normal" className='register-textfield'
+>
                 <TextField
                     label="כתובת"
                     name="address"
@@ -107,12 +108,23 @@ export default function AddKindergarden() {
                 />
                 <label htmlFor="profileFile">
                     <Button
-                        variant="outlined"
-                        component="span"
-                        startIcon={<CloudUploadIcon />}
+                        variant="contained"
+                        component="label"
                         style={{ marginBottom: 20 }}
+                        sx={{
+                            fontFamily: 'Karantina',
+                            fontSize: '20px',
+                            margin: '20px',
+                            color:'white',
+                            backgroundColor: '#076871',
+                            '&:hover': {
+                                backgroundColor: '#6196A6',
+                            }
+                        }} 
                     >
                         העלאת קובץ פרטי ילדים
+                        {<CloudUploadIcon style={{margin:"10px"}} />}
+
                     </Button>
                 </label>
                 {errors.file && <p>{errors.file}</p>}

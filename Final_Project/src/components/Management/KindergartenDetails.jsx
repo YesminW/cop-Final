@@ -69,32 +69,35 @@ export default function KindergartenDetails() {
                 width: '300px',
                 margin: 'auto',
                 marginTop: '20px'
+
             }}
         >
-            <Typography variant="h4" style={{ color: 'white', marginBottom: '20px' }}>
+            <Typography variant="h4" style={{ fontFamily: 'Karantina', color: 'white', marginBottom: '20px', fontSize: '48px' }}>
                 ניהול גנים
             </Typography>
             <Typography
                 variant="h5"
                 style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.28)',
+                    backgroundColor: '#B9DCD1',
                     color: 'white',
                     margin: '10px 0',
-                    padding: '10px 0',
-                    width: '100%',
-                    textAlign: 'center',
-                    borderRadius: '5px'
+                    width: '100px', // Increase width
+                    height: '45px', // Increase height
+                    fontSize: '28px', // Increase font size
+                    fontFamily: 'Karantina',
+                    borderRadius: '10px'
                 }}
             >
                 {decodeURIComponent(gardenName)}
             </Typography>
-            <FormControl fullWidth margin="normal" variant="outlined">
-                <InputLabel style={{ color: 'white' }}>שיתוף גננות</InputLabel>
+            <FormControl fullWidth margin="normal" variant="outlined" style={{ direction: 'rtl', padding: '10px 0' }}>
+                <InputLabel style={{ fontSize: '20px', color: 'white', fontFamily: 'Karantina' }}>שיתוף גננות</InputLabel>
                 <Select
                     value={sharingType}
                     onChange={handleSharingTypeChange}
                     label="שיתוף גננות"
-                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.28)', color: 'white' }}
+                    style={{ backgroundColor: '#B9DCD1', color: 'white' }}
+                    className='register-textfield'
                 >
                     <MenuItem value="חוד">חוד</MenuItem>
                     <MenuItem value="מסדר">מסדר</MenuItem>
@@ -105,26 +108,26 @@ export default function KindergartenDetails() {
             </FormControl>
 
             <Box display="flex" justifyContent="space-between" width="100%" marginTop="16px">
-                <FormControl margin="normal" variant="outlined" style={{ flex: 1, marginRight: '8px' }}>
-                    <InputLabel style={{ color: 'white' }}>שיתוף סייעת 1</InputLabel>
+                <FormControl margin="normal" variant="outlined" style={{ flex: 1, marginRight: '8px', direction: 'rtl', padding: '10px 0' }}>
+                    <InputLabel style={{ fontSize: '20px', color: 'white', fontFamily: 'Karantina' }}>שיוך סייעת 1</InputLabel>
                     <Select
                         value={assistant1}
                         onChange={handleAssistant1Change}
-                        label="שיתוף סייעת 1"
-                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.28)', color: 'white' }}
+                        label="שיוך סייעת 1"
+                        style={{ backgroundColor: '#B9DCD1', color: 'white' }}
                     >
                         <MenuItem value="סייעת1">סייעת1</MenuItem>
                         <MenuItem value="סייעת2">סייעת2</MenuItem>
                     </Select>
                 </FormControl>
 
-                <FormControl margin="normal" variant="outlined" style={{ flex: 1, marginLeft: '8px' }}>
-                    <InputLabel style={{ color: 'white' }}>שיתוף סייעת 2</InputLabel>
+                <FormControl margin="normal" variant="outlined" style={{ flex: 1, marginRight: '8px', direction: 'rtl', padding: '10px 0' }}>
+                    <InputLabel style={{ fontSize: '20px', color: 'white', fontFamily: 'Karantina' }}>שיוך סייעת 2</InputLabel>
                     <Select
-                        value={assistant2}
-                        onChange={handleAssistant2Change}
-                        label="שיתוף סייעת 2"
-                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.28)', color: 'white' }}
+                        value={assistant1}
+                        onChange={handleAssistant1Change}
+                        label="שיוך סייעת 2"
+                        style={{ backgroundColor: '#B9DCD1', color: 'white' }}
                     >
                         <MenuItem value="סייעת1">סייעת1</MenuItem>
                         <MenuItem value="סייעת2">סייעת2</MenuItem>
@@ -139,22 +142,27 @@ export default function KindergartenDetails() {
                     onChange={handleFileChange}
                     style={{ display: 'none' }}
                     id="profileFile"
+                    name='file'
                 />
                 <label htmlFor="profileFile">
                     <Button
-                        variant="outlined"
-                        component="span"
-                        startIcon={<CloudUploadIcon />}
-                        style={{
-                            backgroundColor: 'rgba(255, 255, 255, 0.28)',
+                        variant="contained"
+                        component="label"
+                        style={{ marginBottom: 20 }}
+                        sx={{
+                            fontFamily: 'Karantina',
+                            fontSize: '20px',
+                            margin: '20px',
                             color: 'white',
-                            marginBottom: 20,
-                            width: '100%',
-                            height: '60px',
-                            fontSize: '18px'
+                            backgroundColor: '#076871',
+                            '&:hover': {
+                                backgroundColor: '#6196A6',
+                            }
                         }}
                     >
                         העלאת קובץ פרטי ילדים
+                        {<CloudUploadIcon style={{ margin: "10px" }} />}
+
                     </Button>
                 </label>
                 {file && <Typography variant="body2" style={{ color: 'white' }}>{file.name}</Typography>}
@@ -164,27 +172,29 @@ export default function KindergartenDetails() {
             <Button
                 variant="contained"
                 style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.28)',
+                    backgroundColor: '#B9DCD1',
                     color: 'white',
+                    fontFamily: 'Karantina',
                     marginTop: '20px',
                     width: '100%',
                     height: '60px',
-                    fontSize: '18px'
+                    fontSize: '30px'
                 }}
                 onClick={handleSubmit}
             >
                 שייך
             </Button>
-            
+
             <Button
                 variant="contained"
                 style={{
-                    backgroundColor: 'rgba(255, 0, 0, 0.28)',
+                    backgroundColor: '#E16162',
+                    fontFamily: 'Karantina',
                     color: 'white',
                     marginTop: '20px',
                     width: '100%',
                     height: '60px',
-                    fontSize: '18px'
+                    fontSize: '30px'
                 }}
                 onClick={handleDelete}
             >
