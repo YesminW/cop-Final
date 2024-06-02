@@ -11,12 +11,23 @@ namespace Co_p_new__WebApi.Controllers
     {
         CoPNewContext db = new CoPNewContext();
 
+ 
         [HttpGet]
         [Route("AllChild")]
         public dynamic GetAllChild()
         {
-            var children = db.Children;
+            IEnumerable<Child> children = db.Children.Select(x => new Child()
+            {
+                ChildId = x.ChildId,
+                ChildFirstName = x.ChildFirstName,
+                ChildSurname = x.ChildSurname,
+                ChildBirthDate = x.ChildBirthDate,
+                ChildGender = x.ChildGender,
+                Parent1 = x.Parent1,
+                Parent2 = x.Parent2
+            });
             return children;
+
         }
         //[HttpPost]
         //[Route("AddChildrenByExcel")]
