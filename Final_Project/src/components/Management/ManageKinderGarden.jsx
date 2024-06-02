@@ -6,8 +6,8 @@ export default function KindergartenManagement() {
     const navigate = useNavigate();
     const [kindergartens, setKindergartens] = useState([
         'בית תינוקות',
-        'פנטון ניצן',
-        'גוון שקד',
+        'פעוטון ניצן',
+        'גנון שקד',
         'גן רימון',
         'גן חצב'
     ]);
@@ -43,7 +43,7 @@ export default function KindergartenManagement() {
                 marginTop: '20px'
             }}
         >
-            <Typography variant="h4" style={{ color: 'white', marginBottom: '20px' }}>
+            <Typography variant="h4" style={{ color: 'white', marginBottom: '20px', fontFamily: 'Karantina',fontSize: '48px' }}>
                 ניהול גנים
             </Typography>
             {kindergartens.map((kindergarten, index) => (
@@ -53,12 +53,16 @@ export default function KindergartenManagement() {
                     <Button
                         variant="contained"
                         style={{
-                            backgroundColor: 'rgba(255, 255, 255, 0.28)',
+                            backgroundColor: '#B9DCD1',
                             color: 'white',
                             margin: '10px 0',
                             width: '250px', // Increase width
                             height: '60px', // Increase height
-                            fontSize: '18px' // Increase font size
+                            fontSize: '28px', // Increase font size
+                            fontFamily: 'Karantina',
+                            borderRadius: '10px'
+
+
                         }}
                     >
                         {kindergarten}
@@ -70,7 +74,10 @@ export default function KindergartenManagement() {
                 style={{
                     backgroundColor: 'rgba(255, 255, 255, 0.28)',
                     color: 'white',
-                    marginTop: '20px'
+                    marginTop: '20px',
+                    fontSize: '25px',
+                    fontFamily: 'Karantina'
+
                 }}
                 onClick={handleAddKindergarten}
             >

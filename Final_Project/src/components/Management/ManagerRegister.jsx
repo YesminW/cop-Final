@@ -96,7 +96,7 @@ export default function ManagerRegister() {
             <div className='registerdiv'>
                 <h2 style={{ textAlign: 'center', margin: 0 }}>פרטים אישיים</h2>
             </div>
-            <FormControl fullWidth margin="normal" style={{ width: '120%' }}>
+            <FormControl fullWidth margin="normal" style={{ width: '120%', }}>
                 <TextField
                     label="שם פרטי"
                     name="firstName"
@@ -151,16 +151,16 @@ export default function ManagerRegister() {
                         type="file"
                         name="file"
                         style={{ display: 'none' }}
-                        accept="image/png, image/jpeg"
+                        accept="image/jpg, image/jpeg"
                         onChange={handleChange}
                     />
                 </Button>
                 {errors.profilePicture && <p>{errors.profilePicture}</p>}
             </FormControl>
             <FormControl fullWidth margin="normal" style={{ width: '120%', direction: 'rtl', padding: '10px 0'  }}>
-                <InputLabel id="gender-label">מין</InputLabel>
+                <InputLabel style={{fontFamily: 'Karantina', fontSize: '20px',}}>מין</InputLabel>
                 <Select
-                style={{direction:'rtl'}}
+                style={{direction:'rtl', backgroundColor:'#B9DCD1'}}
                     labelId="gender-label"
                     name="gender"
                     value={formValues.gender}
