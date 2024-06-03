@@ -104,7 +104,6 @@ export default function AddKindergarden() {
                     onChange={handleChange}
                     style={{ display: 'none' }}
                     id="profileFile"
-                    name='file'
                 />
                 <label htmlFor="profileFile">
                     <Button

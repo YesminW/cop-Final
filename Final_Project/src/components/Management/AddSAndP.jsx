@@ -48,18 +48,17 @@ export default function AddsAndP() {
             </div>
 
             <FormControl fullWidth margin="normal">
-                <input
-                    accept=".xls,.xlsx"
-                    type="file"
-                    onChange={handleChange}
-                    style={{ display: 'none' }}
-                    id="profileFile"
-                    name='file'
-                />
                 <label htmlFor="profileFile">
+                    <input
+                        accept=".xls,.xlsx"
+                        type="file"
+                        id="profileFile"
+                        style={{ display: 'none' }}
+                        onChange={handleChange}
+                    />
                     <Button
                         variant="contained"
-                        component="label"
+                        component="span"
                         style={{ marginBottom: 20 }}
                         sx={{
                             fontFamily: 'Karantina',
@@ -73,8 +72,7 @@ export default function AddsAndP() {
                         }}
                     >
                         העלאת קובץ משתמשים
-                        {<CloudUploadIcon style={{ margin: "10px" }} />}
-
+                        <CloudUploadIcon style={{ margin: "10px" }} />
                     </Button>
                 </label>
                 {errors.file && <p>{errors.file}</p>}
