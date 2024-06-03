@@ -108,7 +108,7 @@ export default function AddKindergarden() {
                 <label htmlFor="profileFile">
                     <Button
                         variant="contained"
-                        component="label"
+                        component="span"
                         style={{ marginBottom: 20 }}
                         sx={{
                             fontFamily: 'Karantina',

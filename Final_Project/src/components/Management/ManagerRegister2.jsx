@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, FormControl, InputAdornment, IconButton } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
@@ -14,8 +14,9 @@ export default function AdditionalRegistrationForm(props) {
         address: '',
         email: '',
         password: '',
-        file: null,
     });
+
+    const [file, setfile] = useState('')
 
     useEffect(() => {
         const savedData = JSON.parse(localStorage.getItem('registrationData'));
@@ -52,14 +53,7 @@ export default function AdditionalRegistrationForm(props) {
             newErrors.password = 'יש למלא את הסיסמא';
         }
 
-        if (!formValues.file) {
-            newErrors.file = 'יש להעלות מסמך';
-        } else {
-            const fileType = formValues.file.type;
-            if (fileType !== 'application/pdf') { // Example: assuming the file should be PDF
-                newErrors.file = 'יש להעלות קובץ מסוג PDF בלבד';
-            }
-        }
+
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -76,6 +70,7 @@ export default function AdditionalRegistrationForm(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const urlM = 'http://localhost:5108/ManagerRegisterion';
 
         if (validateForm()) {
             // Merge the new data with the data from localStorage
@@ -84,6 +79,30 @@ export default function AdditionalRegistrationForm(props) {
 
             console.log('Form Data Submitted:', finalData);
             props.SendToParent(finalData);
+
+            const jsonstring = JSON.stringify(finalData);
+
+
+            fetch(urlM, {
+                method: 'POST',
+                body: JSON.stringify(finalData),
+                headers: new Headers({
+                    'Content-type': 'application/json; charset=UTF-8' //very important to add the 'charset=UTF-8'!!!!
+                })
+            })
+                .then(res => {
+                    console.log('res=', res);
+                    return res.json()
+                })
+                .then(
+                    (result) => {
+                        console.log("fetch POST= ", result);
+                        console.log(result.Avg);
+                    },
+                    (error) => {
+                        console.log("err post=", error);
+                    });
+
 
             // Optionally clear localStorage if no longer needed
             localStorage.removeItem('registrationData');
@@ -166,10 +185,10 @@ export default function AdditionalRegistrationForm(props) {
                             </InputAdornment>
                         ),
                     }}
-                /> 
+                />
             </FormControl>
             <FormControl fullWidth margin="normal">
-            <Button
+                <Button
                     component="label"
                     role={undefined}
                     variant="contained"
@@ -184,7 +203,7 @@ export default function AdditionalRegistrationForm(props) {
                         }
                     }}        >
                     העלאת מסמכים
-                    {<CloudUploadIcon style={{margin:"10px"}} />}
+                    {<CloudUploadIcon style={{ margin: "10px" }} />}
 
                     <input
                         type="file"

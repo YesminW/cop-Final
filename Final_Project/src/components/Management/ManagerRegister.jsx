@@ -12,9 +12,11 @@ export default function ManagerRegister() {
         lastName: '',
         birthDate: '',
         gender: '',
-        file: '',
         ID: ''
     });
+
+    const [file, setfile] = useState('')
+
 
     const calculateAge = (birthDate) => {
         const today = new Date();
@@ -57,15 +59,6 @@ export default function ManagerRegister() {
 
         if (!formValues.ID) {
             newErrors.gender = 'יש להוסיף תעודת זהות';
-        }
-
-        if (!formValues.file) {
-            newErrors.file = 'יש להעלות תמונת פרופיל';
-        } else {
-            const fileType = formValues.file.type;
-            if (fileType !== 'image/jpeg' && fileType !== 'image/jpg') {
-                newErrors.file = 'יש להעלות קובץ מסוג JPG או JPEG בלבד';
-            }
         }
 
         setErrors(newErrors);
