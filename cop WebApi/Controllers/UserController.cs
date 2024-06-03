@@ -34,6 +34,13 @@ namespace Co_p_new__WebApi.Controllers
             return users;
 
         }
+        [HttpGet]
+        [Route("GetOneUser")]
+        public dynamic GetOneUser(string ID)
+        {
+            var u = db.Users.Where(x => x.UserId == ID);
+            return u;
+        }
 
 
         [HttpPost]
