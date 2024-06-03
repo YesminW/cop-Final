@@ -5,6 +5,8 @@ namespace Co_p_new__WebApi.DTO
 {
     public class ChildHealthProblemDTO
     {
+        public string ChildId { get; set; } = null!;
+
         public string ChildName { get; set; } = string.Empty;
         public string HealthProblemName { get; set; } = string.Empty;
         public int Severity { get; set; }

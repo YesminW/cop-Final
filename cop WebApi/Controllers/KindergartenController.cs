@@ -24,7 +24,7 @@ namespace Co_p_new__WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("AddKindergarten")]
+        [Route("AddKindergarten/{KindergartenName}/{KindergartenAddress}")]
         public dynamic AddKindergarten(string KindergartenName, string KindergartenAddress)
         {
             var kinder = db.Kindergartens;
@@ -44,9 +44,37 @@ namespace Co_p_new__WebApi.Controllers
             db.SaveChanges();
             return Ok(newk);
         }
+        [HttpPut]
+        [Route("UpdateKindergarten")]
+        public dynamic UpdateKindergarten(string Name, string address,string newName)
+        {
+            Kindergarten k = db.Kindergartens.Where(x => x.KindergartenName == Name).FirstOrDefault();
+            if (k != null)
+            {
+                if (newName != null)
+                {
+                    k.KindergartenName = newName;
+                }
+                if (address != null)
+                {
+                    k.KindergartenAddress = address;
+                }
+               
+            }
+            else
+            {
+                return Name + " kindergarten not exist";
+            }
+
+            db.Kindergartens.Update(k);
+            db.SaveChanges();
+
+            return Name + " kindargarten updated";
+
+        }
 
         [HttpDelete]
-        [Route("DeleteKindergarten/{name}")]
+        [Route("DeleteKindergarten")]
         public dynamic DeletKindergarten(string name)
         {
             Kindergarten? k = db.Kindergartens.Where(x => x.KindergartenName == name).SingleOrDefault();

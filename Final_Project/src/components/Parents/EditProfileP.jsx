@@ -30,13 +30,7 @@ export default function EditProfileP() {
     }
   }, []);
 
-  const handlePhoneNumberChange = (event) => {
-    setDetails((prevDetails) => ({
-      ...prevDetails,
-      phoneNumber: event.target.value,
-    }));
-  };
-
+ 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file && (file.type === 'image/jpeg' || file.type === 'image/jpg')) {

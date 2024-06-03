@@ -17,3 +17,4 @@ public partial class RegisterdTo
 
     public virtual Kindergarten KindergartenNumberNavigation { get; set; } = null!;
 }
+                                                                                                                                                                                                        

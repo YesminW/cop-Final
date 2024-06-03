@@ -8,16 +8,19 @@ export default function ManagerRegister() {
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
     const [formValues, setFormValues] = useState({
-        firstName: '',
-        lastName: '',
-        birthDate: '',
-        gender: '',
-        file: ''
+        UserPrivetName: '',
+        UserSurname: '',
+        UserBirthDate: '',
+        UserGender: '',
+        UserId: ''
     });
 
-    const calculateAge = (birthDate) => {
+    const [file, setfile] = useState('')
+
+
+    const calculateAge = (UserBirthDate) => {
         const today = new Date();
-        const birthDateObj = new Date(birthDate);
+        const birthDateObj = new Date(UserBirthDate);
         let age = today.getFullYear() - birthDateObj.getFullYear();
         const monthDiff = today.getMonth() - birthDateObj.getMonth();
 
@@ -32,35 +35,30 @@ export default function ManagerRegister() {
         const newErrors = {};
         const hebrewRegex = /^[\u0590-\u05FF\s]+$/;
 
-        if (!formValues.firstName) {
-            newErrors.firstName = 'יש למלא את שם פרטי';
-        } else if (!hebrewRegex.test(formValues.firstName)) {
-            newErrors.firstName = 'יש למלא בשפה העברית בלבד';
+        if (!formValues.UserPrivetName) {
+            newErrors.UserPrivetName = 'יש למלא את שם פרטי';
+        } else if (!hebrewRegex.test(formValues.UserPrivetName)) {
+            newErrors.UserPrivetName = 'יש למלא בשפה העברית בלבד';
         }
 
-        if (!formValues.lastName) {
-            newErrors.lastName = 'יש למלא את שם משפחה';
-        } else if (!hebrewRegex.test(formValues.lastName)) {
-            newErrors.lastName = 'יש למלא בשפה העברית בלבד';
+        if (!formValues.UserSurname) {
+            newErrors.UserSurname = 'יש למלא את שם משפחה';
+        } else if (!hebrewRegex.test(formValues.UserSurname)) {
+            newErrors.UserSurname = 'יש למלא בשפה העברית בלבד';
         }
 
-        if (!formValues.birthDate) {
-            newErrors.birthDate = 'יש למלא את תאריך הלידה';
-        } else if (calculateAge(formValues.birthDate) < 18) {
-            newErrors.birthDate = 'יש להיות מעל גיל 18';
+        if (!formValues.UserBirthDate) {
+            newErrors.UserBirthDate = 'יש למלא את תאריך הלידה';
+        } else if (calculateAge(formValues.UserBirthDate) < 18) {
+            newErrors.UserBirthDate = 'יש להיות מעל גיל 18';
         }
 
-        if (!formValues.gender) {
-            newErrors.gender = 'יש לבחור את המין';
+        if (!formValues.UserGender) {
+            newErrors.UserGender = 'יש לבחור את המין';
         }
 
-        if (!formValues.file) {
-            newErrors.file = 'יש להעלות תמונת פרופיל';
-        } else {
-            const fileType = formValues.file.type;
-            if (fileType !== 'image/jpeg' && fileType !== 'image/jpg') {
-                newErrors.file = 'יש להעלות קובץ מסוג JPG או JPEG בלבד';
-            }
+        if (!formValues.UserId) {
+            newErrors.UserId = 'יש להוסיף תעודת זהות';
         }
 
         setErrors(newErrors);
@@ -81,7 +79,6 @@ export default function ManagerRegister() {
         e.preventDefault();
 
         if (validateForm()) {
-            // Save data to localStorage
             localStorage.setItem('registrationData', JSON.stringify(formValues));
             navigate('/ManagerRegister2');
         } else {
@@ -99,33 +96,44 @@ export default function ManagerRegister() {
             <FormControl fullWidth margin="normal" style={{ width: '120%', }}>
                 <TextField
                     label="שם פרטי"
-                    name="firstName"
-                    value={formValues.firstName}
+                    name="UserPrivetName"
+                    value={formValues.UserPrivetName}
                     onChange={handleChange}
-                    error={!!errors.firstName}
-                    helperText={errors.firstName}
+                    error={!!errors.UserPrivetName}
+                    helperText={errors.UserPrivetName}
                     className='register-textfield'
                     variant="outlined"
                 />
                 <br />
                 <TextField
                     label="שם משפחה"
-                    name="lastName"
-                    value={formValues.lastName}
+                    name="UserSurname"
+                    value={formValues.UserSurname}
                     onChange={handleChange}
-                    error={!!errors.lastName}
-                    helperText={errors.lastName}
+                    error={!!errors.UserSurname}
+                    helperText={errors.UserSurname}
                     className='register-textfield'
                     variant="outlined"
                 />
                 <br />
                 <TextField
-                    name="birthDate"
-                    type="date"
-                    value={formValues.birthDate}
+                    label="תעודת זהות"
+                    name="UserId"
+                    value={formValues.UserId}
                     onChange={handleChange}
-                    error={!!errors.birthDate}
-                    helperText={errors.birthDate}
+                    error={!!errors.UserId}
+                    helperText={errors.UserId}
+                    className='register-textfield'
+                    variant="outlined"
+                />
+                <br />
+                <TextField
+                    name="UserBirthDate"
+                    type="date"
+                    value={formValues.UserBirthDate}
+                    onChange={handleChange}
+                    error={!!errors.UserBirthDate}
+                    helperText={errors.UserBirthDate}
                     InputLabelProps={{ shrink: true }}
                     className='register-textfield'
                     variant="outlined"
@@ -145,7 +153,7 @@ export default function ManagerRegister() {
                         }
                     }}        >
                     העלאת תמונת פרופיל
-                    {<CloudUploadIcon style={{margin:"10px"}} />}
+                    {<CloudUploadIcon style={{ margin: "10px" }} />}
 
                     <input
                         type="file"
@@ -157,23 +165,23 @@ export default function ManagerRegister() {
                 </Button>
                 {errors.profilePicture && <p>{errors.profilePicture}</p>}
             </FormControl>
-            <FormControl fullWidth margin="normal" style={{ width: '120%', direction: 'rtl', padding: '10px 0'  }}>
-                <InputLabel style={{fontFamily: 'Karantina', fontSize: '20px',}}>מין</InputLabel>
+            <FormControl fullWidth margin="normal" style={{ width: '120%', direction: 'rtl', padding: '10px 0' }}>
+                <InputLabel style={{ fontFamily: 'Karantina', fontSize: '20px', }}>מין</InputLabel>
                 <Select
-                style={{direction:'rtl', backgroundColor:'#B9DCD1'}}
+                    style={{ direction: 'rtl', backgroundColor: '#B9DCD1' }}
                     labelId="gender-label"
-                    name="gender"
-                    value={formValues.gender}
+                    name="UserGender"
+                    value={formValues.UserGender}
                     onChange={handleChange}
-                    error={!!errors.gender}
+                    error={!!errors.UserGender}
                     className='register-textfield'
-                    
+
                 >
                     <MenuItem value="male">זכר</MenuItem>
                     <MenuItem value="female">נקבה</MenuItem>
                     <MenuItem value="other">אחר</MenuItem>
                 </Select>
-                {errors.gender && <p>{errors.gender}</p>}
+                {errors.UserGender && <p>{errors.UserGender}</p>}
             </FormControl>
             <Button type="submit" variant="contained" onClick={handleSubmit}>
                 המשך

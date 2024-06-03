@@ -7,9 +7,10 @@ import Elogo from '../Elements/Elogo'
 import '../assets/StyleSheets/Main.css'
 
 
-
 export default function Main() {
-    return (
+    const apiUrl = 'http://localhost:5108/getAllUsers'
+
+        return (
         <div>
             {Elogo}
             <br />

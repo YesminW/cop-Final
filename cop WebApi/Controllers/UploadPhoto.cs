@@ -20,13 +20,13 @@ namespace Co_p_new__WebApi.Controllers
             if (file == null || file.Length == 0)
                 return BadRequest("No file uploaded");
 
-            var ProfilePath = Path.Combine(Directory.GetCurrentDirectory(), "ChildPhotos"); //שם התקייה
+            var ProfilePath = Path.Combine(Directory.GetCurrentDirectory(), "ChildPhotos"); // שם התקייה בC#
 
             if (!Directory.Exists(ProfilePath))
             {
                 Directory.CreateDirectory(ProfilePath);
             }
-            var fileName = string.IsNullOrEmpty(ID.ToString()) // שומר את זה בתור 8941.png
+            var fileName = string.IsNullOrEmpty(ID.ToString()) // שם התמונה יהיה תז הילד
                 ? file.FileName
                 : $"{ID}{Path.GetExtension(file.FileName)}";
             var filePath = Path.Combine(ProfilePath, fileName);
@@ -36,8 +36,8 @@ namespace Co_p_new__WebApi.Controllers
                 await file.CopyToAsync(stream);
             }
 
-            Child child = db.Children.Where(x => x.ChildId == ID).First();
-            child.ChildPhotoName = fileName;
+            Child c = db.Children.Where(x => x.ChildId == ID).FirstOrDefault();
+            c.ChildPhotoName = fileName;
             db.SaveChanges();
 
             return Ok(new { fileName = fileName, filePath = filePath });
@@ -104,13 +104,13 @@ namespace Co_p_new__WebApi.Controllers
             if (file == null || file.Length == 0)
                 return BadRequest("No file uploaded");
 
-            var ProfilePath = Path.Combine(Directory.GetCurrentDirectory(), "ParentPhoto"); //שם התקייה
+            var ProfilePath = Path.Combine(Directory.GetCurrentDirectory(), "UserPhoto"); //שם התקייה
 
             if (!Directory.Exists(ProfilePath))
             {
                 Directory.CreateDirectory(ProfilePath);
             }
-            var fileName = string.IsNullOrEmpty(ID.ToString()) // שומר את זה בתור 8941.png
+            var fileName = string.IsNullOrEmpty(ID.ToString()) // שם התמונה יהיה תז של המשתמש
                 ? file.FileName
                 : $"{ID}{Path.GetExtension(file.FileName)}";
             var filePath = Path.Combine(ProfilePath, fileName);

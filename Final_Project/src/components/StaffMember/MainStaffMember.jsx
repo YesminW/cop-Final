@@ -19,7 +19,7 @@ export default function MainStaffMember() {
   const [currentDay, setCurrentDay] = useState('');
 
   useEffect(() => {
-    const storedUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    const storedUser = JSON.parse(sessionStorage.getItem('currentUserS'));
 
     if (storedUser) {
       setUserData(storedUser);

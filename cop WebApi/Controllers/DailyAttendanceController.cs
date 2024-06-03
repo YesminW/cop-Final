@@ -42,7 +42,7 @@ namespace Co_p_new__WebApi.Controllers
         public dynamic addMorningPresence(string childID, int MorningP)
         {
             DailyAttendance DA = new DailyAttendance();
-            DA.Date = DateTime.Now;
+            DA.Date = DateTime.Today;
             DA.ChildId = childID;
             DA.MorningPresence = MorningP;
 
@@ -57,13 +57,16 @@ namespace Co_p_new__WebApi.Controllers
         public dynamic addAfternoonPresence(string ID, int AfternoonP)
         {
             var dateNow = DateTime.Today;
-            DailyAttendance? DA = db.DailyAttendances.Where(x => x.ChildId == ID && x.Date == dateNow).FirstOrDefault();
+            DailyAttendance daily = db.DailyAttendances.Where(x => x.ChildId == ID && x.Date == dateNow).FirstOrDefault();
+            if (daily == null)
+            {
+                return ("Child did not found");
+            }
+            daily.AfternoonPresence = AfternoonP;
 
-            DA.AfternoonPresence = AfternoonP;
-
-            db.DailyAttendances.Update(DA);
+            db.DailyAttendances.Update(daily);
             db.SaveChanges();
-            return DA;
+            return daily;
 
         }
 
