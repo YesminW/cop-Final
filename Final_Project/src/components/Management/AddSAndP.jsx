@@ -1,43 +1,68 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, Button, FormControl } from '@mui/material';
+import React, { useState } from 'react';
+import { Button, FormControl } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function AddsAndP() {
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
-    const [file, setfile] = useState('');
-
-    const validateForm = () => {
-        const newErrors = {};
-        const hebrewRegex = /^[\u0590-\u05FF\s]+$/;
-
-        // לוגיקת התקינות הקודמת נשארת כפי שהיא
-
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
+    const [file, setFile] = useState('');
+    const [data, setData] = useState([]);
 
     const handleChange = (e) => {
-        const { name, value, files } = e.target;
-
-        setfile((prevData) => ({
-            ...prevData,
-            [name]: name === 'file' ? files[0] : value,
-        }));
+        const selectedFile = e.target.files[0];
+        const filename = selectedFile.name
+        if (selectedFile) {
+            const fileExtension = filename.split('.').pop().toLowerCase();
+            if (fileExtension === 'xls' || fileExtension === 'xlsx') {
+                setFile(selectedFile);
+                setErrors((prevErrors) => ({ ...prevErrors, file: '' }));
+            } else {
+                setFile(null);
+                setErrors((prevErrors) => ({ ...prevErrors, file: 'Please upload a valid Excel file (.xls or .xlsx)' }));
+            }
+        }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (validateForm()) {
-            // Get existing data from localStorage
-            const existingData = JSON.parse(localStorage.getItem('AddKindergarden')) || {};
+        const urlExcelS = 'http://localhost:5108/AddUserByExcel';
+        const formData = new FormData();
+        console.log(file)
+        formData.append("file", file);
 
-            navigate('/KindergartenManagement');
-        } else {
-            console.log('Form has validation errors. Cannot submit.');
+        for (let [key, value] of formData.entries()) {
+            console.log(value)
+            console.log(key);
+            var filek = value
         }
+        for (let index = 0; index < formData.length; index++) {
+            const t = formData[index]
+            console.log(t)
+        }
+
+        console.log(filek)
+
+
+        fetch(urlExcelS, {
+            method: 'POST',
+            body: formData,
+        })
+            .then(res => {
+                console.log('res=', res);
+                return res.json()
+            })
+            .then(
+                (result) => {
+                    console.log("fetch POST= ", result);
+                    console.log(result.Avg);
+                },
+                (error) => {
+                    console.log("err post=", error);
+                });
+
+
     };
 
 
