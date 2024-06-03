@@ -25,7 +25,7 @@ export default function LogInParent() {
 
     const loginUser = () => {
         // Check if the entered username and password match any user
-        const foundUser = users.find(users => users.email === mail && users.password === password);
+        const foundUser = users.find(user => user.email === mail && user.password === password);
 
         if (foundUser) {
             // User is authenticated, you can perform further actions
