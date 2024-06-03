@@ -31,6 +31,20 @@ namespace Co_p_new__WebApi.Controllers
             return children;
 
         }
+        [HttpGet]
+        [Route("GetChildByParent")]
+        public dynamic GetChildByParent(string ParentID)
+        {
+            var child = db.Children
+               .Where(c => c.Parent1 == ParentID || c.Parent2 == ParentID)
+               .FirstOrDefault();
+            if (child == null)
+            {
+                return ("Child not found");
+            }
+            return child;
+            
+        }
 
         [HttpPost]
         [Route("AddChildrenByExcel")]
