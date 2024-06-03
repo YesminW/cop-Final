@@ -1,60 +1,65 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #1a4b57;
-    margin: 0;
-    color: white;
-  }
-  
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    height: 100vh;
-    padding: 20px;
-  }
-  
-  .header {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .date-selector select {
-    padding: 10px;
-    font-size: 16px;
-    margin-bottom: 20px;
-  }
-  
-  .day-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    width: 100%;
-  }
-  
-  .day {
-    background-color: #5aa1ab;
-    padding: 20px;
-    text-align: center;
-    border-radius: 10px;
-    font-size: 18px;
-  }
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+  padding: 20px;
+}
 
-  .bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    background-color: #eeeeee;
-    padding: 10px 0;
-  }
-  
-  .bottom-nav button {
-    background: none;
-    border: none;
-    color: #1a4b57;
-    font-size: 24px;
-    cursor: pointer;
-  }
-  
+.header {
+  font-size: 24px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.date-selector select {
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.day-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+
+.day-button {
+  padding: 30px;
+  background-color: #1a4b57;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 28px;
+  text-align: center;
+  color: white;
+}
+
+.day-button:hover {
+  background-color: #dcdcdc;
+}
+
+
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  background-color: #eeeeee;
+  padding: 10px 0;
+}
+
+.bottom-nav button {
+  background: none;
+  border: none;
+  color: #1a4b57;
+  font-size: 24px;
+  cursor: pointer;
+}

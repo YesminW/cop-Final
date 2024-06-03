@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import EfooterS from '../../Elements/EfooterS';
-import '../../assets/StyleSheets/Meals.css'
+import '../../assets/StyleSheets/Meals.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function Meals() {
+
+    const navigate = useNavigate();
+
     const getCurrentWeekDates = () => {
         const currentDate = new Date();
         return getWeekDates(currentDate);
@@ -16,14 +20,17 @@ export default function Meals() {
         }
         return dates;
     };
+
     const formatDate = (date) => {
         return date.toLocaleDateString('he-IL');
     };
 
-    const getWeeksInYear = (year) => {
+    const getWeeksInSchoolYear = () => {
         const weeks = [];
-        let date = new Date(year, 0, 1);
-        while (date.getFullYear() === year) {
+        let date = new Date(new Date().getFullYear(), 8, 1); // Start from September 1st
+        const endDate = new Date(date.getFullYear() + 1, 7, 31); // End at August 31st of the next year
+
+        while (date <= endDate) {
             const weekStart = new Date(date);
             const weekEnd = new Date(date);
             weekEnd.setDate(weekEnd.getDate() + 6);
@@ -36,8 +43,7 @@ export default function Meals() {
         return weeks;
     };
 
-    const currentYear = new Date().getFullYear();
-    const weeks = getWeeksInYear(currentYear);
+    const weeks = getWeeksInSchoolYear();
 
     const [selectedWeek, setSelectedWeek] = useState(getCurrentWeekDates());
 
@@ -47,13 +53,18 @@ export default function Meals() {
         setSelectedWeek(getWeekDates(startDate));
     };
 
+    const handleDayClick = (date) => {
+        const formattedDate = formatDate(date);
+        navigate(`/WatchMeal?date=${formattedDate}`);
+    };
+
     return (
         <div className="container">
             <header className="header">
                 <h1>מה אוכלים היום</h1>
             </header>
             <div className="date-selector">
-                <select onChange={handleWeekChange}>
+                <select onChange={handleWeekChange} style={{ width: '100%', padding: '10px', fontSize: '16px' }}>
                     {weeks.map((week, index) => (
                         <option key={index} value={`${week.start} - ${week.end}`}>
                             {week.start} - {week.end}
@@ -63,14 +74,12 @@ export default function Meals() {
             </div>
             <div className="day-grid">
                 {selectedWeek.map((date, index) => (
-                    <div key={index} className="day">
+                    <button key={index} className="day-button" onClick={() => handleDayClick(date)}>
                         {["יום א'", "יום ב'", "יום ג'", "יום ד'", "יום ה'", "יום ו'", "שבת"][index]} <br /> {formatDate(date)}
-                    </div>
+                    </button>
                 ))}
             </div>
             {EfooterS}
         </div>
-
-
-    )
+    );
 }

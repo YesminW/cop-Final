@@ -19,6 +19,7 @@ import StaffRegister from './components/StaffMember/StaffRegister'
 import StaffRegister2 from './components/StaffMember/StaffRegister2'
 import Presence from './components/StaffMember/Presence'
 import Meals from './components/StaffMember/Meals';
+import WatchMeal from './components/StaffMember/WatchMeal';
 
 import LogInParent from './components/Parents/LogInParent'
 import MainParent from './components/Parents/MainParent'
@@ -36,7 +37,7 @@ import './App.css'
 const apiUtl = '';
 
 function App() {
- 
+
   return (
     <Router>
       <div className="app">
@@ -59,6 +60,7 @@ function App() {
           <Route path='/StaffRegister2' element={<StaffRegister2 />} />
           <Route path='/Presence' element={<Presence />} />
           <Route path='/Meals' element={<Meals />} />
+          <Route path='/WatchMeal' element={<WatchMeal />}/>
 
           <Route path='/LogInParent' element={<LogInParent />} />
           <Route path='/MainParent' element={<MainParent />} />
