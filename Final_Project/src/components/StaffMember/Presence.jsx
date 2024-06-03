@@ -33,21 +33,18 @@ export default function Presence() {
 
     return (
         <>
-            <div style={{ backgroundColor: '#2D8B9099', margin: '20px', height: '10vh', borderRadius: '20px', justifyContent: 'center', alignItems: 'center' }}>
-                <h2 style={{ fontSize: '48px', textAlign: 'center', color: 'white', margin: '0 auto' }}>נוכחות</h2>
+            <div className='title'>
+                <h2 className='titleText'>נוכחות</h2>
             </div>
             <Container className="presence-container">
                 <Box className="header">
-                    <Typography variant="h4" component="h1" className="centered-text">
-                        נוכחות
-                    </Typography>
-                    <Box className="search-box">
+                    <Box className="search-box" >
                         <input type="text" placeholder="חיפוש" className="search-input" />
-                        <IconButton className="search-button">
+                        <IconButton style={{color: '#07676D'}}>
                             <SearchIcon />
                         </IconButton>
                     </Box>
-                    <Button>
+                    <Button style={{backgroundColor: 'white', color: '#07676D',fontFamily: 'Karantina', fontSize: '18px', borderRadius: '5px'}}>
                         צ'אט עם הורה
                     </Button>
                 </Box>
@@ -59,7 +56,7 @@ export default function Presence() {
                             onClick={() => togglePresence(student.id)}
                         >
                             <Avatar src={student.imgSrc} alt={student.name} className="student-avatar" />
-                            <Typography variant="caption" component="p" className="student-name">
+                            <Typography  style={{fontFamily: 'Karantina', fontSize: '15px'}} className="student-name">
                                 {student.name}
                             </Typography>
                         </Box>

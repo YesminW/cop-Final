@@ -1,3 +1,4 @@
+
 .presence-container {
     display: flex;
     flex-direction: column;
@@ -13,34 +14,43 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    background-color: #cce7e8;
+    background-color: #ABD1C6;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 30px;
   }
-  
   .title {
-    color: #00838f;
+    background-color: #07676D;
+    margin: 20px;
+    height: 10vh;
+    border-radius: 20px;
     font-size: 48px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .titleText{
+    font-size: 48px;
+      color: white;
   }
   
   .search-box {
     display: flex;
     align-items: center;
+    color: #07676D;
   }
   
   .search-input {
     padding: 5px;
     border: none;
     border-radius: 5px;
-    outline: none;
     margin-right: 10px;
+    color: #07676D;
+    font-size: 18px;
+    height: 42px;
   }
   
-  .search-button {
-    color: #00838f;
-  }
-  
+
   .students-grid {
     display: flex;
     flex-wrap: wrap;
@@ -73,6 +83,10 @@
   
   .student-name {
     text-align: center;
-    color: #333;
+    color: #07676D;
   }
-  
+
+  input::placeholder {
+    color: #07676D; 
+   }
+ 
