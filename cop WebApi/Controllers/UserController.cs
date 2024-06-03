@@ -29,7 +29,7 @@ namespace Co_p_new__WebApi.Controllers
                 UserEmail = x.UserEmail,
                 UserpPassword = x.UserpPassword,
                 UserCode = x.UserCode,
-               
+
             });
             return users;
 
@@ -156,7 +156,7 @@ namespace Co_p_new__WebApi.Controllers
                                 }
                             }
 
-                                users.Add(newUser);
+                            users.Add(newUser);
                         }
                     }
                 }
@@ -168,59 +168,88 @@ namespace Co_p_new__WebApi.Controllers
             return Ok(new { Message = "Data imported successfully." });
         }
 
-        [HttpPut]
-        [Route("updateUser")]
-        public dynamic updateUser(string ID, string Email, string address, string password, string phonenum, string gender)
+        [HttpPost]
+        [Route("ManagerRegisterion")]
+        public dynamic ManagerRegisterion(string ID, string FirstName, string surname, DateTime Bday, string gender, string phoneNumber, string Adderss, string mail, string password)
         {
-            User? u = db.Users.Where(x => x.UserId == ID).FirstOrDefault();
-            if (u != null)
+            var manager = db.Users.FirstOrDefault(u => u.UserId == ID);
+            if (manager == null)
             {
-                if (Email != null)
+                var newManager = new User
                 {
-                    u.UserEmail = Email;
-                }
-                if (address != null)
-                {
-                    u.UserAddress = address;
-                }
-                if (password != null)
-                {
-                    u.UserpPassword = password;
-                }
-                if (phonenum != null)
-                {
-                    u.UserPhoneNumber = phonenum;
-                }
-                if (gender != null)
-                {
-                    u.UserGender = gender;
-                }
+                    UserId = ID,
+                    UserPrivetName = FirstName,
+                    UserSurname = surname,
+                    UserBirthDate = Bday,
+                    UserAddress = Adderss,
+                    UserPhoneNumber = phoneNumber,
+                    UserGender = gender,
+                    UserEmail = mail,
+                    UserpPassword = password,
+                    UserCode = 444
+                };
+                db.Users.Add(newManager);
                 db.SaveChanges();
-                return Ok(u);
+                return "The manager" + newManager.UserPrivetName + " " + newManager.UserSurname + "Is registered";
+
             }
-            else
+            return ("Manager already registerd");
+        }
+
+            [HttpPut]
+            [Route("updateUser")]
+            public dynamic updateUser(string ID, string Email, string address, string password, string phonenum, string gender)
             {
-                return NotFound(new { message = "User not found" });
+                User? u = db.Users.Where(x => x.UserId == ID).FirstOrDefault();
+                if (u != null)
+                {
+                    if (Email != null)
+                    {
+                        u.UserEmail = Email;
+                    }
+                    if (address != null)
+                    {
+                        u.UserAddress = address;
+                    }
+                    if (password != null)
+                    {
+                        u.UserpPassword = password;
+                    }
+                    if (phonenum != null)
+                    {
+                        u.UserPhoneNumber = phonenum;
+                    }
+                    if (gender != null)
+                    {
+                        u.UserGender = gender;
+                    }
+                    db.SaveChanges();
+                    return Ok(u);
+                }
+                else
+                {
+                    return NotFound(new { message = "User not found" });
+                }
+
+            }
+
+            [HttpDelete]
+            [Route("DeleteUser")]
+            public dynamic DeleteUser(string ID)
+            {
+                var us = db.Users.Where(u => u.UserId == ID).FirstOrDefault();
+                if (us == null)
+                {
+
+                    return ("User not found");
+                }
+
+                db.Users.Remove(us);
+                db.SaveChanges();
+                return (us.UserPrivetName + " " + us.UserSurname + "deleted");
+
             }
 
         }
-
-        [HttpDelete]
-        [Route("DeleteUser")]
-        public dynamic DeleteUser(string ID)
-        {
-            var us = db.Users.Where(u => u.UserId == ID).FirstOrDefault();
-            if (us == null)
-            {
-
-                return ("User not found");
-            }
-
-            db.Users.Remove(us);
-            db.SaveChanges();
-            return (us.UserPrivetName + " " + us.UserSurname + "deleted");
-
-        }
-
     }
 }
