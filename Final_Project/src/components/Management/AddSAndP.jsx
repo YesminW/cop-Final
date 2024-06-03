@@ -40,8 +40,6 @@ export default function AddsAndP() {
             })
             .then(
                 (result) => {
-                    console.log("fetch POST= ", result);
-                    console.log(result.Avg);
                     navigate('/KindergartenManagement')
                 },
                 (error) => {
