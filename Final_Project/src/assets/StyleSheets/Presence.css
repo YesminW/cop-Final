@@ -19,7 +19,7 @@
     border-radius: 5px;
     margin-bottom: 30px;
   }
-  .title {
+  .presencetitle {
     background-color: #07676D;
     margin: 20px;
     height: 10vh;
@@ -29,9 +29,10 @@
     justify-content: center;
   }
 
-  .titleText{
+  .presencetitleText{
     font-size: 48px;
       color: white;
+      padding-bottom: 20px;
   }
   
   .search-box {

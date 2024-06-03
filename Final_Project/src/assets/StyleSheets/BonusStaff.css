@@ -28,7 +28,7 @@
     border: none;
     border-radius: 10px;
     color: white;
-    font-size: 1.2em;
+    font-size: 20px;
     cursor: pointer;
   }
   
@@ -38,7 +38,7 @@
     border: none;
     border-radius: 10px;
     color: white;
-    font-size: 1.2em;
+    font-size: 20px;
     cursor: pointer;
     margin-top: 20px;
   }
@@ -48,15 +48,16 @@
     justify-content: center;
     padding: 10px;
     background-color: #e0e7e9;
+    font-size: 20px;
   }
   
   .edit-button {
-    padding: 15px 30px;
+    padding: 10px 20px;
     background-color: #86b3c2;
     border: none;
     border-radius: 10px;
     color: white;
-    font-size: 1.2em;
+    font-size: 20px;
     cursor: pointer;
   }
   

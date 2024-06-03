@@ -55,10 +55,7 @@ button[type="submit"]:hover,
     background-color: #57888f;
 }
 
-p {
-    color: red;
-    font-size: 1.2rem;
-}
+
 
 .register-textfield .MuiOutlinedInput-root{
     border-radius: 8px;

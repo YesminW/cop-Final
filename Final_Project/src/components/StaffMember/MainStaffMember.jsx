@@ -62,7 +62,7 @@ export default function MainStaffMember() {
         </div>
         <div className='grid-item'>
           <Link to='/presence'>
-            <Button>נוכחים בגן</Button>
+            <Button style={{fontFamily: 'Karantina', color:'white', fontSize:'24px'}}>נוכחים בגן</Button>
           </Link>
         </div>
       </div>

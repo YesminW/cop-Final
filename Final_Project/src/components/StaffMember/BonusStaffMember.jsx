@@ -23,8 +23,8 @@ export default function BonusStaffMember() {
             <header className="header">
                 <h1>בונוס</h1>
             </header>
-            <div className="main-content">
-                <p>כדי להקל עליך, חשבנו איך נוכל לחשוב במקומך, מוזמן/ת לסמן את התחומים שלך ולקבל המלצות לפעילויות בהתאמה</p>
+            <div>
+                <p className='bonusExplanation'>כדי להקל עליך, חשבנו איך נוכל לחשוב במקומך, מוזמן/ת לסמן את התחומים שלך ולקבל המלצות לפעילויות בהתאמה</p>
                 <div className="grid-container">
                     <button className="grid-item">טבע</button>
                     <button className="grid-item">אוכל</button>
