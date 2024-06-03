@@ -8,7 +8,7 @@ namespace cop_WebApi.Controllers
         CoPNewContext db = new CoPNewContext();
 
         [HttpGet]
-        [Route("LogIn")]
+        [Route("LogIn/{ID}/{password}")]
         public dynamic LogIn(string ID, string password)
         {
             List<User> users = db.Users.ToList();

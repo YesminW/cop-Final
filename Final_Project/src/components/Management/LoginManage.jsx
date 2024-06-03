@@ -26,19 +26,30 @@ export default function LoginManage() {
 
     const loginUser = () => {
         // Check if the entered username and password match any user
-        const foundUser = users.find(user => user.email === mail && user.password === password);
 
-
-        
-
-        if (foundUser) {
-            // User is authenticated, you can perform further actions
-            sessionStorage.setItem('currentUser', JSON.stringify(foundUser));
-            navigate('/AddsAndP')
-        } else {
-            // Invalid credentials
-            setErrors("המייל / הסיסמא שגויים")
-        }
+        const urlLM = 'http://localhost:5108/LogIn'
+        fetch(urlLM + '/' + ID + '/' + password, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+            })
+        })
+            .then(res => {
+                console.log('res=', res);
+                console.log('res.status', res.status);
+                console.log('res.ok', res.ok);
+                return res.json()
+            })
+            .then(
+                (result) => {
+                    console.log("fetch btnFetchGetStudentByName= ", result);
+                    console.log('result.FullName=', result.FullName);
+                    navigate('/AddsAndP')
+                },
+                (error) => {
+                    console.log("err post=", error);
+                    setErrors("המייל / הסיסמא שגויים")
+                });  
     };
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -59,12 +70,12 @@ export default function LoginManage() {
                     name="ID"
                     type="text"
                     variant="outlined"
-                    value={mail}
+                    value={ID}
                     onChange={(e) => setID(e.target.value)}
                     className="custom-textfield"
                 />
             </FormControl>
-            <FormControl fullWidth margin="normal"  style={{ width: '80%' }}>
+            <FormControl fullWidth margin="normal" style={{ width: '80%' }}>
                 <TextField
                     id="password"
                     label="סיסמא"
