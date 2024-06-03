@@ -36,17 +36,7 @@ import './App.css'
 const apiUtl = '';
 
 function App() {
-  const [userArray, setUserArray] = useState([]); //Usestate that holds the array of users
-
-  //function that add user
-  const addUserFromRegister = (userFromChild) => {
-    setUserArray((prevUserArray) => {
-      const newUserArray = [...prevUserArray, userFromChild]; // take the last array of user and add the user that register
-      localStorage.setItem("users", JSON.stringify(newUserArray)); //put the new array in the LS
-      return newUserArray;
-    });
-  };
-
+ 
   return (
     <Router>
       <div className="app">
@@ -55,7 +45,7 @@ function App() {
 
           <Route path='/LoginManage' element={<LoginManage />} />
           <Route path='/ManagerRegister' element={<ManagerRegister />} />
-          <Route path='/ManagerRegister2' element={<ManagerRegister2 SendToParent={addUserFromRegister} />} />
+          <Route path='/ManagerRegister2' element={<ManagerRegister2 />} />
           <Route path='/KindergartenManagement' element={<KindergartenManagement />} />
           <Route path='/KindergartenDetails/:gardenName' element={<KindergartenDetails />} />
           <Route path='/AddKindergarden' element={<AddKindergarden />} />

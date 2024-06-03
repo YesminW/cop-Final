@@ -46,7 +46,6 @@ export default function StaffRegister2() {
   const handleSubmit = () => {
     localStorage.setItem('users', JSON.stringify(details));
     console.log('Updated details:', details);
-    // כאן ניתן להוסיף לוגיקה נוספת אם צריך
   };
 
   return (
