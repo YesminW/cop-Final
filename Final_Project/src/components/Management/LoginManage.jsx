@@ -7,7 +7,7 @@ import Elogo from '../../Elements/Elogo'
 
 
 export default function LoginManage() {
-    const [mail, setMail] = useState('');
+    const [ID, setID] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [users, setUsers] = useState([]);
@@ -27,6 +27,9 @@ export default function LoginManage() {
     const loginUser = () => {
         // Check if the entered username and password match any user
         const foundUser = users.find(user => user.email === mail && user.password === password);
+
+
+        
 
         if (foundUser) {
             // User is authenticated, you can perform further actions
@@ -51,13 +54,13 @@ export default function LoginManage() {
             <br />
             <FormControl fullWidth margin="normal" style={{ width: '80%' }}>
                 <TextField
-                    id="mail"
-                    label="מייל"
-                    name="mail"
+                    id="ID"
+                    label="שם משתמש"
+                    name="ID"
                     type="text"
                     variant="outlined"
                     value={mail}
-                    onChange={(e) => setMail(e.target.value)}
+                    onChange={(e) => setID(e.target.value)}
                     className="custom-textfield"
                 />
             </FormControl>
