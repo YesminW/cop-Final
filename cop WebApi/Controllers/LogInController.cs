@@ -9,7 +9,7 @@ namespace cop_WebApi.Controllers
 
         [HttpGet]
         [Route("LogIn")]
-        public dynamic LogIn(string ID)
+        public dynamic LogIn(string ID, string password)
         {
             List<User> users = db.Users.ToList();
             if (users == null)
@@ -18,7 +18,7 @@ namespace cop_WebApi.Controllers
             }
             for (int i = 0; i < users.Count(); i++)
             {
-                if (users[i].UserId ==  ID)
+                if (users[i].UserId == ID && users[i].UserpPassword==password)
                 {
                     return true;
                 }
