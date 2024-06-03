@@ -7,7 +7,6 @@ export default function AddsAndP() {
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
     const [file, setFile] = useState('');
-    const [data, setData] = useState([]);
 
     const handleChange = (e) => {
         const selectedFile = e.target.files[0];
@@ -29,21 +28,7 @@ export default function AddsAndP() {
 
         const urlExcelS = 'http://localhost:5108/AddUserByExcel';
         const formData = new FormData();
-        console.log(file)
         formData.append("file", file);
-
-        for (let [key, value] of formData.entries()) {
-            console.log(value)
-            console.log(key);
-            var filek = value
-        }
-        for (let index = 0; index < formData.length; index++) {
-            const t = formData[index]
-            console.log(t)
-        }
-
-        console.log(filek)
-
 
         fetch(urlExcelS, {
             method: 'POST',
@@ -57,11 +42,11 @@ export default function AddsAndP() {
                 (result) => {
                     console.log("fetch POST= ", result);
                     console.log(result.Avg);
+                    navigate('/KindergartenManagement')
                 },
                 (error) => {
                     console.log("err post=", error);
                 });
-
 
     };
 
