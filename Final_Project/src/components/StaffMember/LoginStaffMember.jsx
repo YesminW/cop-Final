@@ -8,35 +8,29 @@ import Elogo from '../../Elements/Elogo'
 
 
 export default function LoginStaffMember() {
-  const [mail, setUsername] = useState('');
+  const [ID, setID] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [users, setUsers] = useState([]);
   const [error, setErrors] = useState('');
   const navigate = useNavigate();
 
 
-  useEffect(() => {
-    // Fetch data from local storage
-    const storedUsers = localStorage.getItem('users');
-
-    const parsedUsers = storedUsers ? JSON.parse(storedUsers) : [];
-
-    setUsers(parsedUsers);
-  }, [])
-
   const loginUser = () => {
-    // Check if the entered username and password match any user
-    const foundUser = users.find(user => user.email === mail && user.password === password);
-
-    if (foundUser) {
-      // User is authenticated, you can perform further actions
-      sessionStorage.setItem('currentUser', JSON.stringify(foundUser));
-      navigate('/MainStaffMember')
-    } else {
-      // Invalid credentials
-      setErrors("המייל / הסיסמא שגויים")
-    }
+    const urlLM = 'http://localhost:5108/LogIn'
+    fetch(urlLM + '/' + ID + '/' + password, {
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json; charset=UTF-8',
+      })
+    })
+      .then(
+        () => {
+          sessionStorage.setItem('currentUserS', JSON.stringify(ID));
+          navigate('/MainStaffMember')
+        },
+        () => {
+          setErrors("המייל / הסיסמא שגויים")
+        });
   };
 
 
@@ -47,27 +41,29 @@ export default function LoginStaffMember() {
   };
 
   return (
-    <div className="login-container">
+    <div>
       {Elogo}
       <br />
-      <FormControl fullWidth margin="normal">
+      <FormControl fullWidth margin="normal" style={{ width: '80%' }}>
         <TextField
-          id='mail'
-          label='מייל'
-          name='mail'
-          type='text'
+          id="ID"
+          label="שם משתמש"
+          name="ID"
+          type="text"
           variant="outlined"
-          value={mail}
-          onChange={(e) => setUsername(e.target.value)}
+          value={ID}
+          onChange={(e) => setID(e.target.value)}
+          className="custom-textfield"
         />
       </FormControl>
-      <FormControl fullWidth margin="normal">
+      <FormControl fullWidth margin="normal" style={{ width: '80%' }}>
         <TextField
           id="password"
           label="סיסמא"
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className="custom-textfield"
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (

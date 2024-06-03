@@ -12,21 +12,9 @@ export default function AddKindergarden() {
         file: ''
     });
 
-    // קריאה לנתונים מה־Local Storage בטעינת הדף
-    useEffect(() => {
-        const storedData = localStorage.getItem('AddKindergarden');
-        if (storedData && Object.keys(formValues).length === 0) {
-            const parsedData = JSON.parse(storedData);
-            setFormValues(parsedData);
-        }
-    }, [formValues]);
-    
-
     const validateForm = () => {
         const newErrors = {};
         const hebrewRegex = /^[\u0590-\u05FF\s]+$/;
-
-        // לוגיקת התקינות הקודמת נשארת כפי שהיא
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -43,26 +31,28 @@ export default function AddKindergarden() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-    
+
+
+
         if (validateForm()) {
             // Get existing data from localStorage
             const existingData = JSON.parse(localStorage.getItem('AddKindergarden')) || {};
-    
+
             // Merge new data with existing data
             const newData = {
                 ...existingData,
                 [formValues.gardenName]: formValues // Assuming gardenName is unique
             };
-    
+
             // Save merged data back to localStorage
             localStorage.setItem('AddKindergarden', JSON.stringify(newData));
-    
+
             navigate('/KindergartenManagement');
         } else {
             console.log('Form has validation errors. Cannot submit.');
         }
     };
-    
+
 
     return (
         <form onSubmit={handleSubmit}>
@@ -84,7 +74,7 @@ export default function AddKindergarden() {
             </FormControl>
 
             <FormControl fullWidth margin="normal" className='register-textfield'
->
+            >
                 <TextField
                     label="כתובת"
                     name="address"
@@ -114,15 +104,15 @@ export default function AddKindergarden() {
                             fontFamily: 'Karantina',
                             fontSize: '20px',
                             margin: '20px',
-                            color:'white',
+                            color: 'white',
                             backgroundColor: '#076871',
                             '&:hover': {
                                 backgroundColor: '#6196A6',
                             }
-                        }} 
+                        }}
                     >
                         העלאת קובץ פרטי ילדים
-                        {<CloudUploadIcon style={{margin:"10px"}} />}
+                        {<CloudUploadIcon style={{ margin: "10px" }} />}
 
                     </Button>
                 </label>

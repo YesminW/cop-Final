@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FormControl, IconButton, InputAdornment, TextField } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -10,23 +10,11 @@ export default function LoginManage() {
     const [ID, setID] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [users, setUsers] = useState([]);
     const [error, setErrors] = useState('');
     const navigate = useNavigate();
 
 
-    useEffect(() => {
-        // Fetch data from local storage
-        const storedUsers = localStorage.getItem('users');
-
-        const parsedUsers = storedUsers ? JSON.parse(storedUsers) : [];
-
-        setUsers(parsedUsers);
-    }, [])
-
     const loginUser = () => {
-        // Check if the entered username and password match any user
-
         const urlLM = 'http://localhost:5108/LogIn'
         fetch(urlLM + '/' + ID + '/' + password, {
             method: 'GET',
@@ -34,22 +22,13 @@ export default function LoginManage() {
                 'Content-Type': 'application/json; charset=UTF-8',
             })
         })
-            .then(res => {
-                console.log('res=', res);
-                console.log('res.status', res.status);
-                console.log('res.ok', res.ok);
-                return res.json()
-            })
             .then(
-                (result) => {
-                    console.log("fetch btnFetchGetStudentByName= ", result);
-                    console.log('result.FullName=', result.FullName);
+                () => {
                     navigate('/AddsAndP')
                 },
-                (error) => {
-                    console.log("err post=", error);
+                () => {
                     setErrors("המייל / הסיסמא שגויים")
-                });  
+                });
     };
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);

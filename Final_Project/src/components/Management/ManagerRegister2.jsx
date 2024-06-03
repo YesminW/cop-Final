@@ -77,12 +77,6 @@ export default function AdditionalRegistrationForm(props) {
             const initialData = JSON.parse(localStorage.getItem('registrationData')) || {};
             const finalData = { ...initialData, ...formValues };
 
-            console.log('Form Data Submitted:', finalData);
-            props.SendToParent(finalData);
-
-            const jsonstring = JSON.stringify(finalData);
-
-
             fetch(urlM, {
                 method: 'POST',
                 body: JSON.stringify(finalData),

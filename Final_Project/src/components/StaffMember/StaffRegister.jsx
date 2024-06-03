@@ -16,7 +16,7 @@ export default function StaffRegister() {
     });
 
     useEffect(() => {
-        const storedDetails = JSON.parse(sessionStorage.getItem('currentUser'));
+        const storedDetails = JSON.parse(sessionStorage.getItem('currentUserS'));
         if (storedDetails) {
             setDetails({
                 firstName: storedDetails.firstName || '',

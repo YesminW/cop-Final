@@ -10,31 +10,7 @@ import '../assets/StyleSheets/Main.css'
 export default function Main() {
     const apiUrl = 'http://localhost:5108/getAllUsers'
 
-    const btncheck = () => {
-        fetch(apiUrl, {
-            method: 'GET',
-            headers: new Headers({
-                'Content-Type': 'application/json; charset=UTF-8',
-            })
-        })
-            .then(res => {
-                console.log('res=', res);
-                console.log('res.status', res.status);
-                console.log('res.ok', res.ok);
-                return res.json()
-            })
-            .then(
-                (result) => {
-                    console.log("fetch btnFetchGetStudents= ", result);
-                    result.map(st => console.log(st.FullName));
-                    console.log('result[0].FullName=', result[0].FullName);
-                },
-                (error) => {
-                    console.log("err post=", error);
-                });
-    }
-
-    return (
+        return (
         <div>
             {Elogo}
             <br />
@@ -52,7 +28,6 @@ export default function Main() {
                     <button className="btn">מנהל/ת חינוך</button>
                 </Link>
             </div>
-            <button onClick={btncheck} className="btn">בדיקה</button>
         </div>
     );
 }
