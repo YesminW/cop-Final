@@ -20,12 +20,9 @@ namespace cop_WebApi.Controllers
             {
                 if (users[i].UserId == ID && users[i].UserpPassword==password)
                 {
-                    return true;
+                    return users[i].UserPrivetName;
                 }
-                else
-                {
-                    return false;
-                }
+                
             }
             return ("login faild");
         }
