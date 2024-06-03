@@ -1,0 +1,91 @@
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, FormControl } from '@mui/material';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { Link, useNavigate } from 'react-router-dom';
+
+export default function AddsAndP() {
+    const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
+    const [file, setfile] = useState('');
+
+    const validateForm = () => {
+        const newErrors = {};
+        const hebrewRegex = /^[\u0590-\u05FF\s]+$/;
+
+        // לוגיקת התקינות הקודמת נשארת כפי שהיא
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleChange = (e) => {
+        const { name, value, files } = e.target;
+
+        setfile((prevData) => ({
+            ...prevData,
+            [name]: name === 'file' ? files[0] : value,
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (validateForm()) {
+            // Get existing data from localStorage
+            const existingData = JSON.parse(localStorage.getItem('AddKindergarden')) || {};
+
+            navigate('/KindergartenManagement');
+        } else {
+            console.log('Form has validation errors. Cannot submit.');
+        }
+    };
+
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.28)', padding: 10, borderRadius: 5, marginBottom: 30 }}>
+                <h2 style={{ textAlign: 'center', margin: 0, color: 'white', fontSize: '28px' }}>הוספת משתמשים</h2>
+            </div>
+
+            <FormControl fullWidth margin="normal">
+                <input
+                    accept=".xls,.xlsx"
+                    type="file"
+                    onChange={handleChange}
+                    style={{ display: 'none' }}
+                    id="profileFile"
+                    name='file'
+                />
+                <label htmlFor="profileFile">
+                    <Button
+                        variant="contained"
+                        component="label"
+                        style={{ marginBottom: 20 }}
+                        sx={{
+                            fontFamily: 'Karantina',
+                            fontSize: '20px',
+                            margin: '20px',
+                            color: 'white',
+                            backgroundColor: '#076871',
+                            '&:hover': {
+                                backgroundColor: '#6196A6',
+                            }
+                        }}
+                    >
+                        העלאת קובץ משתמשים
+                        {<CloudUploadIcon style={{ margin: "10px" }} />}
+
+                    </Button>
+                </label>
+                {errors.file && <p>{errors.file}</p>}
+            </FormControl>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 20 }}>
+                <button className="btn1" onClick={handleSubmit}>המשך</button>
+                <Link to="/KindergartenManagement">
+                    <button className="btn1">דלג</button>
+                </Link>
+            </div>
+        </form>
+    );
+}

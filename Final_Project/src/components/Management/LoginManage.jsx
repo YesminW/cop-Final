@@ -26,12 +26,12 @@ export default function LoginManage() {
 
     const loginUser = () => {
         // Check if the entered username and password match any user
-        const foundUser = users.find(users => users.email === mail && users.password === password);
+        const foundUser = users.find(user => user.email === mail && user.password === password);
 
         if (foundUser) {
             // User is authenticated, you can perform further actions
             sessionStorage.setItem('currentUser', JSON.stringify(foundUser));
-            navigate('/AddKindergarden')
+            navigate('/AddsAndP')
         } else {
             // Invalid credentials
             setErrors("המייל / הסיסמא שגויים")

@@ -12,7 +12,8 @@ export default function ManagerRegister() {
         lastName: '',
         birthDate: '',
         gender: '',
-        file: ''
+        file: '',
+        ID: ''
     });
 
     const calculateAge = (birthDate) => {
@@ -52,6 +53,10 @@ export default function ManagerRegister() {
 
         if (!formValues.gender) {
             newErrors.gender = 'יש לבחור את המין';
+        }
+
+        if (!formValues.ID) {
+            newErrors.gender = 'יש להוסיף תעודת זהות';
         }
 
         if (!formValues.file) {
@@ -120,6 +125,17 @@ export default function ManagerRegister() {
                 />
                 <br />
                 <TextField
+                    label="תעודת זהות"
+                    name="ID"
+                    value={formValues.ID}
+                    onChange={handleChange}
+                    error={!!errors.ID}
+                    helperText={errors.ID}
+                    className='register-textfield'
+                    variant="outlined"
+                />
+                <br />
+                <TextField
                     name="birthDate"
                     type="date"
                     value={formValues.birthDate}
@@ -145,7 +161,7 @@ export default function ManagerRegister() {
                         }
                     }}        >
                     העלאת תמונת פרופיל
-                    {<CloudUploadIcon style={{margin:"10px"}} />}
+                    {<CloudUploadIcon style={{ margin: "10px" }} />}
 
                     <input
                         type="file"
@@ -157,17 +173,17 @@ export default function ManagerRegister() {
                 </Button>
                 {errors.profilePicture && <p>{errors.profilePicture}</p>}
             </FormControl>
-            <FormControl fullWidth margin="normal" style={{ width: '120%', direction: 'rtl', padding: '10px 0'  }}>
-                <InputLabel style={{fontFamily: 'Karantina', fontSize: '20px',}}>מין</InputLabel>
+            <FormControl fullWidth margin="normal" style={{ width: '120%', direction: 'rtl', padding: '10px 0' }}>
+                <InputLabel style={{ fontFamily: 'Karantina', fontSize: '20px', }}>מין</InputLabel>
                 <Select
-                style={{direction:'rtl', backgroundColor:'#B9DCD1'}}
+                    style={{ direction: 'rtl', backgroundColor: '#B9DCD1' }}
                     labelId="gender-label"
                     name="gender"
                     value={formValues.gender}
                     onChange={handleChange}
                     error={!!errors.gender}
                     className='register-textfield'
-                    
+
                 >
                     <MenuItem value="male">זכר</MenuItem>
                     <MenuItem value="female">נקבה</MenuItem>

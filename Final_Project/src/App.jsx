@@ -7,6 +7,7 @@ import LoginManage from './components/Management/LoginManage';
 import ManagerRegister from './components/Management/ManagerRegister'
 import ManagerRegister2 from './components/Management/ManagerRegister2'
 import AddKindergarden from './components/Management/AddKindergarden'
+import AddsAndP from './components/Management/AddSAndP';
 import KindergartenManagement from './components/Management/ManageKinderGarden'
 import KindergartenDetails from './components/Management/KindergartenDetails'
 
@@ -58,6 +59,7 @@ function App() {
           <Route path='/KindergartenManagement' element={<KindergartenManagement />} />
           <Route path='/KindergartenDetails/:gardenName' element={<KindergartenDetails />} />
           <Route path='/AddKindergarden' element={<AddKindergarden />} />
+          <Route path='AddSAndP' element={<AddsAndP />} />
 
           <Route path='/LoginStaffMember' element={<LoginStaffMember />} />
           <Route path='/MainStaffMember' element={<MainStaffMember />} />
