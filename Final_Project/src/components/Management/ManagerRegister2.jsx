@@ -10,10 +10,10 @@ export default function AdditionalRegistrationForm(props) {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [formValues, setFormValues] = useState({
-        phoneNumber: '',
-        address: '',
-        email: '',
-        password: '',
+        UserPhoneNumber: '',
+        UserAddress: '',
+        UserEmail: '',
+        UserpPassword: '',
     });
 
     const [file, setfile] = useState('')
@@ -33,24 +33,24 @@ export default function AdditionalRegistrationForm(props) {
         const phoneRegex = /^\d{10}$/; // Example: assuming phone number should be 10 digits
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (!formValues.phoneNumber) {
-            newErrors.phoneNumber = 'יש למלא את מספר הטלפון';
-        } else if (!phoneRegex.test(formValues.phoneNumber)) {
-            newErrors.phoneNumber = 'מספר טלפון לא תקין';
+        if (!formValues.UserPhoneNumber) {
+            newErrors.UserPhoneNumber = 'יש למלא את מספר הטלפון';
+        } else if (!phoneRegex.test(formValues.UserPhoneNumber)) {
+            newErrors.UserPhoneNumber = 'מספר טלפון לא תקין';
         }
 
-        if (!formValues.address) {
-            newErrors.address = 'יש למלא את הכתובת';
+        if (!formValues.UserAddress) {
+            newErrors.UserAddress = 'יש למלא את הכתובת';
         }
 
-        if (!formValues.email) {
-            newErrors.email = 'יש למלא את האימייל';
-        } else if (!emailRegex.test(formValues.email)) {
-            newErrors.email = 'אימייל לא תקין';
+        if (!formValues.UserEmail) {
+            newErrors.UserEmail = 'יש למלא את האימייל';
+        } else if (!emailRegex.test(formValues.UserEmail)) {
+            newErrors.UserEmail = 'אימייל לא תקין';
         }
 
-        if (!formValues.password) {
-            newErrors.password = 'יש למלא את הסיסמא';
+        if (!formValues.UserpPassword) {
+            newErrors.UserpPassword = 'יש למלא את הסיסמא';
         }
 
 
@@ -129,11 +129,11 @@ export default function AdditionalRegistrationForm(props) {
             <FormControl fullWidth margin="normal">
                 <TextField
                     label="מספר טלפון"
-                    name="phoneNumber"
-                    value={formValues.phoneNumber}
+                    name="UserPhoneNumber"
+                    value={formValues.UserPhoneNumber}
                     onChange={handleChange}
-                    error={!!errors.phoneNumber}
-                    helperText={errors.phoneNumber}
+                    error={!!errors.UserPhoneNumber}
+                    helperText={errors.UserPhoneNumber}
                     className='register-textfield'
                     variant="outlined"
                 />
@@ -141,11 +141,11 @@ export default function AdditionalRegistrationForm(props) {
             <FormControl fullWidth margin="normal">
                 <TextField
                     label="כתובת"
-                    name="address"
-                    value={formValues.address}
+                    name="UserAddress"
+                    value={formValues.UserAddress}
                     onChange={handleChange}
-                    error={!!errors.address}
-                    helperText={errors.address}
+                    error={!!errors.UserAddress}
+                    helperText={errors.UserAddress}
                     className='register-textfield'
                     variant="outlined"
                 />
@@ -153,11 +153,11 @@ export default function AdditionalRegistrationForm(props) {
             <FormControl fullWidth margin="normal">
                 <TextField
                     label="מייל"
-                    name="email"
-                    value={formValues.email}
+                    name="UserEmail"
+                    value={formValues.UserEmail}
                     onChange={handleChange}
-                    error={!!errors.email}
-                    helperText={errors.email}
+                    error={!!errors.UserEmail}
+                    helperText={errors.UserEmail}
                     className='register-textfield'
                     variant="outlined"
                 />
@@ -166,8 +166,8 @@ export default function AdditionalRegistrationForm(props) {
                 <TextField
                     id="password"
                     label="סיסמא"
-                    name="password"
-                    value={formValues.password}
+                    name="UserpPassword"
+                    value={formValues.UserpPassword}
                     onChange={handleChange}
                     className='register-textfield'
                     type={showPassword ? 'text' : 'password'}
