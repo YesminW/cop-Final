@@ -98,7 +98,6 @@ export default function AdditionalRegistrationForm(props) {
                     });
 
 
-            // Optionally clear localStorage if no longer needed
             localStorage.removeItem('registrationData');
 
             navigate('/LoginManage');
