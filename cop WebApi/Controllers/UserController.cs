@@ -136,25 +136,31 @@ namespace Co_p_new__WebApi.Controllers
 
                             };
 
-                            if (UserCode == 222)
-                            {
-                                Parent p = new Parent();
-                                p.UserId = newUser.UserId;
-                                db.Parents.Add(p);
+                            //if (UserCode == 222)
+                            //{
+                            //    Parent p = new Parent();
+                            //    p.UserId = newUser.UserId;
+                            //    db.Parents.Add(p);
 
-                            }
-                            else if (UserCode == 111 || UserCode == 333)
-                            {
-                                // Check if the user is already a staff member
-                                if (!db.StaffMembers.Any(s => s.UserId == newUser.UserId))
-                                {
-                                    StaffMember s = new StaffMember();
-                                    s.UserId = newUser.UserId;
-                                    db.StaffMembers.Add(s);
-                                    db.SaveChanges();
-                                    return Ok(s);
-                                }
-                            }
+                            //}
+                            //else if (UserCode == 111 || UserCode == 333)
+                            //{
+                            //    // Check if the user is already a staff member
+                            //    if (!db.StaffMembers.Any(s => s.UserId == newUser.UserId))
+                            //    {
+                            //        StaffMember s = new StaffMember();
+                            //        s.UserId = newUser.UserId;
+                            //        List<int> kindergartenCodes = db.Kindergartens.Select(k => k.KindergartenNumber).ToList();
+                            //        if (kindergartenCodes.Count > 0)
+                            //        {
+                            //            // Assign a random kindergarten code
+                            //            Random random = new Random();
+                            //            s.KindergartenNumber = kindergartenCodes[random.Next(kindergartenCodes.Count)];
+                            //        }
+                            //        db.StaffMembers.Add(s);
+
+                            //    }
+                            //}
 
                             users.Add(newUser);
                         }
@@ -162,7 +168,7 @@ namespace Co_p_new__WebApi.Controllers
                 }
             }
 
-            db.Children.AddRange((IEnumerable<Child>)users);
+            db.Users.AddRange(users);
             await db.SaveChangesAsync();
 
             return Ok(new { Message = "Data imported successfully." });
