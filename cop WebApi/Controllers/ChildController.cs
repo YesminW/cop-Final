@@ -112,7 +112,9 @@ namespace Co_p_new__WebApi.Controllers
                 ChildBirthDate = chilsBdate,
                 ChildGender = gender,
                 Parent1 = parent1,
-                Parent2 = parent2
+                Parent2 = parent2,
+               
+
             };
 
             db.Children.Add(c);
