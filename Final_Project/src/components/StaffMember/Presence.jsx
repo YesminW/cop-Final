@@ -33,8 +33,8 @@ export default function Presence() {
 
     return (
         <>
-            <div className='title'>
-                <h2 className='titleText'>נוכחות</h2>
+            <div className='presencetitle'>
+                <h2 className='presencetitleText'>נוכחות</h2>
             </div>
             <Container className="presence-container">
                 <Box className="header">
