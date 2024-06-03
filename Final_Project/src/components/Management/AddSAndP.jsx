@@ -39,7 +39,7 @@ export default function AddsAndP() {
                 return res.json()
             })
             .then(
-                (result) => {
+                () => {
                     navigate('/KindergartenManagement')
                 },
                 (error) => {

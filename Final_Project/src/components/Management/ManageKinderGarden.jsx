@@ -4,25 +4,27 @@ import { useNavigate, Link } from 'react-router-dom';
 
 export default function KindergartenManagement() {
     const navigate = useNavigate();
-    const [kindergartens, setKindergartens] = useState([
-        'בית תינוקות',
-        'פעוטון ניצן',
-        'גנון שקד',
-        'גן רימון',
-        'גן חצב'
-    ]);
+    const [kindergartens, setKindergartens] = useState([])
+
 
     useEffect(() => {
-        // Load additional kindergarten from localStorage only if it hasn't been added in this session
-        if (!localStorage.getItem('kindergartenAdded')) {
-            const additionalKindergarten = JSON.parse(localStorage.getItem('AddKindergarden'));
-            if (additionalKindergarten && additionalKindergarten.gardenName) {
-                setKindergartens((prevKindergartens) => [
-                    ...prevKindergartens,
-                    additionalKindergarten.gardenName
-                ]);
-            }
-        }
+
+        const urlK = 'http://localhost:5108/ShowKindergarten'
+
+        fetch(urlK, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+            })
+        })
+            .then(response => response.json())
+            .then(
+                (data) => {
+                    setKindergartens(data);
+                },
+                () => {
+                    console.log(error)
+                });
     }, []);
 
     const handleAddKindergarten = () => {
@@ -43,12 +45,12 @@ export default function KindergartenManagement() {
                 marginTop: '20px'
             }}
         >
-            <Typography variant="h4" style={{ color: 'white', marginBottom: '20px', fontFamily: 'Karantina',fontSize: '48px' }}>
+            <Typography variant="h4" style={{ color: 'white', marginBottom: '20px', fontFamily: 'Karantina', fontSize: '48px' }}>
                 ניהול גנים
             </Typography>
             {kindergartens.map((kindergarten, index) => (
                 <Link key={index}
-                    to={`/KindergartenDetails/${encodeURIComponent(kindergarten)}`}
+                    to={`/KindergartenDetails/${encodeURIComponent(kindergarten.kindergartenName)}`}
                     style={{ textDecoration: 'none', width: '100%' }} >
                     <Button
                         variant="contained"
@@ -65,7 +67,7 @@ export default function KindergartenManagement() {
 
                         }}
                     >
-                        {kindergarten}
+                        {kindergarten.kindergartenName}
                     </Button>
                 </Link>
             ))}

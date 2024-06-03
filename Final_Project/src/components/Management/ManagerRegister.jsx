@@ -79,7 +79,6 @@ export default function ManagerRegister() {
         e.preventDefault();
 
         if (validateForm()) {
-            // Save data to localStorage
             localStorage.setItem('registrationData', JSON.stringify(formValues));
             navigate('/ManagerRegister2');
         } else {

@@ -91,7 +91,7 @@ export default function KindergartenDetails() {
                 {decodeURIComponent(gardenName)}
             </Typography>
             <FormControl fullWidth margin="normal" variant="outlined" style={{ direction: 'rtl', padding: '10px 0' }}>
-                <InputLabel style={{ fontSize: '20px', color: 'white', fontFamily: 'Karantina' }}>שיתוף גננות</InputLabel>
+                <InputLabel style={{ fontSize: '20px', color: 'white', fontFamily: 'Karantina' }}>שיוך גננת</InputLabel>
                 <Select
                     value={sharingType}
                     onChange={handleSharingTypeChange}

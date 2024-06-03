@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TextField, Button, FormControl } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,52 +7,88 @@ export default function AddKindergarden() {
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
     const [formValues, setFormValues] = useState({
-        gardenName: '',
-        address: '',
-        file: ''
+        KindergartenName: '',
+        KindergartenAddress: '',
     });
+
+    const [file, setFile] = useState('');
 
     const validateForm = () => {
         const newErrors = {};
         const hebrewRegex = /^[\u0590-\u05FF\s]+$/;
+
+        if (!hebrewRegex.test(formValues.KindergartenName)) {
+            newErrors.KindergartenName = 'יש למלא בשפה העברית בלבד';
+        }
+
+        if (!hebrewRegex.test(formValues.KindergartenAddress)) {
+            newErrors.KindergartenAddress = 'יש למלא בשפה העברית בלבד';
+        }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
     const handleChange = (e) => {
-        const { name, value, files } = e.target;
-
-        setFormValues((prevData) => ({
-            ...prevData,
-            [name]: name === 'file' ? files[0] : value,
+        const { name, value } = e.target;
+        setFormValues((prevValues) => ({
+            ...prevValues,
+            [name]: value
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        if (selectedFile) {
+            const fileExtension = selectedFile.name.split('.').pop().toLowerCase();
+            if (fileExtension === 'xls' || fileExtension === 'xlsx') {
+                setFile(selectedFile);
+                setErrors((prevErrors) => ({ ...prevErrors, file: '' }));
+            } else {
+                setFile(null);
+                setErrors((prevErrors) => ({ ...prevErrors, file: 'Invalid file type. Only .xls and .xlsx are allowed.' }));
+            }
+        }
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-
-
         if (validateForm()) {
-            // Get existing data from localStorage
-            const existingData = JSON.parse(localStorage.getItem('AddKindergarden')) || {};
+            const apiurl = 'http://localhost:5108/AddKindergarten';
+            const urlExcelC = 'http://localhost:5108/AddUserByExcel';
 
-            // Merge new data with existing data
-            const newData = {
-                ...existingData,
-                [formValues.gardenName]: formValues // Assuming gardenName is unique
-            };
+            const formData = new FormData();
+            formData.append('file', file);
 
-            // Save merged data back to localStorage
-            localStorage.setItem('AddKindergarden', JSON.stringify(newData));
+            try {
+                const [addKindergartenResponse, addUserByExcelResponse] = await Promise.all([
+                    fetch(apiurl + '/' + formValues.KindergartenName + '/' + formValues.KindergartenAddress, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }).then(res => {
+                        if (!res.ok) throw new Error('Failed to add kindergarten');
+                        return res.json();
+                    }),
+                    fetch(urlExcelC, {
+                        method: 'POST',
+                        body: formData,
+                    }).then(res => {
+                        if (!res.ok) throw new Error('Failed to add users by excel');
+                        return res.json();
+                    })
+                ]);
 
-            navigate('/KindergartenManagement');
+                navigate('/KindergartenManagement');
+            } catch (error) {
+                console.error('Error:', error);
+            }
         } else {
             console.log('Form has validation errors. Cannot submit.');
         }
     };
-
 
     return (
         <form onSubmit={handleSubmit}>
@@ -64,24 +100,23 @@ export default function AddKindergarden() {
             <FormControl fullWidth margin="normal" className='register-textfield'>
                 <TextField
                     label="שם הגן"
-                    name="gardenName"
-                    value={formValues.gardenName}
+                    name="KindergartenName"
+                    value={formValues.KindergartenName}
                     onChange={handleChange}
-                    error={!!errors.gardenName}
-                    helperText={errors.gardenName}
+                    error={!!errors.KindergartenName}
+                    helperText={errors.KindergartenName}
                     variant="outlined"
                 />
             </FormControl>
 
-            <FormControl fullWidth margin="normal" className='register-textfield'
-            >
+            <FormControl fullWidth margin="normal" className='register-textfield'>
                 <TextField
                     label="כתובת"
-                    name="address"
-                    value={formValues.address}
+                    name="KindergartenAddress"
+                    value={formValues.KindergartenAddress}
                     onChange={handleChange}
-                    error={!!errors.address}
-                    helperText={errors.address}
+                    error={!!errors.KindergartenAddress}
+                    helperText={errors.KindergartenAddress}
                     variant="outlined"
                     className="rtl-input"
                 />
@@ -91,7 +126,7 @@ export default function AddKindergarden() {
                 <input
                     accept=".xls,.xlsx"
                     type="file"
-                    onChange={handleChange}
+                    onChange={handleFileChange}
                     style={{ display: 'none' }}
                     id="profileFile"
                 />
@@ -113,16 +148,15 @@ export default function AddKindergarden() {
                     >
                         העלאת קובץ פרטי ילדים
                         {<CloudUploadIcon style={{ margin: "10px" }} />}
-
                     </Button>
                 </label>
                 {errors.file && <p>{errors.file}</p>}
             </FormControl>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 20 }}>
-                <button className="btn1" onClick={handleSubmit}>המשך</button>
+                <button className="btn1">המשך</button>
                 <Link to="/KindergartenManagement">
-                    <button className="btn1">דלג</button>
+                    <button className="btn1">חזור</button>
                 </Link>
             </div>
         </form>
