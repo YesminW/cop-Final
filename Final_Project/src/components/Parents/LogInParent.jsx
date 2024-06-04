@@ -12,7 +12,7 @@ export default function LogInParent() {
     const [error, setErrors] = useState('');
     const navigate = useNavigate();
 
-    const loginUser = () => {
+    const loginUserP = () => {
         const urlLs = 'http://localhost:5108/LogIn';
         fetch(urlLs + '/' + ID + '/' + password, {
           method: 'GET',
@@ -37,7 +37,7 @@ export default function LogInParent() {
                 FirstName: text // השם הפרטי שהתקבל מהמחרוזת
               };
               sessionStorage.setItem('currentUserP', JSON.stringify(userInfo));
-              navigate('/MainStaffMember');
+              navigate('/MainParent');
             }
           })
           .catch(error => {
@@ -95,7 +95,7 @@ export default function LogInParent() {
                 />
             </FormControl>
             <div className="buttons">
-                <button className="btn" onClick={loginUser}>כניסה</button>
+                <button className="btn" onClick={loginUserP}>כניסה</button>
             </div>
             {error && <p style={{ color: '#6196A6' }}>{error}</p>}
         </div>

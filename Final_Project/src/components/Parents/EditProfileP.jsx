@@ -8,27 +8,50 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 export default function EditProfileP() {
   const navigate = useNavigate();
   const [details, setDetails] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    address: '',
-    password: ''
-  });
+    userPrivetName: '',
+    userSurname: '',
+    userId: '',
+    userBirthDate: '',
+    userPhoneNumber: '',
+    userGender: '',
+    userEmail: '',
+    userpPassword: '',
+    userAddress: ''
+});
 
   useEffect(() => {
-    const storedDetails = JSON.parse(sessionStorage.getItem('currentUser'));
-    if (storedDetails) {
-      setDetails({
-        firstName: storedDetails.firstName || '',
-        lastName: storedDetails.lastName || '',
-        email: storedDetails.email || '',
-        phoneNumber: storedDetails.phoneNumber || '',
-        address: storedDetails.address || '',
-        password: storedDetails.password || '',
-      });
-    }
-  }, []);
+    const storedDetails = JSON.parse(sessionStorage.getItem('currentUserP'));
+
+    const urldos = 'http://localhost:5108/GetOneUser'
+
+    fetch(urldos + '/' + storedDetails.ID, {
+        method: 'GET',
+        headers: new Headers({
+            'Content-Type': 'application/json; charset=UTF-8',
+        })
+    })
+        .then(response => response.json())
+        .then(
+            (data) => {
+                const userData = Array.isArray(data) ? data[0] : data; // בדיקה אם הנתונים הם מערך או אובייקט
+                setDetails({
+                    userPrivetName: userData.userPrivetName || '',
+                    userSurname: userData.userSurname || '',
+                    userId: userData.userId || '',
+                    userBirthDate: userData.userBirthDate || '',
+                    userPhoneNumber: userData.userPhoneNumber || '',
+                    userGender: userData.userGender || '',
+                    userEmail: userData.userEmail || '',
+                    userpPassword: userData.userpPassword || '',
+                    userAddress: userData.userAddress || ''
+                });
+            },
+            () => {
+                console.log(error)
+            })
+
+
+}, []);
 
  
   const handleFileUpload = (event) => {
@@ -42,7 +65,7 @@ export default function EditProfileP() {
   };
 
   const handleSubmit = () => {
-    navigate('/EditProfileP2', { state: details });
+    navigate('/MainParent', { state: details });
   };
 
   return (
@@ -54,8 +77,17 @@ export default function EditProfileP() {
         <TextField
           fullWidth
           margin="normal"
+          label="תעודת זהות"
+          value={details.userId}
+          InputProps={{ readOnly: true }}
+          variant="outlined"
+          className='register-textfield'
+        />
+        <TextField
+          fullWidth
+          margin="normal"
           label="שם פרטי"
-          value={details.firstName}
+          value={details.userPrivetName}
           InputProps={{ readOnly: true }}
           variant="outlined"
           className='register-textfield'
@@ -64,7 +96,7 @@ export default function EditProfileP() {
           fullWidth
           margin="normal"
           label="שם משפחה"
-          value={details.lastName}
+          value={details.userSurname}
           InputProps={{ readOnly: true }}
           variant="outlined"
           className='register-textfield'
@@ -73,7 +105,7 @@ export default function EditProfileP() {
           fullWidth
           margin="normal"
           label="כתובת"
-          value={details.address}
+          value={details.userAddress}
           InputProps={{ readOnly: true }}
           variant="outlined"
           className='register-textfield'
@@ -82,7 +114,7 @@ export default function EditProfileP() {
           fullWidth
           margin="normal"
           label="מייל"
-          value={details.email}
+          value={details.userEmail}
           variant="outlined"
           className='register-textfield'
         />
@@ -92,7 +124,7 @@ export default function EditProfileP() {
           label="שינוי סיסמא"
           type='password'
           name="password"
-          value={details.password}
+          value={details.userpPassword}
           InputProps={{ readOnly: true }}
           variant="outlined"
           className='register-textfield'
@@ -102,7 +134,7 @@ export default function EditProfileP() {
           margin="normal"
           label="פלאפון"
           name="phoneNumber"
-          value={details.phoneNumber}
+          value={details.userPhoneNumber}
           InputProps={{ readOnly: true }}
           variant="outlined"
           className='register-textfield'
@@ -137,7 +169,7 @@ export default function EditProfileP() {
           onClick={handleSubmit}
           type='submit'
         >
-          המשך
+          אישור
         </Button>
       </form>
       {EfooterP}
