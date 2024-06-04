@@ -32,7 +32,7 @@ namespace Co_p_new__WebApi.Controllers
 
         }
         [HttpGet]
-        [Route("GetChildByParent")]
+        [Route("GetChildByParent/{ID}")]
         public dynamic GetChildByParent(string ParentID)
         {
             var child = db.Children
