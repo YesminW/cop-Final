@@ -1,5 +1,5 @@
 
-import React, {useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FormControl, IconButton, InputAdornment, TextField } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -22,13 +22,30 @@ export default function LoginManage() {
                 'Content-Type': 'application/json; charset=UTF-8',
             })
         })
-            .then(
-                () => {
-                    navigate('/AddsAndP')
-                },
-                () => {
-                    setErrors("המייל / הסיסמא שגויים")
-                });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text(); // מקבל את התשובה כמחרוזת
+            })
+            .then(text => {
+                if (text.includes("Invalid credentials")) { // בדיקת השגיאה מהשרת
+                    setErrors("המייל / הסיסמא שגויים");
+                    throw new Error('Invalid credentials');
+                } else {
+                    // כאן נתייחס למחרוזת כאילו היא מכילה רק את השם הפרטי
+                    const userInfo = {
+                        ID,
+                        FirstName: text // השם הפרטי שהתקבל מהמחרוזת
+                    };
+                    sessionStorage.setItem('currentUser', JSON.stringify(userInfo));
+                    navigate('/MainParent');
+                }
+            })
+            .catch(error => {
+                setErrors("המייל / הסיסמא שגויים");
+                console.error('There was a problem with the fetch operation:', error);
+            });
     };
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);

@@ -24,7 +24,7 @@ namespace cop_WebApi.Controllers
                 }
                 
             }
-            return ("login faild");
+            return BadRequest("login faild");
         }
     }
 }
