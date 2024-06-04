@@ -20,18 +20,18 @@ export default function BonusStaffMember() {
 
     return (
         <div className="home-container" {...handlers}>
-            <header className="header">
-                <h1>בונוס</h1>
+            <header className="Bonusheader" >
+                <h1 style={{fontSize: '70px'}}>בונוס</h1>
             </header>
             <div>
                 <p className='bonusExplanation'>כדי להקל עליך, חשבנו איך נוכל לחשוב במקומך, מוזמן/ת לסמן את התחומים שלך ולקבל המלצות לפעילויות בהתאמה</p>
                 <div className="grid-container">
-                    <button className="grid-item">טבע</button>
-                    <button className="grid-item">אוכל</button>
-                    <button className="grid-item">ספורט</button>
-                    <button className="grid-item">מדעים</button>
-                    <button className="grid-item">מוזיקה</button>
-                    <button className="grid-item">אומנות</button>
+                    <button className="Bonus-item">טבע</button>
+                    <button className="Bonus-item">אוכל</button>
+                    <button className="Bonus-item">ספורט</button>
+                    <button className="Bonus-item">מדעים</button>
+                    <button className="Bonus-item">מוזיקה</button>
+                    <button className="Bonus-item">אומנות</button>
                 </div>
                 <button className="add-button">הוספת תחום</button>
             </div>

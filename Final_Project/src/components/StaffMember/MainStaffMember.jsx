@@ -80,6 +80,7 @@ export default function MainStaffMember() {
           <h3>האירוע הבא היום</h3>
         </div>
       </div>
+      <br></br>
       <NavigationDots activeIndex={0} />
       {EfooterS}
     </div>
