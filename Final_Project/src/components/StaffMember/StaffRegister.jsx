@@ -14,7 +14,11 @@ export default function StaffRegister() {
             userSurname: '',
             userId: '',
             userBirthDate: '',
-            userPhoneNumber: ''
+            userPhoneNumber: '',
+            userGender: '',
+            userEmail: '',
+            userpPassword: '',
+            userAddress: ''
         }
     );
 
@@ -38,7 +42,11 @@ export default function StaffRegister() {
                         userSurname: userData.userSurname || '',
                         userId: userData.userId || '',
                         userBirthDate: userData.userBirthDate || '',
-                        userPhoneNumber: userData.userPhoneNumber || ''
+                        userPhoneNumber: userData.userPhoneNumber || '',
+                        userGender: userData.userGender || '',
+                        userEmail: userData.userEmail || '',
+                        userpPassword: userData.userpPassword || '',
+                        userAddress: userData.userAddress || ''
                     });
                 },
                 () => {
@@ -67,27 +75,30 @@ export default function StaffRegister() {
 
     const handleSubmit = () => {
 
+        if (file) {
+            const urlphotol = 'http://localhost:5108/UploadUserPhoto';
+            const formData = new FormData();
+            formData.append("file", file);
 
-        const urlphotol = 'http://localhost:5108/UploadUserPhoto';
-        const formData = new FormData();
-        formData.append("file", file);
-
-        fetch(urlphotol + '/' + details.userId, {
-            method: 'PUT',
-            body: formData,
-        })
-            .then(res => {
-                console.log('res=', res);
-                return res.json()
+            fetch(urlphotol + '/' + details.userId, {
+                method: 'PUT',
+                body: formData,
             })
-            .then(
-                () => {
-                    navigate('/StaffRegister2')
-                },
-                (error) => {
-                    console.log("err post=", error);
-                });
-        navigate('/StaffRegister2', { state: details });
+                .then(res => {
+                    console.log('res=', res);
+                    return res.json()
+                })
+                .then(
+                    () => {
+                        navigate('/StaffRegister2', { state: details });
+                    },
+                    (error) => {
+                        console.log("err post=", error);
+                    });
+        }
+        else {
+            navigate('/StaffRegister2', { state: details });
+        }
     };
 
     return (
