@@ -32,7 +32,7 @@ namespace Co_p_new__WebApi.Controllers
 
         }
         [HttpGet]
-        [Route("GetChildByParent/{ID}")]
+        [Route("GetChildByParent/{ParentID}")]
         public dynamic GetChildByParent(string ParentID)
         {
             var child = db.Children
@@ -42,7 +42,7 @@ namespace Co_p_new__WebApi.Controllers
             {
                 return ("Child not found");
             }
-            return child.ChildFirstName;
+            return child;
             
         }
 
