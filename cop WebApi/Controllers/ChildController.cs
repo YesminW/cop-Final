@@ -127,7 +127,8 @@ namespace Co_p_new__WebApi.Controllers
                 ChildGender = gender,
                 Parent1 = parent1,
                 Parent2 = parent2,
-               
+                ChildPhotoName = " "
+
 
             };
 
