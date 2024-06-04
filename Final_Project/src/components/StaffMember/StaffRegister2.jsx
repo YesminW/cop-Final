@@ -1,15 +1,38 @@
 import { Button, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import EfooterS from '../../Elements/EfooterS';
 import '../../assets/StyleSheets/RegisterStaff.css';
 
 export default function StaffRegister2() {
   const location = useLocation();
   const details = location.state || {};
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
 
+    const urlSR = 'http://localhost:5108/updateUser';
+
+    fetch(urlSR + '/' + details.userId, {
+      method: 'PUT',
+      body: JSON.stringify(details),
+      headers: new Headers({
+        'Content-type': 'application/json; charset=UTF-8' //very important to add the 'charset=UTF-8'!!!!
+      })
+    })
+      .then(res => {
+        console.log('res=', res);
+        return res.json()
+      })
+      .then(
+        (result) => {
+          console.log("fetch POST= ", result);
+          console.log(result.Avg);
+          navigate('/MainStaffMember')
+        },
+        (error) => {
+          console.log("err post=", error);
+        });
 
     localStorage.setItem('users', JSON.stringify(details));
     console.log('Updated details:', details);
@@ -36,7 +59,6 @@ export default function StaffRegister2() {
           label="מין"
           name="gender"
           value={details.userGender}
-          InputProps={{ readOnly: true }}
           variant="outlined"
           className='register-textfield'
         />
@@ -63,7 +85,6 @@ export default function StaffRegister2() {
           margin="normal"
           label="שינוי סיסמא"
           type="password"
-          name="password"
           value={details.userpPassword}
           variant="outlined"
           className='register-textfield'
