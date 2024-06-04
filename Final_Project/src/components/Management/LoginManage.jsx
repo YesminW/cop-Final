@@ -39,7 +39,7 @@ export default function LoginManage() {
                         FirstName: text // השם הפרטי שהתקבל מהמחרוזת
                     };
                     sessionStorage.setItem('currentUser', JSON.stringify(userInfo));
-                    navigate('/MainParent');
+                    navigate('/AddsAndP');
                 }
             })
             .catch(error => {

@@ -14,7 +14,7 @@ namespace Co_p_new__WebApi.Controllers
         [EnableCors()]
 
         [HttpPut]
-        [Route("UploadChildPhoto")]
+        [Route("UploadChildPhoto/{ID}")]
         public async Task<IActionResult> UploadChildPhoto(IFormFile file, string ID)
         {
             if (file == null || file.Length == 0)

@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Container, Typography, IconButton, Avatar, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import EfooterS from '../../Elements/EfooterS';
+
+
 
 import '../../assets/StyleSheets/Presence.css';
 
@@ -23,6 +25,10 @@ const students = [
 export default function Presence() {
     const [presence, setPresence] = useState(students.map(student => ({ ...student, present: false })));
 
+
+   
+
+
     const togglePresence = (id) => {
         setPresence(prevPresence =>
             prevPresence.map(student =>
@@ -40,11 +46,11 @@ export default function Presence() {
                 <Box className="header">
                     <Box className="search-box" >
                         <input type="text" placeholder="חיפוש" className="search-input" />
-                        <IconButton style={{color: '#07676D'}}>
+                        <IconButton style={{ color: '#07676D' }}>
                             <SearchIcon />
                         </IconButton>
                     </Box>
-                    <Button style={{backgroundColor: 'white', color: '#07676D',fontFamily: 'Karantina', fontSize: '18px', borderRadius: '5px'}}>
+                    <Button style={{ backgroundColor: 'white', color: '#07676D', fontFamily: 'Karantina', fontSize: '18px', borderRadius: '5px' }}>
                         צ'אט עם הורה
                     </Button>
                 </Box>
@@ -56,7 +62,7 @@ export default function Presence() {
                             onClick={() => togglePresence(student.id)}
                         >
                             <Avatar src={student.imgSrc} alt={student.name} className="student-avatar" />
-                            <Typography  style={{fontFamily: 'Karantina', fontSize: '15px'}} className="student-name">
+                            <Typography style={{ fontFamily: 'Karantina', fontSize: '15px' }} className="student-name">
                                 {student.name}
                             </Typography>
                         </Box>
