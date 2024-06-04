@@ -98,7 +98,7 @@ namespace Co_p_new__WebApi.Controllers
 
 
         [HttpPut]
-        [Route("UploadUserPhoto")]
+        [Route("UploadUserPhoto/{ID}")]
         public async Task<IActionResult> UploadUserPhoto(IFormFile file, string ID)
         {
             if (file == null || file.Length == 0)

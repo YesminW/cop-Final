@@ -35,7 +35,7 @@ namespace Co_p_new__WebApi.Controllers
 
         }
         [HttpGet]
-        [Route("GetOneUser")]
+        [Route("GetOneUser/{ID}")]
         public dynamic GetOneUser(string ID)
         {
             var u = db.Users.Where(x => x.UserId == ID);

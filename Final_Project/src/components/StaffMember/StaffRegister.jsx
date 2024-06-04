@@ -7,25 +7,45 @@ import '../../assets/StyleSheets/RegisterStaff.css';
 
 export default function StaffRegister() {
     const navigate = useNavigate();
-    const [details, setDetails] = useState({
-        firstName: '',
-        lastName: '',
-        idNumber: '',
-        birthDate: '',
-        phoneNumber: '',
-    });
+    const [file, setFile] = useState('');
+    const [details, setDetails] = useState(
+        {
+            userPrivetName: '',
+            userSurname: '',
+            userId: '',
+            userBirthDate: '',
+            userPhoneNumber: ''
+        }
+    );
 
     useEffect(() => {
         const storedDetails = JSON.parse(sessionStorage.getItem('currentUserS'));
-        if (storedDetails) {
-            setDetails({
-                firstName: storedDetails.firstName || '',
-                lastName: storedDetails.lastName || '',
-                idNumber: storedDetails.idNumber || '',
-                birthDate: storedDetails.birthDate || '',
-                phoneNumber: storedDetails.phoneNumber || '',
-            });
-        }
+
+        const urldos = 'http://localhost:5108/GetOneUser'
+
+        fetch(urldos + '/' + storedDetails.ID, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=UTF-8',
+            })
+        })
+            .then(response => response.json())
+            .then(
+                (data) => {
+                    const userData = Array.isArray(data) ? data[0] : data; // בדיקה אם הנתונים הם מערך או אובייקט
+                    setDetails({
+                        userPrivetName: userData.userPrivetName || '',
+                        userSurname: userData.userSurname || '',
+                        userId: userData.userId || '',
+                        userBirthDate: userData.userBirthDate || '',
+                        userPhoneNumber: userData.userPhoneNumber || ''
+                    });
+                },
+                () => {
+                    console.log(error)
+                })
+
+
     }, []);
 
     const handlePhoneNumberChange = (event) => {
@@ -39,13 +59,34 @@ export default function StaffRegister() {
         const file = event.target.files[0];
         if (file && (file.type === 'image/jpeg' || file.type === 'image/jpg')) {
             console.log('Uploaded file:', file);
-            // כאן ניתן להוסיף לוגיקה לטיפול בהעלאת התמונה
+            setFile(file)
         } else {
             alert('יש להעלות קובץ מסוג JPG או JPEG בלבד.');
         }
     };
 
     const handleSubmit = () => {
+
+
+        const urlphotol = 'http://localhost:5108/UploadUserPhoto';
+        const formData = new FormData();
+        formData.append("file", file);
+
+        fetch(urlphotol + '/' + details.userId, {
+            method: 'PUT',
+            body: formData,
+        })
+            .then(res => {
+                console.log('res=', res);
+                return res.json()
+            })
+            .then(
+                () => {
+                    navigate('/StaffRegister2')
+                },
+                (error) => {
+                    console.log("err post=", error);
+                });
         navigate('/StaffRegister2', { state: details });
     };
 
@@ -59,17 +100,19 @@ export default function StaffRegister() {
                     fullWidth
                     margin="normal"
                     label="שם פרטי"
-                    value={details.firstName}
+                    value={details.userPrivetName}
                     InputProps={{ readOnly: true }}
                     variant="outlined"
+                    className='register-textfield'
                 />
                 <TextField
                     fullWidth
                     margin="normal"
                     label="שם משפחה"
-                    value={details.lastName}
+                    value={details.userSurname}
                     InputProps={{ readOnly: true }}
                     variant="outlined"
+                    className='register-textfield'
                 />
                 <Button
                     variant="contained"
@@ -90,9 +133,10 @@ export default function StaffRegister() {
                     fullWidth
                     margin="normal"
                     label="תעודת זהות"
-                    value={details.idNumber}
+                    value={details.userId}
                     InputProps={{ readOnly: true }}
                     variant="outlined"
+                    className='register-textfield'
                 />
                 <TextField
                     fullWidth
@@ -101,14 +145,16 @@ export default function StaffRegister() {
                     value={details.birthDate}
                     InputProps={{ readOnly: true }}
                     variant="outlined"
+                    className='register-textfield'
                 />
                 <TextField
                     fullWidth
                     margin="normal"
                     label="מספר טלפון"
-                    value={details.phoneNumber}
+                    value={details.userPhoneNumber}
                     onChange={handlePhoneNumberChange}
                     variant="outlined"
+                    className='register-textfield'
                 />
                 <Button
                     fullWidth
