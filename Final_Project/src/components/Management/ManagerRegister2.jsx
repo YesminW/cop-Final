@@ -90,17 +90,13 @@ export default function AdditionalRegistrationForm(props) {
                 })
                 .then(
                     (result) => {
-                        console.log("fetch POST= ", result);
-                        console.log(result.Avg);
+                        navigate('/LoginManage');
+                        localStorage.removeItem('registrationData');
                     },
                     (error) => {
                         console.log("err post=", error);
                     });
 
-
-            localStorage.removeItem('registrationData');
-
-            navigate('/LoginManage');
         } else {
             console.log('Form has validation errors. Cannot submit.');
         }

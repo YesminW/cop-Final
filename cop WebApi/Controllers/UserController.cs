@@ -210,31 +210,31 @@ namespace Co_p_new__WebApi.Controllers
         }
 
         [HttpPut]
-        [Route("updateUser")]
-        public dynamic updateUser(string ID, string Email, string address, string password, string phonenum, string gender)
+        [Route("updateUser/{ID}")]
+        public dynamic updateUser(string ID, [FromBody] User obj)
         {
             User? u = db.Users.Where(x => x.UserId == ID).FirstOrDefault();
             if (u != null)
             {
-                if (Email != null)
+                if (obj.UserEmail != null)
                 {
-                    u.UserEmail = Email;
+                    u.UserEmail = obj.UserEmail;
                 }
-                if (address != null)
+                if (obj.UserAddress != null)
                 {
-                    u.UserAddress = address;
+                    u.UserAddress = obj.UserAddress;
                 }
-                if (password != null)
+                if (obj.UserpPassword != null)
                 {
-                    u.UserpPassword = password;
+                    u.UserpPassword = obj.UserpPassword;
                 }
-                if (phonenum != null)
+                if (obj.UserPhoneNumber != null)
                 {
-                    u.UserPhoneNumber = phonenum;
+                    u.UserPhoneNumber = obj.UserPhoneNumber;
                 }
-                if (gender != null)
+                if (obj.UserGender != null)
                 {
-                    u.UserGender = gender;
+                    u.UserGender = obj.UserGender;
                 }
                 db.SaveChanges();
                 return Ok(u);

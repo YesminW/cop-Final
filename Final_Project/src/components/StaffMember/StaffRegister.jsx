@@ -59,7 +59,7 @@ export default function StaffRegister() {
     const handlePhoneNumberChange = (event) => {
         setDetails((prevDetails) => ({
             ...prevDetails,
-            phoneNumber: event.target.value,
+            userPhoneNumber: event.target.value,
         }));
     };
 
@@ -125,6 +125,34 @@ export default function StaffRegister() {
                     variant="outlined"
                     className='register-textfield'
                 />
+
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="תעודת זהות"
+                    value={details.userId}
+                    InputProps={{ readOnly: true }}
+                    variant="outlined"
+                    className='register-textfield'
+                />
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="תאריך לידה"
+                    value={details.userBirthDate}
+                    InputProps={{ readOnly: true }}
+                    variant="outlined"
+                    className='register-textfield'
+                />
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="מספר טלפון"
+                    value={details.userPhoneNumber}
+                    onChange={handlePhoneNumberChange}
+                    variant="outlined"
+                    className='register-textfield'
+                />
                 <Button
                     variant="contained"
                     component="label"
@@ -140,33 +168,6 @@ export default function StaffRegister() {
                         onChange={handleFileUpload}
                     />
                 </Button>
-                <TextField
-                    fullWidth
-                    margin="normal"
-                    label="תעודת זהות"
-                    value={details.userId}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                    className='register-textfield'
-                />
-                <TextField
-                    fullWidth
-                    margin="normal"
-                    label="תאריך לידה"
-                    value={details.birthDate}
-                    InputProps={{ readOnly: true }}
-                    variant="outlined"
-                    className='register-textfield'
-                />
-                <TextField
-                    fullWidth
-                    margin="normal"
-                    label="מספר טלפון"
-                    value={details.userPhoneNumber}
-                    onChange={handlePhoneNumberChange}
-                    variant="outlined"
-                    className='register-textfield'
-                />
                 <Button
                     fullWidth
                     variant="contained"
