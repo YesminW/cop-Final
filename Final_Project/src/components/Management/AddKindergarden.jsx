@@ -56,7 +56,7 @@ export default function AddKindergarden() {
 
         if (validateForm()) {
             const apiurl = 'http://localhost:5108/AddKindergarten';
-            const urlExcelC = 'http://localhost:5108/AddUserByExcel';
+            const urlExcelC = 'http://localhost:5108/AddChildrenByExcel';
 
             const formData = new FormData();
             formData.append('file', file);
@@ -76,7 +76,7 @@ export default function AddKindergarden() {
                         method: 'POST',
                         body: formData,
                     }).then(res => {
-                        if (!res.ok) throw new Error('Failed to add users by excel');
+                        if (!res.ok) throw new Error('Failed to add Childs by excel');
                         return res.json();
                     })
                 ]);
