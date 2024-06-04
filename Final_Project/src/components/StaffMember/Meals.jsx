@@ -60,11 +60,11 @@ export default function Meals() {
 
     return (
         <div className="container">
-            <header className="header">
-                <h1>מה אוכלים היום</h1>
+            <header className="headermeals">
+                <h1 style={{fontSize: '48px'}}>מה אוכלים היום</h1>
             </header>
             <div className="date-selector">
-                <select onChange={handleWeekChange} style={{ width: '100%', padding: '10px', fontSize: '16px' }}>
+                <select onChange={handleWeekChange} style={{ width: '100%', padding: '10px', fontSize: '30px' }}>
                     {weeks.map((week, index) => (
                         <option key={index} value={`${week.start} - ${week.end}`}>
                             {week.start} - {week.end}

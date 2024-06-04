@@ -45,7 +45,7 @@ export default function KindergartenManagement() {
                 marginTop: '20px'
             }}
         >
-            <Typography variant="h4" style={{ color: 'white', marginBottom: '20px', fontFamily: 'Karantina', fontSize: '48px' }}>
+            <Typography variant="h4" ב>
                 ניהול גנים
             </Typography>
             {kindergartens.map((kindergarten, index) => (

@@ -81,7 +81,7 @@ export default function AdditionalRegistrationForm(props) {
                 method: 'POST',
                 body: JSON.stringify(finalData),
                 headers: new Headers({
-                    'Content-type': 'application/json; charset=UTF-8' //very important to add the 'charset=UTF-8'!!!!
+                    'Content-type': 'application/json; charset=UTF-8' // very important to add the 'charset=UTF-8'!!!!
                 })
             })
                 .then(res => {
@@ -90,8 +90,9 @@ export default function AdditionalRegistrationForm(props) {
                 })
                 .then(
                     (result) => {
-                        navigate('/LoginManage');
-                        localStorage.removeItem('registrationData');
+                        console.log("fetch POST= ", result);
+                        console.log(result.Avg);
+                        navigate('/LoginManage')
                     },
                     (error) => {
                         console.log("err post=", error);

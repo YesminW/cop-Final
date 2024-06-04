@@ -7,17 +7,22 @@
   padding: 20px;
 }
 
-.header {
-  font-size: 24px;
+.headermeals {
   margin-bottom: 20px;
   justify-content: center;
+  background-color: #ABD1C6;
+  width: 100%;
+  border-radius: 10px;
 }
 
 .date-selector select {
   padding: 10px;
-  font-size: 16px;
+  font-size: 25px;
   margin-bottom: 20px;
   width: 100%;
+  background-color: #ABD1C6;
+  border-radius: 10px;
+  border: none;
 }
 
 .day-grid {
