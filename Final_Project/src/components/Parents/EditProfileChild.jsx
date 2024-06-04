@@ -1,10 +1,9 @@
-import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { TextField, Button } from '@mui/material';
 import Efooterp from '../../Elements/EfooterP';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-
 
 import '../../assets/StyleSheets/Register.css';
 
@@ -15,18 +14,16 @@ export default function EditProfileChild() {
         lastName: '',
         idNumber: '',
         birthDate: '',
-        phoneNumber: '',
     });
 
     useEffect(() => {
-        const storedDetails = JSON.parse(sessionStorage.getItem('currentUser'));
-        if (storedDetails) {
+        const storedChild = JSON.parse(sessionStorage.getItem('childData'));
+        if (storedChild) {
             setDetails({
-                firstName: storedDetails.firstName || '',
-                lastName: storedDetails.lastName || '',
-                idNumber: storedDetails.idNumber || '',
-                birthDate: storedDetails.birthDate || '',
-                phoneNumber: storedDetails.phoneNumber || '',
+                firstName: storedChild.childFirstName || '',
+                lastName: storedChild.ChildSurname || '',
+                idNumber: storedChild.childID || '',
+                birthDate: storedChild.childBirthDate || '',
             });
         }
     }, []);
@@ -58,7 +55,6 @@ export default function EditProfileChild() {
                     InputProps={{ readOnly: true }}
                     className='register-textfield'
                     variant="outlined"
-
                 />
                 <TextField
                     fullWidth
@@ -99,7 +95,8 @@ export default function EditProfileChild() {
                         '&:hover': {
                             backgroundColor: '#6196A6',
                         }
-                    }}        >
+                    }}
+                >
                     העלאת תמונת פרופיל
                     <input
                         type="file"
