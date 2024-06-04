@@ -183,7 +183,7 @@ namespace Co_p_new__WebApi.Controllers
 
         [HttpPost]
         [Route("ManagerRegisterion")]
-        public dynamic ManagerRegisterion([FromBody] User obj )
+        public dynamic ManagerRegisterion([FromBody] User obj)
         {
             var manager = db.Users.FirstOrDefault(u => u.UserId == obj.UserId);
             if (manager == null)
@@ -203,10 +203,10 @@ namespace Co_p_new__WebApi.Controllers
                 };
                 db.Users.Add(newManager);
                 db.SaveChanges();
-                return "The manager" + newManager.UserPrivetName + " " + newManager.UserSurname + "Is registered";
+                return Ok(new { Message = "The manager Is registered" });
 
             }
-            return ("Manager already registerd");
+            return BadRequest(new { Message = "Manager already registerd" });
         }
 
         [HttpPut]

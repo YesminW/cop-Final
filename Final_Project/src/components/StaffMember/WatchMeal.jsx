@@ -1,6 +1,8 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../../assets/StyleSheets/WatchMeal.css';
+import EfooterS from '../../Elements/EfooterS';
+
 
 const WatchMeal = () => {
     const location = useLocation();
@@ -26,6 +28,7 @@ const WatchMeal = () => {
                 </div>
                 <button className="confirm-button" onClick={handleConfirmClick}>אישור</button>
             </div>
+            {EfooterS}
         </div>
     );
 };
