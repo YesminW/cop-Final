@@ -42,7 +42,7 @@ namespace Co_p_new__WebApi.Controllers
             {
                 return ("Child not found");
             }
-            return child;
+            return child.ChildFirstName;
             
         }
 
