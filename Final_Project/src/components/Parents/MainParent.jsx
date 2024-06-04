@@ -47,7 +47,7 @@ export default function MainParent() {
       {Elogo1}
       <br />
       <div className='info-card'>
-        <h2>{greeting} {userData.firstName}</h2>
+        <h2>{greeting} {userData.FirstName}</h2>
       </div>
       <div className="grid-container">
         <div className='grid-item'>

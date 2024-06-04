@@ -13,22 +13,38 @@ export default function LogInParent() {
     const navigate = useNavigate();
 
     const loginUser = () => {
-        const urlLM = 'http://localhost:5108/LogIn'
-        fetch(urlLM + '/' + ID + '/' + password, {
-            method: 'GET',
-            headers: new Headers({
-                'Content-Type': 'application/json; charset=UTF-8',
-            })
+        const urlLs = 'http://localhost:5108/LogIn';
+        fetch(urlLs + '/' + ID + '/' + password, {
+          method: 'GET',
+          headers: new Headers({
+            'Content-Type': 'application/json; charset=UTF-8',
+          })
         })
-            .then(
-                () => {
-                    sessionStorage.setItem('currentUserP', JSON.stringify(ID));
-                    navigate('/MainParent')
-                },
-                () => {
-                    setErrors("המייל / הסיסמא שגויים")
-                });
-    };
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.text(); // מקבל את התשובה כמחרוזת
+          })
+          .then(text => {
+            if (text.includes("Invalid credentials")) { // בדיקת השגיאה מהשרת
+              setErrors("המייל / הסיסמא שגויים");
+              throw new Error('Invalid credentials');
+            } else {
+              // כאן נתייחס למחרוזת כאילו היא מכילה רק את השם הפרטי
+              const userInfo = {
+                ID,
+                FirstName: text // השם הפרטי שהתקבל מהמחרוזת
+              };
+              sessionStorage.setItem('currentUserP', JSON.stringify(userInfo));
+              navigate('/MainStaffMember');
+            }
+          })
+          .catch(error => {
+            setErrors("המייל / הסיסמא שגויים");
+            console.error('There was a problem with the fetch operation:', error);
+          });
+      };
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
