@@ -10,7 +10,7 @@ export default function StaffRegister2() {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-
+    
     const urlSR = 'http://localhost:5108/updateUser';
 
     fetch(urlSR + '/' + details.userId, {
