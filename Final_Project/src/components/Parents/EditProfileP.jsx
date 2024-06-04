@@ -4,9 +4,9 @@ import { Button, TextField } from '@mui/material';
 import EfooterP from '../../Elements/EfooterP';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-
 export default function EditProfileP() {
   const navigate = useNavigate();
+  const [file, setFile] = useState('');
   const [details, setDetails] = useState({
     userPrivetName: '',
     userSurname: '',
@@ -17,62 +17,115 @@ export default function EditProfileP() {
     userEmail: '',
     userpPassword: '',
     userAddress: ''
-});
+  });
 
   useEffect(() => {
     const storedDetails = JSON.parse(sessionStorage.getItem('currentUserP'));
 
-    const urldos = 'http://localhost:5108/GetOneUser'
+
+    const urldos = 'http://localhost:5108/GetOneUser';
 
     fetch(urldos + '/' + storedDetails.ID, {
-        method: 'GET',
-        headers: new Headers({
-            'Content-Type': 'application/json; charset=UTF-8',
-        })
+      method: 'GET',
+      headers: new Headers({
+        'Content-Type': 'application/json; charset=UTF-8',
+      })
     })
-        .then(response => response.json())
-        .then(
-            (data) => {
-                const userData = Array.isArray(data) ? data[0] : data; // בדיקה אם הנתונים הם מערך או אובייקט
-                setDetails({
-                    userPrivetName: userData.userPrivetName || '',
-                    userSurname: userData.userSurname || '',
-                    userId: userData.userId || '',
-                    userBirthDate: userData.userBirthDate || '',
-                    userPhoneNumber: userData.userPhoneNumber || '',
-                    userGender: userData.userGender || '',
-                    userEmail: userData.userEmail || '',
-                    userpPassword: userData.userpPassword || '',
-                    userAddress: userData.userAddress || ''
-                });
-            },
-            () => {
-                console.log(error)
-            })
+      .then(response => response.json())
+      .then(
+        (data) => {
+          const userData = Array.isArray(data) ? data[0] : data;
+          setDetails({
+            userPrivetName: userData.userPrivetName || '',
+            userSurname: userData.userSurname || '',
+            userId: userData.userId || '',
+            userBirthDate: userData.userBirthDate || '',
+            userPhoneNumber: userData.userPhoneNumber || '',
+            userGender: userData.userGender || '',
+            userEmail: userData.userEmail || '',
+            userpPassword: userData.userpPassword || '',
+            userAddress: userData.userAddress || ''
+          });
+        },
+        (error) => {
+          console.log(error)
+        })
+  }, []);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setDetails(prevDetails => ({
+      ...prevDetails,
+      [name]: value
+    }));
+  };
 
-}, []);
-
- 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file && (file.type === 'image/jpeg' || file.type === 'image/jpg')) {
       console.log('Uploaded file:', file);
-      // כאן ניתן להוסיף לוגיקה לטיפול בהעלאת התמונה
+      setFile(file)
     } else {
       alert('יש להעלות קובץ מסוג JPG או JPEG בלבד.');
     }
-  };
+  }
 
-  const handleSubmit = () => {
-    navigate('/MainParent', { state: details });
+  const handleSubmit = (e) => {
+    e.preventDefault(); // להימנע מטעינת עמוד מחדש
+    const urlSP = 'http://localhost:5108/updateUser';
+
+    fetch(urlSP + '/' + details.userId, {
+      method: 'PUT',
+      body: JSON.stringify(details),
+      headers: new Headers({
+        'Content-type': 'application/json; charset=UTF-8'
+      })
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then(
+        (result) => {
+          console.log("fetch POST= ", result);
+          if (file) {
+            const urlphotol = 'http://localhost:5108/UploadUserPhoto';
+            const formData = new FormData();
+            formData.append("file", file);
+
+            fetch(urlphotol + '/' + details.userId, {
+              method: 'PUT',
+              body: formData,
+            })
+              .then(res => {
+                if (!res.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return res.json();
+              })
+              .then(
+                () => {
+                  navigate('/MainParent');
+                },
+                (error) => {
+                  console.log("err post=", error);
+                });
+          } else {
+            navigate('/MainParent');
+          }
+        },
+        (error) => {
+          console.log("err post=", error);
+        });
   };
 
   return (
     <>
-      <form>
-        <div style={{ backgroundColor: '#cce7e8', padding: 10, borderRadius: 5, marginBottom: 30 }}>
-          <h2 style={{ textAlign: 'center', margin: 0 }}> פרטים אישיים {details.firstName} </h2>
+      <form onSubmit={handleSubmit}>
+        <div style={{ backgroundColor: '#cce7e8', padding: 10, borderRadius: 5, marginBottom: 10 }}>
+          <h2 style={{ textAlign: 'center', margin: 0 }}> פרטים אישיים {details.userPrivetName} </h2>
         </div>
         <TextField
           fullWidth
@@ -87,8 +140,9 @@ export default function EditProfileP() {
           fullWidth
           margin="normal"
           label="שם פרטי"
-          value={details.userPrivetName}
+          name="userPrivetName"
           InputProps={{ readOnly: true }}
+          value={details.userPrivetName}
           variant="outlined"
           className='register-textfield'
         />
@@ -96,8 +150,9 @@ export default function EditProfileP() {
           fullWidth
           margin="normal"
           label="שם משפחה"
-          value={details.userSurname}
           InputProps={{ readOnly: true }}
+          name="userSurname"
+          value={details.userSurname}
           variant="outlined"
           className='register-textfield'
         />
@@ -105,8 +160,9 @@ export default function EditProfileP() {
           fullWidth
           margin="normal"
           label="כתובת"
+          name="userAddress"
           value={details.userAddress}
-          InputProps={{ readOnly: true }}
+          onChange={handleInputChange}
           variant="outlined"
           className='register-textfield'
         />
@@ -114,7 +170,19 @@ export default function EditProfileP() {
           fullWidth
           margin="normal"
           label="מייל"
+          name="userEmail"
           value={details.userEmail}
+          onChange={handleInputChange}
+          variant="outlined"
+          className='register-textfield'
+        />
+        <TextField
+          fullWidth
+          margin="normal"
+          label="פלאפון"
+          name="userPhoneNumber"
+          value={details.userPhoneNumber}
+          onChange={handleInputChange}
           variant="outlined"
           className='register-textfield'
         />
@@ -123,19 +191,9 @@ export default function EditProfileP() {
           margin="normal"
           label="שינוי סיסמא"
           type='password'
-          name="password"
+          name="userpPassword"
           value={details.userpPassword}
-          InputProps={{ readOnly: true }}
-          variant="outlined"
-          className='register-textfield'
-        />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="פלאפון"
-          name="phoneNumber"
-          value={details.userPhoneNumber}
-          InputProps={{ readOnly: true }}
+          onChange={handleInputChange}
           variant="outlined"
           className='register-textfield'
         />
@@ -146,12 +204,14 @@ export default function EditProfileP() {
           tabIndex={0}
           startIcon={<CloudUploadIcon />}
           sx={{
-            margin: '20px',
+            margin: '10px',
             backgroundColor: '#076871',
             '&:hover': {
               backgroundColor: '#6196A6',
-            }
-          }}        >
+            },
+            fontSize: '15px'
+          }}
+        >
           העלאת תמונת פרופיל
           <input
             type="file"
@@ -166,7 +226,6 @@ export default function EditProfileP() {
           variant="contained"
           color="primary"
           sx={{ mt: 2 }}
-          onClick={handleSubmit}
           type='submit'
         >
           אישור

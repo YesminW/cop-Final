@@ -33,9 +33,6 @@ export default function StaffRegister2() {
         (error) => {
           console.log("err post=", error);
         });
-
-    localStorage.setItem('users', JSON.stringify(details));
-    console.log('Updated details:', details);
   };
 
   return (
