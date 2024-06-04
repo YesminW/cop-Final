@@ -18,7 +18,7 @@ export default function MainParent() {
   const [currentDay, setCurrentDay] = useState('');
 
   useEffect(() => {
-    const storedUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    const storedUser = JSON.parse(sessionStorage.getItem('currentUserP'));
 
     if (storedUser) {
       setUserData(storedUser);

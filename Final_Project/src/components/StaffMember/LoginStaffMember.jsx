@@ -17,7 +17,7 @@ export default function LoginStaffMember() {
 
   const loginUser = () => {
     const urlLs = 'http://localhost:5108/LogIn';
-    fetch(urlLS + '/' + ID + '/' + password, {
+    fetch(urlLs + '/' + ID + '/' + password, {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json; charset=UTF-8',
@@ -39,8 +39,8 @@ export default function LoginStaffMember() {
             ID,
             FirstName: text // השם הפרטי שהתקבל מהמחרוזת
           };
-          sessionStorage.setItem('currentUser', JSON.stringify(userInfo));
-          navigate('/MainParent');
+          sessionStorage.setItem('currentUserS', JSON.stringify(userInfo));
+          navigate('/MainStaffMember');
         }
       })
       .catch(error => {

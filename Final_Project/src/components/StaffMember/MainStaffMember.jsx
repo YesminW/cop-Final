@@ -5,7 +5,6 @@ import he from 'date-fns/locale/he';
 import { useSwipeable } from 'react-swipeable';
 import NavigationDots from './NavigationDots';
 
-
 import Elogo1 from '../../Elements/Elogo1';
 import EfooterS from '../../Elements/EfooterS';
 import '../../assets/StyleSheets/MainStaff.css';
@@ -13,13 +12,15 @@ import { Button } from '@mui/material';
 
 export default function MainStaffMember() {
   const navigate = useNavigate();
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState([]);
   const [greeting, setGreeting] = useState('');
   const [currentDate, setCurrentDate] = useState('');
   const [currentDay, setCurrentDay] = useState('');
 
   useEffect(() => {
     const storedUser = JSON.parse(sessionStorage.getItem('currentUserS'));
+
+    console.log(storedUser);
 
     if (storedUser) {
       setUserData(storedUser);
@@ -49,12 +50,14 @@ export default function MainStaffMember() {
     trackMouse: true
   });
 
+  console.log(`Greeting: ${greeting}, FirstName: ${userData.FirstName}`);
+
   return (
     <div className="home-container" {...handlers}>
       {Elogo1}
       <br />
       <div className='info-card'>
-        <h2>{greeting} {userData.firstName}</h2>
+        <h2>{greeting} {userData.FirstName}</h2>
       </div>
       <div className="grid-container">
         <div className='grid-item'>
@@ -62,7 +65,7 @@ export default function MainStaffMember() {
         </div>
         <div className='grid-item'>
           <Link to='/presence'>
-            <Button style={{fontFamily: 'Karantina', color:'white', fontSize:'24px'}}>נוכחים בגן</Button>
+            <Button style={{ fontFamily: 'Karantina', color: 'white', fontSize: '24px' }}>נוכחים בגן</Button>
           </Link>
         </div>
       </div>
