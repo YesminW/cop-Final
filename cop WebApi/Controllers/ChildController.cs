@@ -43,7 +43,7 @@ namespace Co_p_new__WebApi.Controllers
                 return ("Child not found");
             }
             return child;
-            
+
         }
 
         [HttpPost]
@@ -105,15 +105,83 @@ namespace Co_p_new__WebApi.Controllers
                             children.Add(newChild);
                         }
 
+
+
                     }
                 }
             }
-
+            RegisteredTo(file);
             db.Children.AddRange(children);
             await db.SaveChangesAsync();
 
+
             return Ok(new { Message = "Data imported successfully." });
         }
+
+        [HttpPut]
+        [Route("Registered")]
+        public dynamic RegisteredTo(IFormFile file)
+        {
+
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("Please upload a valid Excel file.");
+            }
+
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial; // Set the license context
+
+            var children = new List<Child>();
+            var registered = new List<RegisterdTo>();
+
+
+            using (var stream2 = new MemoryStream())
+            {
+                await file.CopyToAsync(stream2);
+                using (var package = new ExcelPackage(stream2))
+                {
+                    var worksheet = package.Workbook.Worksheets.First();
+                    if (worksheet.Dimension == null)
+                    {
+                        return BadRequest("The Excel file is empty.");
+                    }
+                    var rowCount = worksheet.Dimension.Rows;
+                    Console.WriteLine($"Row count: {rowCount}");
+
+                    for (int row = 2; row <= rowCount; row++) // Assuming the first row is the header
+                    {
+                        var childId = worksheet.Cells[row, 1].Text;
+                        var childFirstName = worksheet.Cells[row, 2].Text; // Change from int to string
+                        var childSurname = worksheet.Cells[row, 3].Text;  // Change from int to string
+                        var childBirthDate = DateTime.Parse(worksheet.Cells[row, 4].Text); // Parse DateTime
+                        var childGender = worksheet.Cells[row, 5].Text;
+                        var parent1 = worksheet.Cells[row, 6].Text;
+                        var parent2 = worksheet.Cells[row, 7].Text;
+                        var childPhotoName = worksheet.Cells[row, 8].Text;
+                        var CurrentAcademicYear = int.Parse(worksheet.Cells[row, 9].Text);
+                        var KindergartenNumber = int.Parse(worksheet.Cells[row, 10].Text);
+                    }
+                    for (int i = 0; i < children.Count; i++)
+                    {
+                        var register = db.RegisterdTos.FirstOrDefault(r => r.ChildId == children[i].ChildId);
+                        if (register == null)
+                        {
+                            var newRegister = new RegisterdTo
+                            {
+                                ChildId = children[i].ChildId,
+                                CurrentAcademicYear = CurrentAcademicYear,
+                                KindergartenNumber = KindergartenNumber
+                            };
+                            registered.Add(register);
+
+                        }
+                    }
+                }
+                db.RegisterdTos.AddRange(registered);
+                return Ok(new { Message = "Data imported successfully." });
+
+            }
+        }
+
         [HttpPost]
         [Route("AddChildren")]
         public dynamic addChild(string ID, string childFMame, string chilsSName, DateTime chilsBdate, string gender, string parent1, string parent2)
@@ -154,5 +222,9 @@ namespace Co_p_new__WebApi.Controllers
 
 
 
+
     }
+
 }
+
+

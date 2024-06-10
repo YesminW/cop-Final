@@ -143,31 +143,6 @@ namespace Co_p_new__WebApi.Controllers
 
                             };
 
-                            //if (UserCode == 222)
-                            //{
-                            //    Parent p = new Parent();
-                            //    p.UserId = newUser.UserId;
-                            //    db.Parents.Add(p);
-
-                            //}
-                            //else if (UserCode == 111 || UserCode == 333)
-                            //{
-                            //    // Check if the user is already a staff member
-                            //    if (!db.StaffMembers.Any(s => s.UserId == newUser.UserId))
-                            //    {
-                            //        StaffMember s = new StaffMember();
-                            //        s.UserId = newUser.UserId;
-                            //        List<int> kindergartenCodes = db.Kindergartens.Select(k => k.KindergartenNumber).ToList();
-                            //        if (kindergartenCodes.Count > 0)
-                            //        {
-                            //            // Assign a random kindergarten code
-                            //            Random random = new Random();
-                            //            s.KindergartenNumber = kindergartenCodes[random.Next(kindergartenCodes.Count)];
-                            //        }
-                            //        db.StaffMembers.Add(s);
-
-                            //    }
-                            //}
 
                             users.Add(newUser);
                         }
@@ -180,6 +155,53 @@ namespace Co_p_new__WebApi.Controllers
 
             return Ok(new { Message = "Data imported successfully." });
         }
+
+        [HttpPut]
+        [Route("parentOrStaff")]
+        public dynamic ParentOrStaff()
+        {
+            List<User> users = db.Users.ToList();
+            var parent = new List<Parent>();
+            var staff = new List<StaffMember>();
+
+            for (int i = 0; i < users.Count(); i++)
+            {
+                if (users[i].UserCode == 222)
+                {
+                    if (!db.Parents.Any(s => s.UserId == users[i].UserId))
+                    {
+                        Parent p = new Parent();
+                        p.UserId = users[i].UserId;
+                        parent.Add(p);
+                    }
+                }
+                else if (users[i].UserCode == 111 || users[i].UserCode == 333)
+                {
+                    // Check if the user is already a staff member
+                    if (!db.StaffMembers.Any(s => s.UserId == users[i].UserId))
+                    {
+                        StaffMember s = new StaffMember();
+                        s.UserId = users[i].UserId;  // Remove this line if UserId is an identity column
+
+                        List<int> kindergartenCodes = db.Kindergartens.Select(k => k.KindergartenNumber).ToList();
+                        if (kindergartenCodes.Count > 0)
+                        {
+                            // Assign a random kindergarten code
+                            Random random = new Random();
+                            s.KindergartenNumber = kindergartenCodes[random.Next(kindergartenCodes.Count)];
+                        }
+                        staff.Add(s);
+                    }
+                }
+            }
+            db.Parents.AddRange(parent);
+            db.SaveChanges();
+            db.StaffMembers.AddRange(staff);
+            db.SaveChanges();
+
+            return ("Data imported successfully");
+        }
+
 
         [HttpPost]
         [Route("ManagerRegisterion")]
