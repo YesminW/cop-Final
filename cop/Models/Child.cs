@@ -32,6 +32,7 @@ public partial class Child
     public virtual Parent Parent1Navigation { get; set; } = null!;
 
     public virtual Parent Parent2Navigation { get; set; } = null!;
+    public virtual RegisterdTo RegisterdTosNavigation { get; set; } = null!;
 
     public virtual ICollection<RegisterdTo> RegisterdTos { get; set; } = new List<RegisterdTo>();
 }
