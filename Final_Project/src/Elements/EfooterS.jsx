@@ -16,26 +16,26 @@ const EfooterS =
             <img src={logo} alt="My Logo" className="logofooter" />
         </Link>
         <Link to="/MainStaffMember">
-            <IconButton >
+            <IconButton>
                 <People className="footer-icon" />
             </IconButton>
         </Link>
         <Link>
-            <IconButton >
+            <IconButton>
                 <EditCalendarOutlinedIcon className="footer-icon" />
             </IconButton>
         </Link>
         <Link to='/Meals'>
-            <IconButton >
+            <IconButton>
                 <RestaurantMenuOutlinedIcon className="footer-icon" />
             </IconButton>
         </Link>
         <Link>
-            <IconButton >
+            <IconButton>
                 <Notifications className="footer-icon" />
             </IconButton>
         </Link>
-        <IconButton >
+        <IconButton>
             <SendOutlinedIcon className="footer-icon" />
         </IconButton>
     </div>
