@@ -1,43 +1,53 @@
 import { Button, TextField } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import EfooterS from '../../Elements/EfooterS';
 import '../../assets/StyleSheets/RegisterStaff.css';
 
 export default function StaffRegister2() {
   const location = useLocation();
-  const details = location.state || {};
+  const initialDetails = location.state || {};
+  const [details, setDetails] = useState(initialDetails);
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDetails({
+      ...details,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const urlSR = 'http://localhost:5108/updateUser';
 
     fetch(urlSR + '/' + details.userId, {
       method: 'PUT',
       body: JSON.stringify(details),
       headers: new Headers({
-        'Content-type': 'application/json; charset=UTF-8' //very important to add the 'charset=UTF-8'!!!!
-      })
+        'Content-type': 'application/json; charset=UTF-8', // very important to add the 'charset=UTF-8'!!!!
+      }),
     })
-      .then(res => {
+      .then((res) => {
         console.log('res=', res);
-        return res.json()
+        return res.json();
       })
       .then(
         (result) => {
-          console.log("fetch POST= ", result);
+          console.log('fetch POST= ', result);
           console.log(result.Avg);
-          navigate('/MainStaffMember')
+          navigate('/MainStaffMember');
         },
         (error) => {
-          console.log("err post=", error);
-        });
+          console.log('err post=', error);
+        }
+      );
   };
 
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div style={{ backgroundColor: '#cce7e8', padding: 10, borderRadius: 5, marginBottom: 30 }}>
           <h2 style={{ textAlign: 'center', margin: 0 }}> פרטים אישיים {details.firstName} </h2>
         </div>
@@ -45,8 +55,9 @@ export default function StaffRegister2() {
           fullWidth
           margin="normal"
           label="כתובת"
-          name="address"
+          name="userAddress"
           value={details.userAddress}
+          onChange={handleChange}
           variant="outlined"
           className='register-textfield'
         />
@@ -54,8 +65,9 @@ export default function StaffRegister2() {
           fullWidth
           margin="normal"
           label="מין"
-          name="gender"
+          name="userGender"
           value={details.userGender}
+          onChange={handleChange}
           variant="outlined"
           className='register-textfield'
         />
@@ -63,8 +75,9 @@ export default function StaffRegister2() {
           fullWidth
           margin="normal"
           label="אימייל"
-          name="email"
+          name="userEmail"
           value={details.userEmail}
+          onChange={handleChange}
           variant="outlined"
           className='register-textfield'
         />
@@ -74,6 +87,7 @@ export default function StaffRegister2() {
           label="בעיות בריאות"
           name="healthIssues"
           value={details.healthIssues}
+          onChange={handleChange}
           variant="outlined"
           className='register-textfield'
         />
@@ -82,7 +96,9 @@ export default function StaffRegister2() {
           margin="normal"
           label="שינוי סיסמא"
           type="password"
+          name="userpPassword"
           value={details.userpPassword}
+          onChange={handleChange}
           variant="outlined"
           className='register-textfield'
         />
@@ -91,8 +107,7 @@ export default function StaffRegister2() {
           variant="contained"
           color="primary"
           sx={{ mt: 2 }}
-          onClick={handleSubmit}
-          type='submit'
+          type="submit"
         >
           אישור
         </Button>
