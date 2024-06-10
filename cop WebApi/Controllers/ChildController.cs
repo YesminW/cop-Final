@@ -58,7 +58,7 @@ namespace Co_p_new__WebApi.Controllers
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial; // Set the license context
 
             var children = new List<Child>();
-            //var registered = new List<RegisterdTo>();
+            var registered = new List<RegisterdTo>();
 
 
             using (var stream = new MemoryStream())
@@ -90,7 +90,6 @@ namespace Co_p_new__WebApi.Controllers
 
                         // Retrieve or create related entities as needed
                         var child = db.Children.FirstOrDefault(c => c.ChildId == childId);
-                        //var register = db.RegisterdTos.FirstOrDefault(r => r.ChildId == childId);
                         if (child == null)
                         {
                             var newChild = new Child
@@ -104,15 +103,15 @@ namespace Co_p_new__WebApi.Controllers
                                 Parent2 = parent2,
                                 ChildPhotoName = childPhotoName
                             };
-                            //var newRegister = new RegisterdTo
-                            //{
-                            //    ChildId = childId,
-                            //    CurrentAcademicYear = CurrentAcademicYear,
-                            //    KindergartenNumber = KindergartenNumber
-                            //};
+                            var newRegister = new RegisterdTo
+                            {
+                                ChildId = childId,
+                                CurrentAcademicYear = CurrentAcademicYear,
+                                KindergartenNumber = KindergartenNumber
+                            };
 
 
-                            //registered.Add(register);
+                            registered.Add(newRegister);
                             children.Add(newChild);
                         }
 
@@ -120,8 +119,8 @@ namespace Co_p_new__WebApi.Controllers
                 }
 
                 db.Children.AddRange(children);
-                //db.RegisterdTos.AddRange(registered);
-                await db.SaveChangesAsync();
+                db.RegisterdTos.AddRange(registered);
+                db.SaveChanges();
 
 
                 return Ok(new { Message = "Data imported successfully." });

@@ -174,6 +174,10 @@ public partial class CoPNewContext : DbContext
                 .HasForeignKey(d => d.Parent2)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Child__Parent_2__5165187F");
+
+            entity.HasMany(c => c.RegisterdTos)
+            .WithOne(r => r.Child)
+            .HasForeignKey(r => r.ChildId);
         });
 
         modelBuilder.Entity<DailyAttendance>(entity =>
