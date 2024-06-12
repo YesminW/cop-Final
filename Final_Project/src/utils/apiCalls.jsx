@@ -55,7 +55,7 @@ export async function updateUserById(details) {
     const { userId, ...rest } = details;
     const user = await fetch(`${SERVER_URL}/updateUser/${userId}`, {
       method: "PUT",
-      body: rest,
+      body: JSON.stringify(rest),
       headers: new Headers({
         "Content-Type": "application/json; charset=UTF-8",
       }),
@@ -70,13 +70,15 @@ export async function updateUserById(details) {
 
 export async function uploadUserPhoto(data) {
   try {
+    console.log(data);
     const { userId, file } = data;
+    console.log(userId);
+    console.log(file);
+    const formData = new FormData();
+    formData.append("file", file);
     const photo = await fetch(`${SERVER_URL}/UploadUserPhoto/${userId}`, {
       method: "PUT",
-      body: { file },
-      headers: new Headers({
-        "Content-Type": "application/json; charset=UTF-8",
-      }),
+      body: formData,
     });
     const photoData = await photo.json();
     return photoData;

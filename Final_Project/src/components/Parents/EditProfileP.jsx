@@ -38,62 +38,18 @@ export default function EditProfileP() {
       const data = Object.fromEntries(formData);
 
       if (
-        !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.userEmail)
+        !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.UserEmail)
       ) {
         console.error("Not a valid email");
         return;
+      }
+      if (!data["UserpPassword"].trim()) {
+        data["UserpPassword"] = details.UserpPassword;
       }
       const promises = [updateUserById(data)];
       if (file) promises.push(uploadUserPhoto({ userId: data.userId, file }));
       await Promise.all(promises);
       navigate("/MainParent");
-      // fetch(urlSP + "/" + details.userId, {
-      //   method: "PUT",
-      //   body: JSON.stringify(details),
-      //   headers: new Headers({
-      //     "Content-type": "application/json; charset=UTF-8",
-      //   }),
-      // })
-      //   .then((res) => {
-      //     if (!res.ok) {
-      //       throw new Error("Network response was not ok");
-      //     }
-      //     return res.json();
-      //   })
-      //   .then(
-      //     (result) => {
-      //       console.log("fetch POST= ", result);
-      //       if (file) {
-      //         const urlphotol = "http://localhost:5108/UploadUserPhoto";
-      //         const formData = new FormData();
-      //         formData.append("file", file);
-
-      //         fetch(urlphotol + "/" + details.userId, {
-      //           method: "PUT",
-      //           body: formData,
-      //         })
-      //           .then((res) => {
-      //             if (!res.ok) {
-      //               throw new Error("Network response was not ok");
-      //             }
-      //             return res.json();
-      //           })
-      //           .then(
-      //             () => {
-      //               navigate("/MainParent");
-      //             },
-      //             (error) => {
-      //               console.log("err post=", error);
-      //             }
-      //           );
-      //       } else {
-      //         navigate("/MainParent");
-      //       }
-      //     },
-      //     (error) => {
-      //       console.log("err post=", error);
-      //     }
-      //   );
     } catch (error) {
       console.error(error);
     } finally {
@@ -114,7 +70,7 @@ export default function EditProfileP() {
         >
           <h2 style={{ textAlign: "center", margin: 0 }}>
             {" "}
-            פרטים אישיים {details.userPrivetName}{" "}
+            פרטים אישיים {details.UserPrivetName}{" "}
           </h2>
         </div>
         <TextField
@@ -122,7 +78,7 @@ export default function EditProfileP() {
           margin="normal"
           label="תעודת זהות"
           name="userId"
-          value={details.userId}
+          value={details.UserId}
           InputProps={{ readOnly: true }}
           variant="outlined"
           className="register-textfield"
@@ -133,7 +89,7 @@ export default function EditProfileP() {
           label="שם פרטי"
           name="UserPrivetName"
           InputProps={{ readOnly: true }}
-          value={details.userPrivetName}
+          value={details.UserPrivetName}
           variant="outlined"
           className="register-textfield"
         />
@@ -143,7 +99,7 @@ export default function EditProfileP() {
           label="שם משפחה"
           InputProps={{ readOnly: true }}
           name="UserSurname"
-          value={details.userSurname}
+          value={details.UserSurname}
           variant="outlined"
           className="register-textfield"
         />
@@ -152,7 +108,7 @@ export default function EditProfileP() {
           margin="normal"
           label="כתובת"
           name="UserAddress"
-          value={details.userAddress}
+          value={details.UserAddress}
           onChange={handleInputChange}
           variant="outlined"
           className="register-textfield"
@@ -163,7 +119,7 @@ export default function EditProfileP() {
           label="מייל"
           name="UserEmail"
           type="email"
-          value={details.userEmail}
+          value={details.UserEmail}
           onChange={handleInputChange}
           variant="outlined"
           className="register-textfield"
@@ -173,7 +129,7 @@ export default function EditProfileP() {
           margin="normal"
           label="פלאפון"
           name="UserPhoneNumber"
-          value={details.userPhoneNumber}
+          value={details.UserPhoneNumber}
           onChange={handleInputChange}
           variant="outlined"
           className="register-textfield"
@@ -184,8 +140,6 @@ export default function EditProfileP() {
           label="שינוי סיסמא"
           type="password"
           name="UserpPassword"
-          value={details.userpPassword}
-          onChange={handleInputChange}
           variant="outlined"
           className="register-textfield"
         />
