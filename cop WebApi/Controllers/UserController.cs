@@ -38,7 +38,7 @@ namespace Co_p_new__WebApi.Controllers
         [Route("GetOneUser/{ID}")]
         public dynamic GetOneUser(string ID)
         {
-            var u = db.Users.Where(x => x.UserId == ID);
+            User? u = db.Users.Where(x => x.UserId == ID).FirstOrDefault();
             return u;
         }
 

@@ -20,7 +20,7 @@ namespace cop_WebApi.Controllers
             {
                 if (users[i].UserId == ID && users[i].UserpPassword==password)
                 {
-                    return users[i].UserPrivetName;
+                    return new {user_id = users[i].UserId };
                 }
                 
             }

@@ -40,7 +40,7 @@ namespace Co_p_new__WebApi.Controllers
                .FirstOrDefault();
             if (child == null)
             {
-                return ("Child not found");
+                return new { error = "Child not found" };
             }
             return child;
 
