@@ -34,8 +34,7 @@ export default function Meals() {
   };
 
   const handleDayClick = (date) => {
-    const formattedDate = formatDate(date);
-    navigate(`/WatchMeal?date=${formattedDate}`);
+    navigate("/WatchMeal", { state: date });
   };
 
   const handleAddMealClick = () => {
