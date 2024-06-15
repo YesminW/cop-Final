@@ -32,7 +32,6 @@ export default function MainParent() {
       try {
         setLoading(true);
         const user = await getUserById(localStorage.getItem("user_id"));
-        console.log(user);
         setUserData(user);
       } catch (error) {
         console.error(error);
@@ -55,7 +54,7 @@ export default function MainParent() {
       <br />
       <div className="info-card">
         <h2>
-          {greeting} {userData.userPrivetName}
+          {greeting} {userData.UserPrivetName}
         </h2>
       </div>
       <div className="grid-container">
