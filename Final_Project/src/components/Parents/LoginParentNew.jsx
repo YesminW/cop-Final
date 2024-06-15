@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function LoginParentNew() {
   const [showPassword, setShowPassword] = useState(false);
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
   const [error, setErrors] = useState("");
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -27,7 +27,7 @@ export default function LoginParentNew() {
       const data = Object.fromEntries(formData);
       const { user_id } = await login(data);
       localStorage.setItem("user_id", user_id);
-      Navigate("/MainParent");
+      navigate("/MainParent");
     } catch (error) {
       console.error(error);
       setErrors("המייל / הסיסמא שגויים");
