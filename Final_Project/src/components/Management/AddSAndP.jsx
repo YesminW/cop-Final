@@ -36,27 +36,6 @@ export default function AddsAndP() {
     } catch (error) {
       console.error(error);
     }
-
-    // const urlExcelS = "http://localhost:5108/AddUserByExcel";
-    // const formData = new FormData();
-    // formData.append("file", file);
-
-    // fetch(urlExcelS, {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    //   .then((res) => {
-    //     console.log("res=", res);
-    //     return res.json();
-    //   })
-    //   .then(
-    //     () => {
-    //       navigate("/KindergartenManagement");
-    //     },
-    //     (error) => {
-    //       console.log("err post=", error);
-    //     }
-    //   );
   };
 
   return (
