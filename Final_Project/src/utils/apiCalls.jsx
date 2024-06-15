@@ -70,10 +70,7 @@ export async function updateUserById(details) {
 
 export async function uploadUserPhoto(data) {
   try {
-    console.log(data);
     const { userId, file } = data;
-    console.log(userId);
-    console.log(file);
     const formData = new FormData();
     formData.append("file", file);
     const photo = await fetch(`${SERVER_URL}/UploadUserPhoto/${userId}`, {
@@ -82,6 +79,22 @@ export async function uploadUserPhoto(data) {
     });
     const photoData = await photo.json();
     return photoData;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error);
+  }
+}
+
+export async function addUserByExcel(file) {
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+    const files = await await fetch(`${SERVER_URL}/AddUserByExcel`, {
+      method: "POST",
+      body: formData,
+    });
+    const filesData = await files.json();
+    return filesData;
   } catch (error) {
     console.error(error);
     throw new Error(error);
