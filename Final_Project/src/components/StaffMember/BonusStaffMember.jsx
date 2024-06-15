@@ -36,7 +36,7 @@ export default function BonusStaffMember() {
                 <button className="add-button">הוספת תחום</button>
             </div>
             <footer className="footer">
-                <Link to="/StaffRegister">
+                <Link to="/EditProfileS">
                     <button className="edit-button">עריכת פרטים אישיים</button>
                 </Link>
             </footer>

@@ -15,8 +15,8 @@ import LoginStaffMember from "./components/StaffMember/LoginStaffMember";
 import MainStaffMember from "./components/StaffMember/MainStaffMember";
 import ActivitiesStaffMember from "./components/StaffMember/ActivitiesStaffMember";
 import BonusStaffMember from "./components/StaffMember/BonusStaffMember";
-import StaffRegister from "./components/StaffMember/StaffRegister";
-import StaffRegister2 from "./components/StaffMember/StaffRegister2";
+import EditProfileS from "./components/StaffMember/EditProfileS";
+import EditProfileS2 from "./components/StaffMember/EditProfileS2";
 import Presence from "./components/StaffMember/Presence";
 import Meals from "./components/StaffMember/Meals";
 import WatchMeal from "./components/StaffMember/WatchMeal";
@@ -64,8 +64,8 @@ function App() {
             element={<ActivitiesStaffMember />}
           />
           <Route path="/BonusStaffMember" element={<BonusStaffMember />} />
-          <Route path="/StaffRegister" element={<StaffRegister />} />
-          <Route path="/StaffRegister2" element={<StaffRegister2 />} />
+          <Route path="/EditProfileS" element={<EditProfileS />} />
+          <Route path="/EditProfileS2" element={<EditProfileS2 />} />
           <Route path="/Presence" element={<Presence />} />
           <Route path="/Meals" element={<Meals />} />
           <Route path="/WatchMeal" element={<WatchMeal />} />

@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import EfooterS from '../../Elements/EfooterS';
 import '../../assets/StyleSheets/RegisterStaff.css';
 
-export default function StaffRegister2() {
+export default function EditProfileS2() {
   const location = useLocation();
   const initialDetails = location.state || {};
   const [details, setDetails] = useState(initialDetails);
