@@ -1,69 +1,41 @@
-import { Button, TextField } from "@mui/material";
+import { Button, CircularProgress, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import EfooterS from "../../Elements/EfooterS";
 
 import "../../assets/StyleSheets/RegisterStaff.css";
+import { getUserById } from "../../utils/apiCalls";
 
 export default function EditProfileS() {
   const navigate = useNavigate();
   const [file, setFile] = useState("");
-  const [details, setDetails] = useState({
-    userPrivetName: "",
-    userSurname: "",
-    userId: "",
-    userBirthDate: "",
-    userPhoneNumber: "",
-    userGender: "",
-    userEmail: "",
-    userpPassword: "",
-    userAddress: "",
-  });
+  const [userData, setUserData] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedDetails = JSON.parse(sessionStorage.getItem("currentUserS"));
-
-    const urldos = "http://localhost:5108/GetOneUser";
-
-    fetch(urldos + "/" + storedDetails.ID, {
-      method: "GET",
-      headers: new Headers({
-        "Content-Type": "application/json; charset=UTF-8",
-      }),
-    })
-      .then((response) => response.json())
-      .then(
-        (data) => {
-          const userData = Array.isArray(data) ? data[0] : data; // בדיקה אם הנתונים הם מערך או אובייקט
-          setDetails({
-            userPrivetName: userData.userPrivetName || "",
-            userSurname: userData.userSurname || "",
-            userId: userData.userId || "",
-            userBirthDate: userData.userBirthDate || "",
-            userPhoneNumber: userData.userPhoneNumber || "",
-            userGender: userData.userGender || "",
-            userEmail: userData.userEmail || "",
-            userpPassword: userData.userpPassword || "",
-            userAddress: userData.userAddress || "",
-          });
-        },
-        () => {
-          console.log(error);
-        }
-      );
+    async function getData() {
+      try {
+        setLoading(true);
+        setUserData(getUserById(localStorage.getItem("user_id")));
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getData();
   }, []);
 
   const handlePhoneNumberChange = (event) => {
-    setDetails((prevDetails) => ({
-      ...prevDetails,
-      userPhoneNumber: event.target.value,
+    setUserData((prev) => ({
+      ...prev,
+      UserPhoneNumber: event.target.value,
     }));
   };
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file && (file.type === "image/jpeg" || file.type === "image/jpg")) {
-      console.log("Uploaded file:", file);
       setFile(file);
     } else {
       alert("יש להעלות קובץ מסוג JPG או JPEG בלבד.");
@@ -76,7 +48,7 @@ export default function EditProfileS() {
       const formData = new FormData();
       formData.append("file", file);
 
-      fetch(urlphotol + "/" + details.userId, {
+      fetch(urlphotol + "/" + userData.userId, {
         method: "PUT",
         body: formData,
       })
@@ -86,18 +58,20 @@ export default function EditProfileS() {
         })
         .then(
           () => {
-            navigate("/EditProfileS2", { state: details });
+            navigate("/EditProfileS2", { state: userData });
           },
           (error) => {
             console.log("err post=", error);
           }
         );
     } else {
-      navigate("/StaffRegister2", { state: details });
+      navigate("/StaffRegister2", { state: userData });
     }
   };
 
-  return (
+  return loading ? (
+    <CircularProgress />
+  ) : (
     <>
       <form>
         <div
@@ -110,14 +84,14 @@ export default function EditProfileS() {
         >
           <h2 style={{ textAlign: "center", margin: 0 }}>
             {" "}
-            פרטים אישיים {details.firstName}{" "}
+            פרטים אישיים {userData.firstName}{" "}
           </h2>
         </div>
         <TextField
           fullWidth
           margin="normal"
           label="שם פרטי"
-          value={details.userPrivetName}
+          value={userData.UserPrivetName}
           InputProps={{ readOnly: true }}
           variant="outlined"
           className="register-textfield"
@@ -126,7 +100,7 @@ export default function EditProfileS() {
           fullWidth
           margin="normal"
           label="שם משפחה"
-          value={details.userSurname}
+          value={userData.UserSurname}
           InputProps={{ readOnly: true }}
           variant="outlined"
           className="register-textfield"
@@ -136,7 +110,7 @@ export default function EditProfileS() {
           fullWidth
           margin="normal"
           label="תעודת זהות"
-          value={details.userId}
+          value={userData.UserId}
           InputProps={{ readOnly: true }}
           variant="outlined"
           className="register-textfield"
@@ -145,7 +119,7 @@ export default function EditProfileS() {
           fullWidth
           margin="normal"
           label="תאריך לידה"
-          value={details.userBirthDate}
+          value={userData.UserBirthDate}
           InputProps={{ readOnly: true }}
           variant="outlined"
           className="register-textfield"
@@ -154,7 +128,7 @@ export default function EditProfileS() {
           fullWidth
           margin="normal"
           label="מספר טלפון"
-          value={details.userPhoneNumber}
+          value={userData.UserPhoneNumber}
           onChange={handlePhoneNumberChange}
           variant="outlined"
           className="register-textfield"

@@ -23,7 +23,6 @@ export default function EditProfileP() {
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file && (file.type === "image/jpeg" || file.type === "image/jpg")) {
-      console.log("Uploaded file:", file);
       setFile(file);
     } else {
       alert("יש להעלות קובץ מסוג JPG או JPEG בלבד.");
@@ -34,7 +33,6 @@ export default function EditProfileP() {
     e.preventDefault();
     try {
       setLoading(true);
-      const urlSP = "http://localhost:5108/updateUser";
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData);
 
