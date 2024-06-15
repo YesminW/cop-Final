@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Main from "./components/Main";
+import First from "./components/First";
 
 import LoginManage from "./components/Management/LoginManage";
 import ManagerRegister from "./components/Management/ManagerRegister";
@@ -41,7 +41,7 @@ function App() {
     <Router>
       <div className="app">
         <Routes>
-          <Route path="/" element={<Main />} />
+          <Route path="/" element={<First />} />
 
           <Route path="/LoginManage" element={<LoginManage />} />
           <Route path="/ManagerRegister" element={<ManagerRegister />} />

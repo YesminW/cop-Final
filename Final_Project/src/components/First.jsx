@@ -5,7 +5,7 @@ import Elogo from "../Elements/Elogo";
 
 import "../assets/StyleSheets/Main.css";
 
-export default function Main() {
+export default function First() {
   const apiUrl = "http://localhost:5108/getAllUsers";
 
   return (
