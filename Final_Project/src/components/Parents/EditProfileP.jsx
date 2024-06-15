@@ -11,6 +11,7 @@ export default function EditProfileP() {
   const location = useLocation();
   const [details, setDetails] = useState(location.state);
   const [loading, setLoading] = useState(false);
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setDetails((prevDetails) => ({
@@ -30,7 +31,7 @@ export default function EditProfileP() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // להימנע מטעינת עמוד מחדש
+    e.preventDefault();
     try {
       setLoading(true);
       const urlSP = "http://localhost:5108/updateUser";
