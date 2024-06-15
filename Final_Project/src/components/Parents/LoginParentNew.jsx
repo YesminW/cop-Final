@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 export default function LoginParentNew() {
   const [showPassword, setShowPassword] = useState(false);
   const Navigate = useNavigate();
+  const [error, setErrors] = useState("");
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
@@ -29,6 +30,7 @@ export default function LoginParentNew() {
       Navigate("/MainParent");
     } catch (error) {
       console.error(error);
+      setErrors("המייל / הסיסמא שגויים");
     }
   }
 
@@ -73,6 +75,7 @@ export default function LoginParentNew() {
       <button type="submit" className="btn">
         כניסה
       </button>
+      {error && <p style={{ color: "#6196A6" }}>{error}</p>}
     </form>
   );
 }
