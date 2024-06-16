@@ -80,8 +80,7 @@ namespace Co_p_new__WebApi.Controllers
 
 
             });
-            Console.WriteLine(kindergartenNumner);
-            Console.WriteLine(today);
+          
             return ActualActivities;
 
 
