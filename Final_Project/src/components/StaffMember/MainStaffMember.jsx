@@ -35,7 +35,6 @@ export default function MainStaffMember() {
       try {
         setLoading(true);
         const user = await getUserById(localStorage.getItem("user_id"));
-        console.log(user);
         setUserData(user);
       } catch (error) {
         console.error(error);
@@ -59,9 +58,11 @@ export default function MainStaffMember() {
   return loading ? (
     <CircularProgress />
   ) : (
-    <div className="home-container" {...handlers}>
+    <div
+      className="home-container flex-column center-a space-evenly"
+      {...handlers}
+    >
       {Elogo1}
-      <br />
       <div className="info-card">
         <h2>
           {greeting} {userData.UserPrivetName}
@@ -73,24 +74,30 @@ export default function MainStaffMember() {
             {currentDay} <br /> {currentDate}
           </h3>
         </div>
-        <div className="grid-item">
-          <Link to="/presence">
-            <Button
-              style={{
-                fontFamily: "Karantina",
-                color: "white",
-                fontSize: "24px",
-              }}
-            >
-              נוכחים בגן
-            </Button>
-          </Link>
-        </div>
+        <Link to="/presence" className="grid-item">
+          <Button
+            style={{
+              fontFamily: "Karantina",
+              color: "white",
+              fontSize: "24px",
+            }}
+          >
+            נוכחים בגן
+          </Button>
+        </Link>
       </div>
       <div>
-        <div className="grid-item">
-          <h3>תורנים להיום</h3>
-        </div>
+        <Link to="/ChildDuty" className="grid-item">
+          <Button
+            style={{
+              fontFamily: "Karantina",
+              color: "white",
+              fontSize: "24px",
+            }}
+          >
+            תורנים להיום
+          </Button>
+        </Link>
         <div className="grid-item">
           <h3>מי חוגג היום</h3>
         </div>
@@ -98,7 +105,6 @@ export default function MainStaffMember() {
           <h3>האירוע הבא היום</h3>
         </div>
       </div>
-      <br></br>
       <NavigationDots activeIndex={0} />
       {EfooterS}
     </div>

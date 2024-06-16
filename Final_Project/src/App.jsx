@@ -21,6 +21,7 @@ import Presence from "./components/StaffMember/Presence";
 import Meals from "./components/StaffMember/Meals";
 import WatchMeal from "./components/StaffMember/WatchMeal";
 import AddMeal from "./components/StaffMember/AddMeal";
+import ChildDuty from "./components/StaffMember/ChildDuty";
 
 import LogInParent from "./components/Parents/LogInParent";
 import MainParent from "./components/Parents/MainParent";
@@ -70,6 +71,7 @@ function App() {
           <Route path="/Meals" element={<Meals />} />
           <Route path="/WatchMeal" element={<WatchMeal />} />
           <Route path="/AddMeal" element={<AddMeal />} />
+          <Route path="/ChildDuty" element={<ChildDuty />} />
 
           <Route path="/LogInParent" element={<LoginParentNew />} />
           <Route path="/MainParent" element={<MainParent />} />
