@@ -38,3 +38,7 @@ export const getWeeksInSchoolYear = () => {
 export const formatDate = (date) => {
   return date.toLocaleDateString("he-IL");
 };
+
+export const formatForCSharp = (date) => {
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+};

@@ -5,6 +5,7 @@ import EfooterS from "../../Elements/EfooterS";
 import { hebrewWeekDays } from "../../utils/constants";
 import { formatDate } from "../../utils/functions";
 import { nanoid } from "nanoid";
+import { getMealByKindergardenAndDate } from "../../utils/apiCalls";
 
 const WatchMeal = () => {
   const location = useLocation();
@@ -18,19 +19,16 @@ const WatchMeal = () => {
   useEffect(() => {
     const fetchMealData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:5108/getbydateandkindergarten?date=${formatDate(
-            date
-          )}&kindergartenNumber=${kindergartenNumber}`
+        const data = await getMealByKindergardenAndDate(
+          date,
+          kindergartenNumber
         );
-        const data = await response.json();
         console.log(data);
-        setMealData({
-          בוקר: "salad",
-          צהריים: "meat",
-          ארבע: "fruit",
-          פינוק: "tapuchips",
-        });
+        const meals = { בוקר: "", צהריים: "", ארבע: "", פינוק: "" };
+        for (const meal of data) {
+          meals[meal.maelName] = meal.mealDetails;
+        }
+        setMealData(meals);
         setIsDataLoaded(true);
       } catch (error) {
         console.error("Error fetching meal data:", error);
@@ -61,17 +59,19 @@ const WatchMeal = () => {
         <h2>{`${hebrewWeekDays[date.getDay()]} ${formatDate(date)}`}</h2>
         {isDataLoaded ? (
           <table className="meal-table">
-            {Object.keys(mealData).map((mealKey) => (
-              <tr key={nanoid()}>
-                <td className="meal-time">{mealKey}</td>
-                <td className="meal-description">
-                  <input
-                    name={mealKey}
-                    defaultValue={mealData[mealKey]}
-                  ></input>
-                </td>
-              </tr>
-            ))}
+            <tbody>
+              {Object.keys(mealData).map((mealKey) => (
+                <tr key={nanoid()}>
+                  <td className="meal-time">{mealKey}</td>
+                  <td className="meal-description">
+                    <input
+                      name={mealKey}
+                      defaultValue={mealData[mealKey]}
+                    ></input>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         ) : (
           <p>טוען נתונים...</p>

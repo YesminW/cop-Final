@@ -1,3 +1,5 @@
+import { formatDate, formatForCSharp } from "./functions";
+
 const SERVER_URL = "http://localhost:5108";
 
 export async function login(data) {
@@ -98,5 +100,19 @@ export async function addUserByExcel(file) {
   } catch (error) {
     console.error(error);
     throw new Error(error);
+  }
+}
+
+export async function getMealByKindergardenAndDate(date, kindergartenNumber) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/getbydateandkindergarten/${kindergartenNumber}/${formatForCSharp(
+        date
+      )}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
   }
 }
