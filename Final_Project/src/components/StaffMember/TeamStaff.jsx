@@ -17,6 +17,7 @@ export default function TeamStaff() {
           <GridItem />
         </div>
       </div>
+      {EfooterS}
     </div>
   );
 }
@@ -26,13 +27,11 @@ function GridItem() {
     <div className="flex-column space-evenly duty-grid-item radius-25">
       <h2 className="white">2.4</h2>
       <div className="flex-column space-evenly">
-        <div className="flex-column">
-          <img
-            className="avatar"
-            src="https://images.pexels.com/photos/35537/child-children-girl-happy.jpg?cs=srgb&dl=pexels-bess-hamiti-83687-35537.jpg&fm=jpg"
-          />
-          <p className="white">אביהו</p>
-        </div>
+        <img
+          className="avatar"
+          src="https://images.pexels.com/photos/35537/child-children-girl-happy.jpg?cs=srgb&dl=pexels-bess-hamiti-83687-35537.jpg&fm=jpg"
+        />
+        <p className="white">אביהו</p>
       </div>
     </div>
   );
