@@ -45,6 +45,13 @@ body {
   gap: 8px;
 }
 
+.one-column-grid {
+  display: grid;
+  width: 100%;
+  
+  gap: 8px;
+}
+
 .padded-container {
   background-color: #07676d99;
   width: 100%;

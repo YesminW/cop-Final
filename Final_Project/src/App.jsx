@@ -22,8 +22,9 @@ import Meals from "./components/StaffMember/Meals";
 import WatchMeal from "./components/StaffMember/WatchMeal";
 import AddMeal from "./components/StaffMember/AddMeal";
 import ChildDuty from "./components/StaffMember/ChildDuty";
+import TeamStaff from "./components/StaffMember/TeamStaff";
 
-import LogInParent from "./components/Parents/LogInParent";
+import LoginParent from "./components/Parents/LoginParent";
 import MainParent from "./components/Parents/MainParent";
 import EditProfile from "./components/Parents/EditProfile";
 import EditProfileChild from "./components/Parents/EditProfileChild";
@@ -33,7 +34,6 @@ import Allergies from "./components/Parents/Allergies";
 import "./assets/StyleSheets/Register.css";
 import "./assets/StyleSheets/Main.css";
 import "./App.css";
-import LoginParentNew from "./components/Parents/LoginParentNew";
 
 const apiUtl = "";
 
@@ -72,8 +72,9 @@ function App() {
           <Route path="/WatchMeal" element={<WatchMeal />} />
           <Route path="/AddMeal" element={<AddMeal />} />
           <Route path="/ChildDuty" element={<ChildDuty />} />
+          <Route path="/TeamStaff" element={<TeamStaff />} />
 
-          <Route path="/LogInParent" element={<LoginParentNew />} />
+          <Route path="/LogInParent" element={<LoginParent />} />
           <Route path="/MainParent" element={<MainParent />} />
           <Route path="/EditProfile" element={<EditProfile />} />
           <Route path="/EditProfileChild" element={<EditProfileChild />} />

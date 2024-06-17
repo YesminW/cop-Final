@@ -14,7 +14,7 @@ export default function First() {
       <br />
       <h1 className="loginh1">מי אתה/את?</h1>
       <div className="buttons">
-        <Link to="/LogInParent">
+        <Link to="/LoginParent">
           <button className="btn">הורה</button>
         </Link>
         <Link to="/LoginStaffMember">
