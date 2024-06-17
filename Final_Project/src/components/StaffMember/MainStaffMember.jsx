@@ -98,8 +98,18 @@ export default function MainStaffMember() {
             תורנים להיום
           </Button>
         </Link>
-        <div className="grid-item">
-          <h3>מי חוגג היום</h3>
+        <div>
+          <Link to="/BirthDayChild" className="grid-item">
+            <Button
+              style={{
+                fontFamily: "Karantina",
+                color: "white",
+                fontSize: "24px",
+              }}
+            >
+              מי חוגג היום
+            </Button>
+          </Link>{" "}
         </div>
         <div className="grid-item">
           <h3>האירוע הבא היום</h3>

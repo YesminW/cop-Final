@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import First from "./components/First";
@@ -23,6 +22,7 @@ import WatchMeal from "./components/StaffMember/WatchMeal";
 import AddMeal from "./components/StaffMember/AddMeal";
 import ChildDuty from "./components/StaffMember/ChildDuty";
 import TeamStaff from "./components/StaffMember/TeamStaff";
+import BirthDayChild from "./components/StaffMember/BirthDayChild";
 
 import LoginParent from "./components/Parents/LoginParent";
 import MainParent from "./components/Parents/MainParent";
@@ -73,6 +73,7 @@ function App() {
           <Route path="/AddMeal" element={<AddMeal />} />
           <Route path="/ChildDuty" element={<ChildDuty />} />
           <Route path="/TeamStaff" element={<TeamStaff />} />
+          <Route path="/BirthDayChild" element={<BirthDayChild />} />
 
           <Route path="/LogInParent" element={<LoginParent />} />
           <Route path="/MainParent" element={<MainParent />} />
