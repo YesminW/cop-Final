@@ -48,7 +48,6 @@ body {
 .one-column-grid {
   display: grid;
   width: 100%;
-  
   gap: 8px;
 }
 
