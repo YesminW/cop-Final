@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import First from "./components/First";
-
+import LoginParent from "./components/Parents/LogInParent";
 import LoginManage from "./components/Management/LoginManage";
 import ManagerRegister from "./components/Management/ManagerRegister";
 import ManagerRegister2 from "./components/Management/ManagerRegister2";
@@ -24,7 +24,6 @@ import ChildDuty from "./components/StaffMember/ChildDuty";
 import TeamStaff from "./components/StaffMember/TeamStaff";
 import BirthDayChild from "./components/StaffMember/BirthDayChild";
 
-import LoginParent from "./components/Parents/LoginParent";
 import MainParent from "./components/Parents/MainParent";
 import EditProfile from "./components/Parents/EditProfile";
 import EditProfileChild from "./components/Parents/EditProfileChild";
@@ -34,57 +33,80 @@ import Allergies from "./components/Parents/Allergies";
 import "./assets/StyleSheets/Register.css";
 import "./assets/StyleSheets/Main.css";
 import "./App.css";
+import WeekCalendar from "./components/WeekCalendar/WeekCalendar";
 
 const apiUtl = "";
 
 function App() {
-  return (
-    <Router>
-      <div className="app">
-        <Routes>
-          <Route path="/" element={<First />} />
+    return (
+        <Router>
+            <div className="app">
+                <Routes>
+                    <Route path="/" element={<First />} />
+                    {/* <Route path="/" element={<WeekCalendar />} /> */}
 
-          <Route path="/LoginManage" element={<LoginManage />} />
-          <Route path="/ManagerRegister" element={<ManagerRegister />} />
-          <Route path="/ManagerRegister2" element={<ManagerRegister2 />} />
-          <Route
-            path="/KindergartenManagement"
-            element={<KindergartenManagement />}
-          />
-          <Route
-            path="/KindergartenDetails/:gardenName"
-            element={<KindergartenDetails />}
-          />
-          <Route path="/AddKindergarden" element={<AddKindergarden />} />
-          <Route path="AddSAndP" element={<AddsAndP />} />
+                    <Route path="/LoginManage" element={<LoginManage />} />
+                    <Route
+                        path="/ManagerRegister"
+                        element={<ManagerRegister />}
+                    />
+                    <Route
+                        path="/ManagerRegister2"
+                        element={<ManagerRegister2 />}
+                    />
+                    <Route
+                        path="/KindergartenManagement"
+                        element={<KindergartenManagement />}
+                    />
+                    <Route
+                        path="/KindergartenDetails/:gardenName"
+                        element={<KindergartenDetails />}
+                    />
+                    <Route
+                        path="/AddKindergarden"
+                        element={<AddKindergarden />}
+                    />
+                    <Route path="AddSAndP" element={<AddsAndP />} />
 
-          <Route path="/LoginStaffMember" element={<LoginStaffMember />} />
-          <Route path="/MainStaffMember" element={<MainStaffMember />} />
-          <Route
-            path="/ActivitiesStaffMember"
-            element={<ActivitiesStaffMember />}
-          />
-          <Route path="/BonusStaffMember" element={<BonusStaffMember />} />
-          <Route path="/EditProfileS" element={<EditProfileS />} />
-          <Route path="/EditProfileS2" element={<EditProfileS2 />} />
-          <Route path="/Presence" element={<Presence />} />
-          <Route path="/Meals" element={<Meals />} />
-          <Route path="/WatchMeal" element={<WatchMeal />} />
-          <Route path="/AddMeal" element={<AddMeal />} />
-          <Route path="/ChildDuty" element={<ChildDuty />} />
-          <Route path="/TeamStaff" element={<TeamStaff />} />
-          <Route path="/BirthDayChild" element={<BirthDayChild />} />
+                    <Route
+                        path="/LoginStaffMember"
+                        element={<LoginStaffMember />}
+                    />
+                    <Route
+                        path="/MainStaffMember"
+                        element={<MainStaffMember />}
+                    />
+                    <Route
+                        path="/ActivitiesStaffMember"
+                        element={<ActivitiesStaffMember />}
+                    />
+                    <Route
+                        path="/BonusStaffMember"
+                        element={<BonusStaffMember />}
+                    />
+                    <Route path="/EditProfileS" element={<EditProfileS />} />
+                    <Route path="/EditProfileS2" element={<EditProfileS2 />} />
+                    <Route path="/Presence" element={<Presence />} />
+                    <Route path="/Meals" element={<Meals />} />
+                    <Route path="/WatchMeal" element={<WatchMeal />} />
+                    <Route path="/AddMeal" element={<AddMeal />} />
+                    <Route path="/ChildDuty" element={<ChildDuty />} />
+                    <Route path="/TeamStaff" element={<TeamStaff />} />
+                    <Route path="/BirthDayChild" element={<BirthDayChild />} />
 
-          <Route path="/LogInParent" element={<LoginParent />} />
-          <Route path="/MainParent" element={<MainParent />} />
-          <Route path="/EditProfile" element={<EditProfile />} />
-          <Route path="/EditProfileChild" element={<EditProfileChild />} />
-          <Route path="/EditProfileP" element={<EditProfileP />} />
-          <Route path="/Allergies" element={<Allergies />} />
-        </Routes>
-      </div>
-    </Router>
-  );
+                    <Route path="/LogInParent" element={<LoginParent />} />
+                    <Route path="/MainParent" element={<MainParent />} />
+                    <Route path="/EditProfile" element={<EditProfile />} />
+                    <Route
+                        path="/EditProfileChild"
+                        element={<EditProfileChild />}
+                    />
+                    <Route path="/EditProfileP" element={<EditProfileP />} />
+                    <Route path="/Allergies" element={<Allergies />} />
+                </Routes>
+            </div>
+        </Router>
+    );
 }
 
 export default App;
