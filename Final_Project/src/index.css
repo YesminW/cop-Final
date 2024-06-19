@@ -122,6 +122,18 @@ body {
     background-color: #b9dcd1;
 }
 
+.usual-background {
+    background-color: #07676d;
+}
+
+.cool-input {
+    background-color: #abd1c6;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    outline: none;
+}
+
 .font-40 {
     font-size: 40px;
 }
@@ -130,13 +142,32 @@ body {
     font-size: 30px;
 }
 
+.font-20 {
+    font-size: 20px;
+}
+
 .padding-v-40 {
     padding-top: 40px;
     padding-bottom: 40px;
 }
+.padding-v-20 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.padding-h-10px {
+    padding-left: 10px;
+    padding-right: 10px;
+}
 
 .scroll {
     overflow: scroll;
+}
+.width-100 {
+    width: 80px;
+}
+.gap-8 {
+    gap: 8px;
 }
 
 .gap-20 {
@@ -145,4 +176,8 @@ body {
 
 .duty-grid-item p {
     font-size: 20px;
+}
+
+.height-60 {
+    height: 60%;
 }

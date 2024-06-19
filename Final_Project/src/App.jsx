@@ -34,6 +34,7 @@ import "./assets/StyleSheets/Register.css";
 import "./assets/StyleSheets/Main.css";
 import "./App.css";
 import WeekCalendar from "./components/WeekCalendar/WeekCalendar";
+import DayHoursList from "./components/DayHoursList/DayHoursList";
 
 const apiUtl = "";
 
@@ -43,7 +44,11 @@ function App() {
             <div className="app">
                 <Routes>
                     <Route path="/" element={<First />} />
-                    {/* <Route path="/" element={<WeekCalendar />} /> */}
+                    <Route path="/WeekCalendar" element={<WeekCalendar />} />
+                    <Route
+                        path="/WatchDayHourList"
+                        element={<DayHoursList />}
+                    />
 
                     <Route path="/LoginManage" element={<LoginManage />} />
                     <Route

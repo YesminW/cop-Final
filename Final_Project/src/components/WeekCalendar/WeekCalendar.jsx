@@ -9,10 +9,12 @@ import {
 import "./WeekCalendar.css";
 import { nanoid } from "nanoid";
 import { hebrewWeekDays } from "../../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 export default function WeekCalendar() {
     const weeks = getWeeksInSchoolYear();
     const [selectedWeek, setSelectedWeek] = useState(0);
+    const navigate = useNavigate();
     useEffect(() => {
         const currentWeekDates = getCurrentWeekDates();
         const start = currentWeekDates[0];
@@ -29,7 +31,9 @@ export default function WeekCalendar() {
         setSelectedWeek(event.target.value);
     };
 
-    const handleDayClick = (date) => {};
+    const handleDayClick = (date) => {
+        navigate("/WatchDayHourList", { state: date });
+    };
 
     return (
         <div className="flex-column page-container week-calendar-container space-between">
