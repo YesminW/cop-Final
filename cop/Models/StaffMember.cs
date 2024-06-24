@@ -8,6 +8,7 @@ public partial class StaffMember
     public string UserId { get; set; } = null!;
 
     public int KindergartenNumber { get; set; }
+    public int CurrentAcademicYear { get; set; }
 
     public virtual Kindergarten KindergartenNumberNavigation { get; set; } = null!;
 
