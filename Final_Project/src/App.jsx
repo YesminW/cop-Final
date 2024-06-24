@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import First from "./components/First";
-import LoginParent from "./components/Parents/LogInParent";
+import LoginParent from "./components/Parents/LoginParent";
 import LoginManage from "./components/Management/LoginManage";
 import ManagerRegister from "./components/Management/ManagerRegister";
 import ManagerRegister2 from "./components/Management/ManagerRegister2";
@@ -80,6 +80,24 @@ function App() {
           <Route path="/TeamStaff" element={<TeamStaff />} />
           <Route path="/BirthDayChild" element={<BirthDayChild />} />
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+                    <Route path="/LoginParent" element={<LoginParent />} />
+                    <Route path="/MainParent" element={<MainParent />} />
+                    <Route path="/EditProfile" element={<EditProfile />} />
+                    <Route
+                        path="/EditProfileChild"
+                        element={<EditProfileChild />}
+                    />
+                    <Route path="/EditProfileP" element={<EditProfileP />} />
+                    <Route path="/Allergies" element={<Allergies />} />
+                </Routes>
+            </div>
+        </Router>
+    );
+=======
+>>>>>>> Stashed changes
           <Route path="/LogInParent" element={<LoginParent />} />
           <Route path="/MainParent" element={<MainParent />} />
           <Route path="/EditProfile" element={<EditProfile />} />
@@ -90,6 +108,10 @@ function App() {
       </div>
     </Router>
   );
+<<<<<<< Updated upstream
+=======
+>>>>>>> edd516c5b7a234e66fb7d2e517438b5aa2dadbb4
+>>>>>>> Stashed changes
 }
 
 export default App;
