@@ -85,6 +85,7 @@ namespace Co_p_new__WebApi.Controllers
             db.SaveChanges();
             return Ok(u);
         }
+
         [HttpPost]
         [Route("AddUserByExcel")]
         public async Task<IActionResult> UploadUserExcel(IFormFile file)
@@ -97,6 +98,7 @@ namespace Co_p_new__WebApi.Controllers
             ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial; // Set the license context
 
             var users = new List<User>();
+           
 
             using (var stream = new MemoryStream())
             {
@@ -113,88 +115,142 @@ namespace Co_p_new__WebApi.Controllers
 
                     for (int row = 2; row <= rowCount; row++) // Assuming the first row is the header
                     {
-                        var UserID = worksheet.Cells[row, 1].Text;
-                        var UserPrivetName = worksheet.Cells[row, 2].Text; // Change from int to string
-                        var UserSurname = worksheet.Cells[row, 3].Text;  // Change from int to string
-                        var UserBirthDate = DateTime.Parse(worksheet.Cells[row, 4].Text); // Parse DateTime
-                        var UserAddress = worksheet.Cells[row, 5].Text;
-                        var UserPhoneNumber = worksheet.Cells[row, 6].Text;
-                        var UserGender = worksheet.Cells[row, 7].Text;
-                        var UserEmail = worksheet.Cells[row, 8].Text;
-                        var UserpPassword = worksheet.Cells[row, 9].Text;
-                        var UserCode = int.Parse(worksheet.Cells[row, 10].Text);
-
-
-                        // Retrieve or create related entities as needed
-                        var user = db.Users.FirstOrDefault(u => u.UserId == UserID);
-                        if (user == null)
+                        try
                         {
-                            var newUser = new User
+                            var userId = worksheet.Cells[row, 1].Text;
+                            var userPrivetName = worksheet.Cells[row, 2].Text; // Change from int to string
+                            var userSurname = worksheet.Cells[row, 3].Text;  // Change from int to string
+                            var userBirthDate = DateTime.Parse(worksheet.Cells[row, 4].Text); // Parse DateTime
+                            var userAddress = worksheet.Cells[row, 5].Text;
+                            var userPhoneNumber = worksheet.Cells[row, 6].Text;
+                            var userGender = worksheet.Cells[row, 7].Text;
+                            var userEmail = worksheet.Cells[row, 8].Text;
+                            var userpPassword = worksheet.Cells[row, 9].Text;
+                            var userCode = int.Parse(worksheet.Cells[row, 10].Text);
+                            
+                            var user = db.Users.FirstOrDefault(u => u.UserId == userId);
+                            if (user == null)
                             {
-                                UserId = UserID,
-                                UserPrivetName = UserPrivetName,
-                                UserSurname = UserSurname,
-                                UserBirthDate = UserBirthDate,
-                                UserAddress = UserAddress,
-                                UserPhoneNumber = UserPhoneNumber,
-                                UserGender = UserGender,
-                                UserEmail = UserEmail,
-                                UserpPassword = UserpPassword,
-                                UserCode = UserCode,
-
-                            };
-
-
-                            users.Add(newUser);
+                                var newUser = new User
+                                {
+                                    UserId = userId,
+                                    UserPrivetName = userPrivetName,
+                                    UserSurname = userSurname,
+                                    UserBirthDate = userBirthDate,
+                                    UserAddress = userAddress,
+                                    UserPhoneNumber = userPhoneNumber,
+                                    UserGender = userGender,
+                                    UserEmail = userEmail,
+                                    UserpPassword = userpPassword,
+                                    UserCode = userCode,
+                                };
+                                users.Add(newUser);
+                               
+                            }
+                        }
+                        catch (FormatException ex)
+                        {
+                            Console.WriteLine($"Row {row} has invalid data: {ex.Message}");
+                            return BadRequest($"Row {row} has invalid data: {ex.Message}");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Row {row} encountered an error: {ex.Message}");
+                            return BadRequest($"Row {row} encountered an error: {ex.Message}");
                         }
                     }
                 }
             }
 
             db.Users.AddRange(users);
+            
             await db.SaveChangesAsync();
+
+            ParentOrStaff(file);
 
             return Ok(new { Message = "Data imported successfully." });
         }
 
         [HttpPut]
         [Route("parentOrStaff")]
-        public dynamic ParentOrStaff()
+        public dynamic ParentOrStaff(IFormFile file)
         {
-            List<User> users = db.Users.ToList();
+
             var parent = new List<Parent>();
             var staff = new List<StaffMember>();
-
-            for (int i = 0; i < users.Count(); i++)
+            using (var stream = new MemoryStream())
             {
-                if (users[i].UserCode == 222)
+                await file.CopyToAsync(stream);
+                using (var package = new ExcelPackage(stream))
                 {
-                    if (!db.Parents.Any(s => s.UserId == users[i].UserId))
+                    var worksheet = package.Workbook.Worksheets.First();
+                    if (worksheet.Dimension == null)
                     {
-                        Parent p = new Parent();
-                        p.UserId = users[i].UserId;
-                        parent.Add(p);
+                        return BadRequest("The Excel file is empty.");
                     }
-                }
-                else if (users[i].UserCode == 111 || users[i].UserCode == 333)
-                {
-                    // Check if the user is already a staff member
-                    if (!db.StaffMembers.Any(s => s.UserId == users[i].UserId))
-                    {
-                        StaffMember s = new StaffMember();
-                        s.UserId = users[i].UserId;  // Remove this line if UserId is an identity column
+                    var rowCount = worksheet.Dimension.Rows;
+                    Console.WriteLine($"Row count: {rowCount}");
 
-                        List<int> kindergartenCodes = db.Kindergartens.Select(k => k.KindergartenNumber).ToList();
-                        if (kindergartenCodes.Count > 0)
+                    for (int row = 2; row <= rowCount; row++) // Assuming the first row is the header
+                    {
+                        var userId = worksheet.Cells[row, 1].Text;
+                        var userPrivetName = worksheet.Cells[row, 2].Text; // Change from int to string
+                        var userSurname = worksheet.Cells[row, 3].Text;  // Change from int to string
+                        var userBirthDate = DateTime.Parse(worksheet.Cells[row, 4].Text); // Parse DateTime
+                        var userAddress = worksheet.Cells[row, 5].Text;
+                        var userPhoneNumber = worksheet.Cells[row, 6].Text;
+                        var userGender = worksheet.Cells[row, 7].Text;
+                        var userEmail = worksheet.Cells[row, 8].Text;
+                        var userpPassword = worksheet.Cells[row, 9].Text;
+                        var userCode = int.Parse(worksheet.Cells[row, 10].Text);
+                        var currentAcademicYear = int.Parse(worksheet.Cells[row, 11].Text);
+                        var kindergartenNumber = int.Parse(worksheet.Cells[row, 12].Text);
+
+                        // Retrieve or create the KindergartenYear entity
+                        var ky = db.KindergartenYears.FirstOrDefault(ky => ky.KindergartenNumber == kindergartenNumber && ky.CurrentAcademicYear == currentAcademicYear);
+
+                        if (ky == null)
                         {
-                            // Assign a random kindergarten code
-                            Random random = new Random();
-                            s.KindergartenNumber = kindergartenCodes[random.Next(kindergartenCodes.Count)];
+                            ky = new KindergartenYear
+                            {
+                                KindergartenNumber = kindergartenNumber,
+                                CurrentAcademicYear = currentAcademicYear
+                            };
+                            db.KindergartenYears.Add(ky);
+                            await db.SaveChangesAsync();
                         }
-                        staff.Add(s);
+
+                        // Retrieve or create related entities as needed
+
+                        if (userCode == 222)
+                        {
+                            var newParent = new Parent
+                            {
+                                UserId = userId,
+                                KindergartenNumber = kindergartenNumber,
+                                CurrentAcademicYear = currentAcademicYear,
+
+                            };
+                            parent.Add(newParent);
+                        }
+                        else if (userCode == 111 || userCode == 333)
+                        {
+                            var newStaffMember = new StaffMember
+                            {
+                                UserId = userId,
+                                KindergartenNumber = kindergartenNumber,
+                                CurrentAcademicYear = currentAcademicYear,
+
+                            };
+                            staff.Add(newStaffMember);
+                        }
+
+
+
                     }
                 }
             }
+
             db.Parents.AddRange(parent);
             db.SaveChanges();
             db.StaffMembers.AddRange(staff);
@@ -202,6 +258,106 @@ namespace Co_p_new__WebApi.Controllers
 
             return ("Data imported successfully");
         }
+
+
+        //[HttpPost]
+        //[Route("AddUserByExcel")]
+        //public async Task<IActionResult> UploadUserExcel(IFormFile file)
+        //{
+        //    if (file == null || file.Length == 0)
+        //    {
+        //        return BadRequest("Please upload a valid Excel file.");
+        //    }
+
+        //    ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial; // Set the license context
+
+        //    var users = new List<User>();
+        //    var parents = new List<Parent>();
+        //    var staffm = new List<StaffMember>();
+
+        //    using (var stream = new MemoryStream())
+        //    {
+        //        await file.CopyToAsync(stream);
+        //        using (var package = new ExcelPackage(stream))
+        //        {
+        //            var worksheet = package.Workbook.Worksheets.First();
+        //            if (worksheet.Dimension == null)
+        //            {
+        //                return BadRequest("The Excel file is empty.");
+        //            }
+        //            var rowCount = worksheet.Dimension.Rows;
+        //            Console.WriteLine($"Row count: {rowCount}");
+
+        //            for (int row = 2; row <= rowCount; row++) // Assuming the first row is the header
+        //            {
+        //                var UserID = worksheet.Cells[row, 1].Text;
+        //                var UserPrivetName = worksheet.Cells[row, 2].Text; // Change from int to string
+        //                var UserSurname = worksheet.Cells[row, 3].Text;  // Change from int to string
+        //                var UserBirthDate = DateTime.Parse(worksheet.Cells[row, 4].Text); // Parse DateTime
+        //                var UserAddress = worksheet.Cells[row, 5].Text;
+        //                var UserPhoneNumber = worksheet.Cells[row, 6].Text;
+        //                var UserGender = worksheet.Cells[row, 7].Text;
+        //                var UserEmail = worksheet.Cells[row, 8].Text;
+        //                var UserpPassword = worksheet.Cells[row, 9].Text;
+        //                var UserCode = int.Parse(worksheet.Cells[row, 10].Text);
+        //                var CurrentAcademicYear = int.Parse(worksheet.Cells[row, 11].Text);
+        //                var KindergartenNumber = int.Parse(worksheet.Cells[row, 12].Text);
+
+
+        //                // Retrieve or create related entities as needed
+        //                var user = db.Users.FirstOrDefault(u => u.UserId == UserID);
+        //                if (user == null)
+        //                {
+        //                    var newUser = new User
+        //                    {
+        //                        UserId = UserID,
+        //                        UserPrivetName = UserPrivetName,
+        //                        UserSurname = UserSurname,
+        //                        UserBirthDate = UserBirthDate,
+        //                        UserAddress = UserAddress,
+        //                        UserPhoneNumber = UserPhoneNumber,
+        //                        UserGender = UserGender,
+        //                        UserEmail = UserEmail,
+        //                        UserpPassword = UserpPassword,
+        //                        UserCode = UserCode,
+
+        //                    };
+        //                    users.Add(newUser);
+        //                    if (UserCode == 222 )
+        //                    {
+        //                        var newParent = new Parent
+        //                        {
+        //                            UserId = UserID,
+        //                            KindergartenNumber = KindergartenNumber,
+        //                            CurrentAcademicYear = CurrentAcademicYear,
+
+        //                        };
+        //                        parents.Add(newParent);
+        //                    }
+        //                    else if (UserCode == 111 || UserCode == 333)
+        //                    {
+        //                        var newStaffMember = new StaffMember
+        //                        {
+        //                            UserId = UserID,
+        //                            KindergartenNumber = KindergartenNumber,
+        //                            CurrentAcademicYear = CurrentAcademicYear,
+        //                        };
+        //                        staffm.Add(newStaffMember);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    db.Users.AddRange(users);
+        //    db.Parents.AddRange(parents);
+        //    db.StaffMembers.AddRange(staffm);
+        //    await db.SaveChangesAsync();
+
+        //    return Ok(new { Message = "Data imported successfully." });
+        //}
+
+
 
 
         [HttpPost]
