@@ -18,7 +18,7 @@ const EfooterS = (
         <People sx={{ fontSize: 30 }} className="footer-icon" />
       </IconButton>
     </Link>
-    <Link>
+    <Link to="/CalendarStaff">
       <IconButton>
         <EditCalendarOutlinedIcon
           sx={{ fontSize: 30 }}
