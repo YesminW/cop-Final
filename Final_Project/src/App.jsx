@@ -37,6 +37,8 @@ import DayHoursList from "./components/DayHoursList/DayHoursList";
 import ActivitiesList from "./components/ActivitiesList/ActivitiesList";
 import LoginParent from "./components/Parents/LogInParent";
 import CalendarStaff from "./components/CalendarStaff/CalendarStaff";
+import ChatsList from "./components/chat/ChatsList";
+import Chat from "./components/chat/Chat";
 const apiUtl = "";
 
 function App() {
@@ -45,6 +47,7 @@ function App() {
             <div className="app">
                 <Routes>
                     <Route path="/" element={<First />} />
+                    <Route path="/chats" element={<Chat />} />
                     <Route path="/WeekCalendar" element={<WeekCalendar />} />
                     <Route
                         path="/WatchDayHourList"
