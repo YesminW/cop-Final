@@ -1,4 +1,4 @@
-import Efooterp from "../../Elements/EfooterP";
+import EfooterS from "../../Elements/EfooterS";
 import "./chat.css";
 export default function ChatsList() {
     const chats = [
@@ -54,7 +54,7 @@ export default function ChatsList() {
                     </div>
                 ))}
             </div>
-            {Efooterp}
+            {EfooterS}
         </div>
     );
 }
