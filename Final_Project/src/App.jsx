@@ -47,7 +47,7 @@ function App() {
       <div className="app">
         <Routes>
           <Route path="/" element={<First />} />
-          <Route path="/chats" element={<Chat />} />
+          <Route path="/chat/:id" element={<Chat />} />
           <Route path="/ChatList" element={<ChatsList />} />
           <Route path="/WeekCalendar" element={<WeekCalendar />} />
           <Route path="/WatchDayHourList" element={<DayHoursList />} />
