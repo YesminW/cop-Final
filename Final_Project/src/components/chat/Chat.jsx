@@ -1,86 +1,54 @@
 import { useParams } from "react-router-dom";
 import "./chat.css";
-import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useRef, useState } from "react";
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  doc,
+  getDoc,
+  Timestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { CircularProgress } from "@mui/material";
 import { db } from "../../utils/firebase";
 
 export default function Chat() {
   const { id } = useParams();
   const [chat, setChat] = useState({});
+  const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
-  //   const chat = {
-  //     messages: [
-  //       {
-  //         id: 1,
-  //         sender: "John Doe",
-  //         text: "Hello",
-  //         timestamp: new Date(),
-  //         img: "https://media.istockphoto.com/id/1353379172/photo/cute-little-african-american-girl-looking-at-camera.jpg?s=612x612&w=0&k=20&c=RCOYytwS2nMGfEb80oyeiCcIiqMQu6wnTluAaxMBye4=",
-  //       },
-  //       {
-  //         id: 2,
-  //         sender: "Jane Smith",
-  //         text: "Hi",
-  //         timestamp: new Date(),
-  //         img: "https://media.istockphoto.com/id/1353379172/photo/cute-little-african-american-girl-looking-at-camera.jpg?s=612x612&w=0&k=20&c=RCOYytwS2nMGfEb80oyeiCcIiqMQu6wnTluAaxMBye4=",
-  //       },
-  //       {
-  //         id: 3,
-  //         sender: "John Doe",
-  //         text: "Hi",
-  //         timestamp: new Date(),
-  //         img: "https://media.istockphoto.com/id/1353379172/photo/cute-little-african-american-girl-looking-at-camera.jpg?s=612x612&w=0&k=20&c=RCOYytwS2nMGfEb80oyeiCcIiqMQu6wnTluAaxMBye4=",
-  //       },
-  //       {
-  //         id: 4,
-  //         sender: "Jane Smith",
-  //         text: "Hi",
-  //         timestamp: new Date(),
-  //         img: "https://media.istockphoto.com/id/1353379172/photo/cute-little-african-american-girl-looking-at-camera.jpg?s=612x612&w=0&k=20&c=RCOYytwS2nMGfEb80oyeiCcIiqMQu6wnTluAaxMBye4=",
-  //       },
-  //       {
-  //         id: 5,
-  //         sender: "Jane Smith",
-  //         text: "Hi",
-  //         timestamp: new Date(),
-  //         img: "https://media.istockphoto.com/id/1353379172/photo/cute-little-african-american-girl-looking-at-camera.jpg?s=612x612&w=0&k=20&c=RCOYytwS2nMGfEb80oyeiCcIiqMQu6wnTluAaxMBye4=",
-  //       },
-  //       {
-  //         id: 6,
-  //         sender: "John Doe",
-  //         text: "Hi",
-  //         timestamp: new Date(),
-  //         img: "https://media.istockphoto.com/id/1353379172/photo/cute-little-african-american-girl-looking-at-camera.jpg?s=612x612&w=0&k=20&c=RCOYytwS2nMGfEb80oyeiCcIiqMQu6wnTluAaxMBye4=",
-  //       },
-  //       {
-  //         id: 7,
-  //         sender: "John Doe",
-  //         text: "Hi",
-  //         timestamp: new Date(),
-  //         img: "https://media.istockphoto.com/id/1353379172/photo/cute-little-african-american-girl-looking-at-camera.jpg?s=612x612&w=0&k=20&c=RCOYytwS2nMGfEb80oyeiCcIiqMQu6wnTluAaxMBye4=",
-  //       },
-  //       {
-  //         id: 8,
-  //         sender: "Jane Smith",
-  //         text: "Hi",
-  //         timestamp: new Date(),
-  //         img: "https://media.istockphoto.com/id/1353379172/photo/cute-little-african-american-girl-looking-at-camera.jpg?s=612x612&w=0&k=20&c=RCOYytwS2nMGfEb80oyeiCcIiqMQu6wnTluAaxMBye4=",
-  //       },
-  //       {
-  //         id: 9,
-  //         sender: "Jane Smith",
-  //         text: "Hi",
-  //         timestamp: new Date(),
-  //         img: "https://media.istockphoto.com/id/1353379172/photo/cute-little-african-american-girl-looking-at-camera.jpg?s=612x612&w=0&k=20&c=RCOYytwS2nMGfEb80oyeiCcIiqMQu6wnTluAaxMBye4=",
-  //       },
-  //     ],
-  //   };
+  const inputRef = useRef(null);
+
+  async function createMessage(e) {
+    if (!inputRef.current.value.trim()) return;
+    const messageData = {
+      chatId: id,
+      sender: "1",
+      text: inputRef.current.value.trim(),
+      sentAt: Timestamp.now(),
+    };
+    const message = await addDoc(collection(db, "messages"), messageData);
+    const chatRef = doc(db, "chats", id);
+    await updateDoc(chatRef, {
+      messages: arrayUnion(message.id),
+    });
+    inputRef.current.value = "";
+    setMessages((prev) => [...prev, { id: message.id, ...messageData }]);
+  }
 
   useEffect(() => {
     async function getChatById() {
       try {
         const chat = await getDoc(doc(db, "chats", id));
+        setMessages(
+          await Promise.all(
+            chat.data().messages.map(async (mId) => {
+              const message = await getDoc(doc(db, "messages", mId));
+              return { id: mId, ...message.data() };
+            })
+          )
+        );
         setChat({ id, ...chat.data() });
       } catch (e) {
         console.error(e);
@@ -90,6 +58,7 @@ export default function Chat() {
     }
     getChatById();
   }, [id]);
+
   return loading ? (
     <CircularProgress />
   ) : (
@@ -100,14 +69,14 @@ export default function Chat() {
       </div>
       <div className="chat-content-container week-calendar-container">
         <div className="chat-messages-container">
-          {!chat.messages ? (
+          {!messages.length ? (
             <h2>אין הודעות</h2>
           ) : (
-            chat.messages.map((message) => (
+            messages.map((message) => (
               <div
                 key={message.id}
                 className={`chat-message ${
-                  message.sender === "Jane Smith" && "reverse"
+                  message.sender === "2" && "reverse"
                 }`}
               >
                 <img className="chat-img" src={message.img} alt="user" />
@@ -116,7 +85,7 @@ export default function Chat() {
                     {message.text}
                   </span>
                   <span className="chat-message-timestamp">
-                    {message.timestamp.toLocaleTimeString()}
+                    {/* {message.timestamp.toLocaleTimeString()} */}
                   </span>
                 </div>
               </div>
@@ -124,10 +93,13 @@ export default function Chat() {
           )}
         </div>
         <div className="chat-input-container">
-          <button className="chat-send-btn">⇨</button>
+          <button className="chat-send-btn" onClick={createMessage}>
+            ⇨
+          </button>
           <input
             className="chat-input"
             type="text"
+            ref={inputRef}
             placeholder="שלחו הודעה..."
           />
         </div>
